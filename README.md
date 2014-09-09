@@ -1,15 +1,14 @@
 
-ProyectoPlay
+Proyecto Gimansio
 ============
-
-#Proyecto Gimansio
 
 Herramientas a Utilizar
  ------
-| Tables        | Are           | 
+ 
+| Herramienta   | Version       | 
 | ------------- |:-------------:|
-| col 3 is      | right-aligned |
-| col 2 is      | centered      |
-| zebra stripes | are neat      |
+| Play Framework| 1.2.7         |
+| Boostrap      | 3.x           |
+| Hibernate     | ----          |
 
 
