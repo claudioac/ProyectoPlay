@@ -9,6 +9,6 @@ Herramientas a Utilizar
 | ------------- |:-------------:|
 | Play Framework| 1.2.7         |
 | Boostrap      | 3.x           |
-| Hibernate     | ----          |
+| Hibernate     | -----         |
 
 
