@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
  * Created by claudio on 06-09-14.
  */
 @Entity
-public class Login extends Model {
+public class Login extends EntidadIdAutoLongAltKey {
 
     @Required
     public String usuario;

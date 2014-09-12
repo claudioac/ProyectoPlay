@@ -9,7 +9,8 @@ import java.util.Date;
  * Created by claudio on 08-09-14.
  */
 @Entity
-public class Persona extends Model {
+@SequenceGenerator(name = "profile_seq", sequenceName = "profile_seq")
+public class Persona extends EntidadIdAutoLongAltKey {
 
     public String nombres;
 

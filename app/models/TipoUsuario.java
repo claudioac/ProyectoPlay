@@ -4,12 +4,14 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 
 /**
  * Created by claudio on 07-09-14.
  */
 @Entity
-public class TipoUsuario extends Model{
+@SequenceGenerator(name = "idAutoGen", sequenceName = "seq_tipo_usuario")
+public class TipoUsuario extends EntidadIdAutoLongAltKey{
 
     @Required
     public String tipoUsuario;

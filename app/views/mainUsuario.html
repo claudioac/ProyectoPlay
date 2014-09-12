@@ -48,7 +48,15 @@
 </div>
 <div class="container" style="margin-top: 70px;">
 
-#{doLayout /}
+    <div class="col-sm-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#"><i class="fa fa-home fa-2x"></i> Inicio</a></li>
+        </ul>
+    </div>
+    <div class="col-sm-10">
+    #{doLayout /}
+    </div>
+
 #{if flash.error}
         <strong>${flash.error}</strong>
 #{/if}
