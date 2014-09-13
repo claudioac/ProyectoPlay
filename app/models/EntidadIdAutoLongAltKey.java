@@ -1,14 +1,17 @@
 package models;
 
+import org.hibernate.annotations.GenericGenerator;
+import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
+import javax.persistence.*;
 import java.util.UUID;
 
 @MappedSuperclass
-public abstract class EntidadIdAutoLongAltKey extends Model {
+public abstract class EntidadIdAutoLongAltKey extends GenericModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idAutonGen")
+    public Long id;
 
     @Column(unique = true)
     protected String altKey;

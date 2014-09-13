@@ -10,7 +10,7 @@ import javax.persistence.SequenceGenerator;
  * Created by claudio on 07-09-14.
  */
 @Entity
-@SequenceGenerator(name = "idAutoGen", sequenceName = "seq_tipo_usuario")
+@SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_tipo_usuario")
 public class TipoUsuario extends EntidadIdAutoLongAltKey{
 
     @Required
