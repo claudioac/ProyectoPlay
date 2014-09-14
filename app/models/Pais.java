@@ -25,6 +25,6 @@ public class Pais extends Model{
 
     @Override
     public String toString() {
-        return nombre;
+        return nacionalidad;
     }
 }

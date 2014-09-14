@@ -1,7 +1,7 @@
 package controllers;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
-import models.Login;
+import models.Persona;
 import play.mvc.Controller;
 
 public class Inicio extends Controller {
@@ -13,28 +13,44 @@ public class Inicio extends Controller {
 
     public static void login(String usuario, String password) {
 
-        Login login = Login.checkUsuario(usuario);
+        validation.required(usuario).message("Usuario Requerido");
+        validation.required(password).message("Password Requerida");
+
+        if (validation.hasErrors()){
+            render("@Index");
+        }
+
+        Persona login = Persona.checkUsuario(usuario);
         if (login != null && login.password.equals(password)) {
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)) {
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioAdmin.index();
+                InicioAdmin.index(login);
             }
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.USUARIO)){
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioUsuario.indexUsuario();
+                InicioUsuario.indexUsuario(login);
             }
 
             if(login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.PROFESOR)){
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioProfesor.index();
+                InicioProfesor.index(login);
             }
 
-        } else {
-            error("No existe Usuario");
+        }else {
+           index();
         }
+
+    }
+
+    public static void acercaDe(){
+        renderTemplate("@acerca_de");
+    }
+
+    public static void contacto(){
+        renderTemplate("@contacto");
     }
 
 }

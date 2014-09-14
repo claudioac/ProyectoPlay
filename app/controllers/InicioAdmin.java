@@ -1,5 +1,6 @@
 package controllers;
 
+import models.Persona;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -9,7 +10,7 @@ import play.mvc.With;
 @With(Autenticar.class)
 public class InicioAdmin extends Controller {
 
-    public static void index(){
-        render();
+    public static void index(Persona persona){
+        render(persona);
     }
 }

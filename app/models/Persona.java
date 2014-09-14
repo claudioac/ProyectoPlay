@@ -1,5 +1,6 @@
 package models;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
@@ -39,9 +40,19 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public String email;
 
-    @OneToOne
-    public Login login;
 
+    @Required
+    public String usuario;
+
+    @Required
+    public String password;
+
+    @ManyToOne
+    public TipoUsuario tipoUsuario;
+
+    public static Persona checkUsuario(String Usuario){
+        return find("usuario",Usuario).first();
+    }
 
 
 }
