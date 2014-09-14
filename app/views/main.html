@@ -39,7 +39,7 @@
                 <li class=""><a href="@{Inicio.contacto()}">Contacto</a></li>
             </ul>
 
-                <button type="button" class="btn btn-success navbar-btn navbar-right" data-toggle="modal" data-target="#login">Iniciar Sessión</button>
+                <button type="button" class="btn btn-success navbar-btn navbar-right" id="logeo" data-toggle="modal" data-target="#login">Iniciar Sessión</button>
         </div>
     </div>
 </div>
@@ -51,6 +51,13 @@
             <strong>#{error 'password' /}</strong>
         </div>
     #{/ifErrors}
+    #{if 'error'}
+        <div class="alert alert-danger small alert-dismissible text-center" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                    class="sr-only">Close</span></button>
+            <strong>${error}</strong>
+        </div>
+    #{/if}
 
 #{doLayout /}
 

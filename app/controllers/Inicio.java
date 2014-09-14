@@ -40,7 +40,9 @@ public class Inicio extends Controller {
             }
 
         }else {
-           index();
+           String error = "No se Encuentra el usuario";
+           flash("error",error);
+           renderTemplate("@index",error);
         }
 
     }
