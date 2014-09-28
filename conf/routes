@@ -6,6 +6,7 @@
 GET     /                                      Inicio.index
 GET     /usuario                               InicioUsuario.indexUsuario
 GET     /administrador                         InicioAdmin.index
+GET     /administrativo                        InicioAdministrativo.index
 GET     /profesor                              InicioProfesor.index
 POST    /login                                 Inicio.login
 # Ignore favicon requests
