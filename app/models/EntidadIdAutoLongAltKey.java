@@ -7,6 +7,11 @@ import play.db.jpa.Model;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * @author Claudio Acuña
+ *
+ * Clase que Base para la generación de los diferentes modelos del presente proyecto
+ */
 @MappedSuperclass
 public abstract class EntidadIdAutoLongAltKey extends GenericModel {
     @Id

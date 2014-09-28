@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- * Created by claudio on 08-09-14.
+ *@author Claudio Acuña
+ *
+ * Entidad Región
  */
 @Entity
-public class Region extends Model{
+public class Region extends Model {
 
     public String nombre;
 

@@ -7,11 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 
 /**
- * Created by claudio on 07-09-14.
+ *@author Claudio Acuña
+ *
+ *
+ * Entidad Tipo Usuario
  */
 @Entity
 @SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_tipo_usuario")
-public class TipoUsuario extends EntidadIdAutoLongAltKey{
+public class TipoUsuario extends EntidadIdAutoLongAltKey {
 
     @Required
     public String tipoUsuario;

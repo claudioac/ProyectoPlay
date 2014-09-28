@@ -7,7 +7,10 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by claudio on 08-09-14.
+ * @author Claudio Acuña
+ *
+ *
+ * Entidad Persona
  */
 @Entity
 @SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_login")

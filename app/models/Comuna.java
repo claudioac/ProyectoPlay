@@ -6,15 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 /**
- * Created by claudio on 08-09-14.
+ *@author Claudio Acuña
+ *
+ * Entidad Comuna
  */
 @Entity
-public class Comuna  extends Model {
+public class Comuna extends Model {
 
     public String nombre;
 
     @ManyToOne
-    public  Provincia provincia;
+    public Provincia provincia;
 
 
     @Override

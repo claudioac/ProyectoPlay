@@ -5,11 +5,15 @@ import play.mvc.Controller;
 import play.mvc.With;
 
 /**
- * Created by claudio on 07-09-14.
+ * @author Claudio Acuña
  */
 @With(Autenticar.class)
 public class InicioAdmin extends Controller {
 
+    /**
+     * Funcion que renderisa el escritorio del cliente
+     * @param persona
+     */
     public static void index(Persona persona){
         render(persona);
     }

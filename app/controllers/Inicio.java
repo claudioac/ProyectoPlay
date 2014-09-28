@@ -4,13 +4,25 @@ import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.Persona;
 import play.mvc.Controller;
 
+/**
+ * @author Claudio Acuña
+ *
+ */
 public class Inicio extends Controller {
 
+    /**
+     * Función para pagina principal.
+     */
     public static void index() {
         session.clear();
         render();
     }
 
+    /**
+     * Autentificador
+     * @param usuario
+     * @param password
+     */
     public static void login(String usuario, String password) {
 
         validation.required(usuario).message("Usuario Requerido");

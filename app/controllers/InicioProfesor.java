@@ -5,12 +5,17 @@ import play.mvc.Controller;
 import play.mvc.With;
 
 /**
- * Created by claudio on 07-09-14.
+ * @author Claudio Acuña
+ *
  */
 @With(Autenticar.class)
-public class InicioProfesor extends Controller{
+public class InicioProfesor extends Controller {
 
-    public static void index(Persona persona){
+    /**
+     * Funcion que renderisa la pagina principal del profesor
+     * @param persona
+     */
+    public static void index(Persona persona) {
 
         render(persona);
     }
