@@ -8,5 +8,6 @@ public class TipoUsuariosDTO {
     public static final String ADMIN = "admin";
     public static final String USUARIO = "usuario";
     public static final String PROFESOR = "profesor";
+    public static final String ADMINISTRATIVO = "administrativo";
 
 }

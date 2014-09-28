@@ -51,6 +51,12 @@ public class Inicio extends Controller {
                 InicioProfesor.index(login);
             }
 
+            if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+                session.put("user",usuario);
+                session.put("tipo",login.tipoUsuario.tipoUsuario);
+                InicioAdministrativo.index(login);
+            }
+
         }else {
            String error = "No se Encuentra el usuario";
            flash("error",error);
