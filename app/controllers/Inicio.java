@@ -43,6 +43,7 @@ public class Inicio extends Controller {
            String error = "No se Encuentra el usuario";
            flash("error",error);
            renderTemplate("@index",error);
+
         }
 
     }

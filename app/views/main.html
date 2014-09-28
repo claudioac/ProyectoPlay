@@ -51,7 +51,7 @@
             <strong>#{error 'password' /}</strong>
         </div>
     #{/ifErrors}
-    #{if 'error'}
+    #{if error!= null}
         <div class="alert alert-danger small alert-dismissible text-center" role="alert">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
                     class="sr-only">Close</span></button>
@@ -76,7 +76,6 @@
             placement: "bottom",
             toggle: "tooltip"
         });
-
 
     });
 

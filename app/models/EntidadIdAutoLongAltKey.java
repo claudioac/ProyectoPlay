@@ -10,7 +10,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class EntidadIdAutoLongAltKey extends GenericModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "idAutonGen")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "idAutonGen")
     public Long id;
 
     @Column(unique = true)
