@@ -7,6 +7,7 @@
     <!--Bootstrap Css-->
 
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/css/bootstrap.min.css'}"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/css/paginaPrincipal.css'}"/>
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/css/font-awesome.min.css'}"/>
     <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
 #{get 'moreStyles' /}
@@ -20,6 +21,7 @@
 
 <body>
 <!-- Fixed navbar -->
+
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 
     <div class="container">
@@ -30,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">GYM</a>
+            <a class="navbar-brand" href="#">Planet Gym</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -43,7 +45,7 @@
         </div>
     </div>
 </div>
-<div class="container" style="margin-top: 70px;">
+<div class="container" id="paginaPrincipal" style="margin-top: 70px;">
     #{ifErrors }
         <div class="alert alert-danger small alert-dismissible text-center"  role="alert">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -63,13 +65,11 @@
 
 </div>
 
-<div class="text-center container">
-    <br/>
-    <hr/>
-#{Footer/}
-</div>
-
 #{Login /}
+<footer class="text-center" id="footer">
+    <br/>
+#{Footer/}
+</footer>
 <script type="text/javascript">
     $(function () {
         $(".help").tooltip({

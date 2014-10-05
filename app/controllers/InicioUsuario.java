@@ -15,7 +15,6 @@ public class InicioUsuario extends Controller{
      * @param persona
      */
     public static void indexUsuario(Persona persona){
-        renderArgs.put("persona",persona);
-        render();
+        render(persona);
     }
 }
