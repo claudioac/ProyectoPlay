@@ -1,10 +1,12 @@
 package controllers.cruds;
 
 import controllers.CRUD;
+import controllers.Secure;
 import models.Comuna;
+import play.mvc.With;
 
 /**
- * Created by claudio on 08-09-14.
+ * @author Claudio Acuña
  */
 @CRUD.For(Comuna.class)
 public class Comunas extends CRUD {

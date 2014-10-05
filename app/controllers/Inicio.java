@@ -25,8 +25,8 @@ public class Inicio extends Controller {
      */
     public static void login(String usuario, String password) {
 
-        validation.required(usuario).message("Usuario Requerido");
-        validation.required(password).message("Password Requerida");
+        validation.required(usuario).message("validation.userRequired");
+        validation.required(password).message("validation.passwordRequired");
 
         if (validation.hasErrors()){
             render("@Index");

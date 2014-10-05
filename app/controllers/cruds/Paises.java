@@ -1,11 +1,14 @@
 package controllers.cruds;
 
 import controllers.CRUD;
+import controllers.Secure;
 import models.Pais;
+import play.mvc.With;
 
 /**
- * Created by claudio on 08-09-14.
+ * @author Claudio Acuña
  */
+
 @CRUD.For(Pais.class)
 public class Paises extends CRUD {
 }

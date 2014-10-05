@@ -1,10 +1,12 @@
 package controllers.cruds;
 
 import controllers.CRUD;
+import controllers.Secure;
 import models.TipoUsuario;
+import play.mvc.With;
 
 /**
- * Created by claudio on 07-09-14.
+ * @author Claudio Acuña
  */
 @CRUD.For(TipoUsuario.class)
 public class TipoUsuarios extends CRUD {
