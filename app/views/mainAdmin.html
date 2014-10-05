@@ -34,27 +34,22 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Inicio</a></li>
-                <li><a href="#about">Clientes</a></li>
-                <li><a href="#contact">Matriculas</a></li>
-                <li><a href="#contact">Clases</a></li>
-                <li><a href="#contact">Mensualidad</a></li>
+                <li class="active"><a href="#"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
+                <li><a href="#about"><i class="fa fa-group"></i>&nbsp;Clientes</a></li>
+                <li><a href="#contact"><i class="fa fa-bookmark-o"></i>&nbsp;Matriculas</a></li>
+                <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
+                <li><a href="#contact"><i class="fa fa-money"></i>&nbsp;Mensualidad</a></li>
+                <li><a href="#contact"><i class="fa fa-mortar-board"></i>&nbsp;Profesores</a></li>
             </ul>
-            <button type="button" class="btn btn-danger navbar-btn navbar-right" id="cerrarSession">Cerrar Sessión</button>
+            <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
-            <p class="navbar-text navbar-right">Bienvenido: ${persona.nombres}</p>
+            <p class="navbar-text navbar-right"><i class="fa fa-user"></i>&nbsp; ${persona.nombres}</p>
         </div>
     </div>
 </div>
 <div class="container" style="margin-top: 70px;">
-    <div class="col-sm-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"><i class="fa fa-home fa-2x"></i> Inicio</a></li>
-        </ul>
-    </div>
-    <div class="col-sm-10">
-    #{doLayout /}
-    </div>
+
+#{doLayout /}
 </div>
 
 <footer class="text-center" id="footer">
