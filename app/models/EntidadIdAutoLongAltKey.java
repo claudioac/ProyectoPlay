@@ -19,18 +19,11 @@ public abstract class EntidadIdAutoLongAltKey extends GenericModel {
     public Long id;
 
     @Column(unique = true)
-    protected String altKey;
+    public String altKey;
 
-    public String getAltKey() {
-        return altKey;
-    }
-
-    public void setAltKey(String altKey) {
-        this.altKey = altKey;
-    }
 
     @PrePersist
-    protected void prePersist() {
-        setAltKey(UUID.randomUUID().toString());
+    public void prePersist() {
+        altKey = (UUID.randomUUID().toString());
     }
 }

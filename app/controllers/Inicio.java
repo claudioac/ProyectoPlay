@@ -37,7 +37,7 @@ public class Inicio extends Controller {
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)) {
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioAdmin.index(login);
+                InicioAdmin.index(login.altKey);
             }
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.USUARIO)){
                 session.put("user",usuario);

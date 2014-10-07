@@ -57,5 +57,7 @@ public class Persona extends EntidadIdAutoLongAltKey {
         return find("usuario",Usuario).first();
     }
 
-
+    public static Persona findPersonabyAltKey(String altKey){
+        return find("altKey",altKey).first();
+    }
 }
