@@ -12,9 +12,10 @@ public class InicioUsuario extends Controller{
 
     /**
      * Funcion que renderisa la página principal del usuario.
-     * @param persona
+     * @param altKey
      */
-    public static void indexUsuario(Persona persona){
+    public static void indexUsuario(String altKey){
+        Persona persona = Persona.findPersonabyAltKey(altKey);
         render(persona);
     }
 }

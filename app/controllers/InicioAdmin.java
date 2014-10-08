@@ -18,6 +18,7 @@ public class InicioAdmin extends Controller {
      *
      */
     public static void index(String altKey){
+
         Persona persona = Persona.findPersonabyAltKey(altKey);
         render(persona);
     }

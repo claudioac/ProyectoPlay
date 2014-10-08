@@ -4,10 +4,10 @@
 
 # Home page
 GET     /                                      Inicio.index
-GET     /usuario                               InicioUsuario.indexUsuario
+GET     /usuario/{altKey}                      InicioUsuario.indexUsuario
 GET     /administrador/{altKey}                InicioAdmin.index
-GET     /administrativo                        InicioAdministrativo.index
-GET     /profesor                              InicioProfesor.index
+GET     /administrativo/{altKey}               InicioAdministrativo.index
+GET     /profesor/{altKey}                     InicioProfesor.index
 POST    /login                                 Inicio.login
 # Ignore favicon requests
 GET     /favicon.ico                            404
