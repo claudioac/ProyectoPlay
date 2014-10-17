@@ -5,6 +5,7 @@ import play.db.jpa.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -59,5 +60,9 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public static Persona findPersonabyAltKey(String altKey){
         return find("altKey",altKey).first();
+    }
+
+    public static List<Persona> getAllPersonas(){
+        return findAll();
     }
 }

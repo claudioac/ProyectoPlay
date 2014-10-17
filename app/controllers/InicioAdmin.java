@@ -5,6 +5,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,5 +22,10 @@ public class InicioAdmin extends Controller {
 
         Persona persona = Persona.findPersonabyAltKey(altKey);
         render(persona);
+    }
+
+    public static void getPersona(){
+        List<Persona> personas = Persona.getAllPersonas();
+        renderJSON(personas);
     }
 }

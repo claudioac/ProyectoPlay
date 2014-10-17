@@ -6,6 +6,7 @@
 GET     /                                      Inicio.index
 GET     /usuario/{altKey}                      InicioUsuario.indexUsuario
 GET     /administrador/{altKey}                InicioAdmin.index
+GET     /administrador/{altKey}/getPersona                            InicioAdmin.getPersona
 GET     /administrativo/{altKey}               InicioAdministrativo.index
 GET     /profesor/{altKey}                     InicioProfesor.index
 POST    /login                                 Inicio.login

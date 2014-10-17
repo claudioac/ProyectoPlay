@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="MyApp" >
 <head>
     <title>#{get 'title' /}</title>
     <meta charset="${_response_encoding}">
@@ -15,6 +15,8 @@
     <script src="@{'/public/javascripts/jquery-1.11.0.min.js'}" type="text/javascript"
             charset="${_response_encoding}"></script>
     <script type="text/javascript" src="@{'/public/javascripts/bootstrap.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/angular/angular.min.js'}"></script>
+    <script type="text/javascript" src="@{'/public/angular/angular-route.min.js'}"></script>
 #{get 'moreScripts' /}
 </head>
 
@@ -43,7 +45,9 @@
             </ul>
             <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
+*{
             <p class="navbar-text navbar-right" ><i class="fa fa-user"></i>&nbsp;${persona.nombres}</p>
+}*
         </div>
     </div>
 </div>
