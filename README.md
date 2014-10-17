@@ -1,5 +1,5 @@
 
-Proyecto Gimansio
+Proyecto Gimnasio
 ============
 
 Herramientas a Utilizar
