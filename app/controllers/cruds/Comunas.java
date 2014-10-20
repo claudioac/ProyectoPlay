@@ -8,7 +8,6 @@ import play.mvc.With;
 /**
  * @author Claudio Acuña
  */
-@With(Secure.class)
 @CRUD.For(Comuna.class)
 public class Comunas extends CRUD {
 }

@@ -26,7 +26,7 @@
 
             <br/>
             <br/>
-            <table class="table table-responsive">
+            <table class="table table-responsive" id="personas" style="display: none;">
                 <tr>
                     <th>Nombres</th>
                     <th>Apellido Paterno</th>
@@ -54,6 +54,7 @@
         $scope.buscar = function(){
             $http.get('/administrador/{altKey}/getPersona').success(function(persona){
                 $scope.personas = persona;
+                $("#personas").show();
                 console.log(persona);
             });
         }

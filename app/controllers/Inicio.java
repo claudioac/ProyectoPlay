@@ -34,7 +34,7 @@ public class Inicio extends Controller {
 
         Persona login = Persona.checkUsuario(usuario);
         if (login != null && login.password.equals(password)) {
-            if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)) {
+            if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)){
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
                 InicioAdmin.index(login.altKey);
