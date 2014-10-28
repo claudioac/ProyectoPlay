@@ -24,8 +24,13 @@ public class InicioAdmin extends Controller {
         render(persona);
     }
 
-    public static void getPersona(){
+    public static void getPersonas(){
         List<Persona> personas = Persona.getAllPersonas();
         renderJSON(personas);
+    }
+
+    public static void getPersona(String rut){
+        Persona persona = Persona.findPersonaByRut(rut);
+        renderJSON(persona);
     }
 }

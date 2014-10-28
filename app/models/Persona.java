@@ -62,6 +62,10 @@ public class Persona extends EntidadIdAutoLongAltKey {
         return find("altKey",altKey).first();
     }
 
+    public static Persona findPersonaByRut(String rut){
+        return find("rut",rut).first();
+    }
+
     public static List<Persona> getAllPersonas(){
         return findAll();
     }
