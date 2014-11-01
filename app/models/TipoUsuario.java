@@ -19,6 +19,14 @@ public class TipoUsuario extends EntidadIdAutoLongAltKey {
     @Required
     public String tipoUsuario;
 
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public String toString() {
         return tipoUsuario;
