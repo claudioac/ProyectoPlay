@@ -1,6 +1,8 @@
 package models;
 
+import controllers.variblesEstaticas.TipoUsuariosDTO;
 import play.data.validation.Required;
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
@@ -53,6 +55,11 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     @ManyToOne
     public TipoUsuario tipoUsuario;
+
+    /**
+     * Setter y Getters de atributos
+     * @return
+     */
 
     public String getNombres() {
         return nombres;
@@ -174,6 +181,11 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.tipoUsuario = tipoUsuario;
     }
 
+    /**
+     * Funciones JPA
+     */
+
+
     public static Persona checkUsuario(String Usuario){
         return find("usuario",Usuario).first();
     }
@@ -188,5 +200,13 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public static List<Persona> getAllPersonas(){
         return findAll();
+    }
+
+    public static List<Persona> getAllClientes(){
+        return JPA.em().createQuery("Select p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdUsuario).getResultList();
+    }
+
+    public static List<Persona> getAllProfesores() {
+        return JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id =?1").setParameter(1,TipoUsuariosDTO.IdProfesor).getResultList();
     }
 }

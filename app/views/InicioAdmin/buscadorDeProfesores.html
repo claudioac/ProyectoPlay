@@ -1,0 +1,44 @@
+<h3>Buscador de Profesores</h3>
+<br/>
+<div class="row" ng-controller="buscadorDeProfesores">
+    <form>
+        <div class="col-lg-3" >
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control"/>
+              <span class="input-group-btn" >
+             <input type="submit" class="btn btn-default" ng-click="buscar()" value="Buscar"/>
+             </span>
+            </div>
+        </div>
+    </form>
+
+    <br/>
+    <br/>
+    <table class="table table-responsive" id="profesores" style="display: none;">
+        <tr>
+            <th>Nombres</th>
+            <th>Apellido Paterno</th>
+            <th>Apellido Materno</th>
+            <th>Rut</th>
+        </tr>
+        <tr ng-repeat="per in profesores">
+            <td>{{per.nombres}}</td>
+            <td>{{per.apellidoPaterno}}</td>
+            <td>{{per.apellidoMaterno}}</td>
+            <td>{{per.rut}}</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    app.controller("buscadorDeProfesores", function($scope, $http) {
+        $scope.buscar = function(){
+            $http.get('/buscar/getProfesores').success(function(profesores){
+                $scope.profesores = profesores;
+                $("#profesores").show();
+                //console.log(profesores);
+            });
+        }
+    });
+
+</script>

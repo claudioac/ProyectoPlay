@@ -1,6 +1,9 @@
 package controllers;
 
+import controllers.cruds.TipoUsuarios;
+import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.Persona;
+import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -27,6 +30,16 @@ public class InicioAdmin extends Controller {
     public static void getPersonas(){
         List<Persona> personas = Persona.getAllPersonas();
         renderJSON(personas);
+    }
+
+    public static void getClientes(){
+        List<Persona>  clientes = Persona.getAllClientes();
+        renderJSON(clientes);
+    }
+
+    public static void getProfesores(){
+        List<Persona> profesores = Persona.getAllProfesores();
+        renderJSON(profesores);
     }
 
     public static void getPersona(String rut){
