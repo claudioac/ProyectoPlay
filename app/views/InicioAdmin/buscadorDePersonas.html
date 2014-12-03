@@ -1,41 +1,50 @@
 <h3>Buscador de Personas</h3>
 <br/>
-<div class="row"  ng-controller="PostsCtrl">
+<div class="row" ng-controller="PostsCtrl">
+    <form class="form-horizontal">
     <form>
-        <div class="col-lg-3" >
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control"/>
-              <span class="input-group-btn" >
+        <div class="input-group custom-search-form col-sm-3">
+            <input type="text"  class="form-control"/>
+              <span class="input-group-btn">
              <input type="submit" class="btn btn-default" ng-click="buscar()" value="Buscar"/>
              </span>
-            </div>
         </div>
     </form>
+    <br/>
+    <div id="personas" style="display: none;">
+        <table ng-table="buscadorPersonas" class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th colspan="4" class="text-right" >
+                    Filtrar:&nbsp;<input type="text" ng-model="buscador"/>
+                </th>
+            </tr>
+            <tr class="active">
+                <th>Nombres</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Rut</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="per in personas | filter:buscador">
+                <td>{{per.nombres}}</td>
+                <td>{{per.apellidoPaterno}}</td>
+                <td>{{per.apellidoMaterno}}</td>
+                <td>{{per.rut}}</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <br/>
-    <br/>
-    <table class="table table-responsive" id="personas" style="display: none;">
-        <tr>
-            <th>Nombres</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>Rut</th>
-        </tr>
-        <tr ng-repeat="per in personas">
-            <td>{{per.nombres}}</td>
-            <td>{{per.apellidoPaterno}}</td>
-            <td>{{per.apellidoMaterno}}</td>
-            <td>{{per.rut}}</td>
-        </tr>
-    </table>
+    </div>
 </div>
 
 <script type="text/javascript">
 
-    var app = angular.module("MyApp", []);
-    app.controller("PostsCtrl", function($scope, $http) {
-        $scope.buscar = function(){
-            $http.get('/administrador/{altKey}/getPersonas').success(function(persona){
+    var app = angular.module("admin",[]);
+    app.controller("PostsCtrl", function ($scope, $http) {
+        $scope.buscar = function () {
+            $http.get('/administrador/{altKey}/getPersonas').success(function (persona) {
                 $scope.personas = persona;
                 $("#personas").show();
                 //console.log(persona);

@@ -1,24 +1,8 @@
 <!DOCTYPE html>
 
-<html ng-app="MyApp" >
+<html ng-app="admin" >
 <head>
-    <title>#{get 'title' /}</title>
-    <meta charset="${_response_encoding}">
-    <!--Bootstrap Css-->
-
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/css/bootstrap.min.css'}"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/css/font-awesome.min.css'}"/>
-    <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
-#{get 'moreStyles' /}
-    <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-    <!-- JavaScript Bootstrap-->
-    <script src="@{'/public/javascripts/jquery-1.11.0.min.js'}" type="text/javascript"
-            charset="${_response_encoding}"></script>
-    <script type="text/javascript" src="@{'/public/javascripts/bootstrap.min.js'}"></script>
-    <script type="text/javascript" src="@{'/public/angular/angular.min.js'}"></script>
-    <script type="text/javascript" src="@{'/public/angular/angular-route.min.js'}"></script>
-#{get 'moreScripts' /}
-
+ #{Librerias/}
 </head>
 
 
@@ -46,9 +30,7 @@
             </ul>
             <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
-*{
             <p class="navbar-text navbar-right" ><i class="fa fa-user"></i>&nbsp;${persona.nombres}</p>
-}*
         </div>
     </div>
 </div>

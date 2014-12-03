@@ -33,7 +33,7 @@ public class Inicio extends Controller {
         }
 
         Persona login = Persona.checkUsuario(usuario);
-        if (login != null && login.password.equals(password)) {
+        if (login != null && login.usuario.getPassword().equals(password)) {
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)){
                 session.put("user",usuario);
                 session.put("tipo",login.tipoUsuario.tipoUsuario);

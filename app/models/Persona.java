@@ -44,14 +44,8 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public String celular;
 
-    public String email;
-
-
-    @Required
-    public String usuario;
-
-    @Required
-    public String password;
+    @OneToOne
+    public Usuario usuario;
 
     @ManyToOne
     public TipoUsuario tipoUsuario;
@@ -149,29 +143,6 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.celular = celular;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public TipoUsuario getTipoUsuario() {
         return tipoUsuario;
@@ -184,10 +155,9 @@ public class Persona extends EntidadIdAutoLongAltKey {
     /**
      * Funciones JPA
      */
-
-
     public static Persona checkUsuario(String Usuario){
-        return find("usuario",Usuario).first();
+          Persona usuario = JPA.em().createQuery("Select p from Persona p where p.usuario.usuario=?1",Persona.class).setParameter(1,Usuario).getSingleResult();
+        return usuario;
     }
 
     public static Persona findPersonabyAltKey(String altKey){
