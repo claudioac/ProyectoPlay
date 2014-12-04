@@ -11,45 +11,50 @@
         </div>
     </form>
     <br/>
-    <div id="personas" style="display: none;">
-        <table ng-table="buscadorPersonas" class="table table-hover table-bordered">
-            <thead>
-            <tr>
-                <th colspan="4" class="text-right" >
-                    Filtrar:&nbsp;<input type="text" ng-model="buscador"/>
-                </th>
-            </tr>
-            <tr class="active">
-                <th>Nombres</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Rut</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="per in personas | filter:buscador">
-                <td>{{per.nombres}}</td>
-                <td>{{per.apellidoPaterno}}</td>
-                <td>{{per.apellidoMaterno}}</td>
-                <td>{{per.rut}}</td>
-            </tr>
-            </tbody>
-        </table>
+        <div id="personas" style="display: none;">
+            <table ng-table="tablaPersonas" class="table table-hover table-bordered">
+                <tr ng-repeat="per in $data">
+                    <td data-title="'Nombres'" sortable="'nombres'">{{per.nombres}}</td>
+                    <td data-title="'Apellido Paterno'">{{per.apellidoPaterno}}</td>
+                    <td data-title="'Apellido Materno'">{{per.apellidoMaterno}}</td>
+                    <td data-title="'rut'" sortable="'rut'">{{per.rut}}</td>
+                </tr>
+            </table>
+        </div>
 
-    </div>
 </div>
 
 <script type="text/javascript">
 
-    var app = angular.module("admin",[]);
-    app.controller("PostsCtrl", function ($scope, $http) {
+    var app = angular.module("admin",['ngTable']);
+    app.controller("PostsCtrl", function ($scope, $http, ngTableParams, $filter) {
         $scope.buscar = function () {
             $http.get('/administrador/{altKey}/getPersonas').success(function (persona) {
                 $scope.personas = persona;
                 $("#personas").show();
-                //console.log(persona);
+                var data = $scope.personas
+                console.log(data.length);
+                $scope.tablaPersonas = new ngTableParams({
+                    page: 1,            // show first page
+                    count: 10,           // count per page
+                    sorting: {
+                        name: 'asc'     // initial sorting
+                    }
+                }, {
+                    total: data.length, // length of data
+                    counts: [],
+                    getData: function($defer, params) {
+                        var orderedData = params.sorting() ?
+                                $filter('orderBy')(data, params.orderBy()) :
+                                data;
+                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    }
+                });
             });
+
         }
+
+
     });
 
 </script>
