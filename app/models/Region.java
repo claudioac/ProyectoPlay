@@ -1,9 +1,11 @@
 package models;
 
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  *@author Claudio Acuña
@@ -68,5 +70,10 @@ public class Region extends Model {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    public static List<Region> getAllRegiones() {
+        List<Region> regionesList = JPA.em().createQuery("SELECT r from Region r order by r.id",Region.class).getResultList();
+        return regionesList;
     }
 }

@@ -72,7 +72,6 @@
 
 <script type="text/javascript">
 
-    var app = angular.module("admin", ['ngTable']);
     app.controller("PostsCtrl", function ($scope, $http, ngTableParams, $filter) {
         $scope.buscar = function () {
             $http.get('/administrador/{altKey}/getPersonas').success(function (persona) {

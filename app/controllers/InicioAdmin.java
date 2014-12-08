@@ -3,6 +3,7 @@ package controllers;
 import controllers.cruds.TipoUsuarios;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.Persona;
+import models.Region;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -25,6 +26,11 @@ public class InicioAdmin extends Controller {
 
         Persona persona = Persona.findPersonabyAltKey(altKey);
         render(persona);
+    }
+
+    public static void clientes(){
+        List<Region> regiones = Region.getAllRegiones();
+        render(regiones);
     }
 
     public static void getPersonas(){
