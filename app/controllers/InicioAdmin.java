@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.cruds.TipoUsuarios;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
+import models.Comuna;
 import models.Persona;
 import models.Provincia;
 import models.Region;
@@ -56,5 +57,10 @@ public class InicioAdmin extends Controller {
     public static void getProvincias(Long idRegion) {
         List<Provincia> provincias = Provincia.getAllProvincias(idRegion);
         renderJSON(provincias);
+    }
+
+    public static void getComunas(Long idProvincia){
+        List<Comuna> comunas = Comuna.getAllComunas(idProvincia);
+        renderJSON(comunas);
     }
 }

@@ -30,6 +30,10 @@ public class Persona extends EntidadIdAutoLongAltKey {
     @Temporal(TemporalType.TIMESTAMP)
     public Date fechaNacimiento;
 
+    /**
+     * Genero 0.- Masculino
+     *        1.- Femenino
+     */
     public int genero;
 
     public String direccion;

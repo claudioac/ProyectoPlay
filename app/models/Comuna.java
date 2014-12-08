@@ -1,9 +1,11 @@
 package models;
 
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  *@author Claudio Acuña
@@ -37,5 +39,10 @@ public class Comuna extends Model {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    public static List<Comuna> getAllComunas(Long idProvincia) {
+        List<Comuna> comunaList = JPA.em().createQuery("Select c from Comuna c where c.provincia.id=?1 order by c.id",Comuna.class).setParameter(1,idProvincia).getResultList();
+        return comunaList;
     }
 }

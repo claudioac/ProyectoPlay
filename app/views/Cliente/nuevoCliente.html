@@ -94,8 +94,7 @@
 
                 <div class="col-md-8">
                     <select id="comuna" name="comuna" class="form-control">
-                        <option value="1">Option one</option>
-                        <option value="2">Option two</option>
+                        <option value="">Seleccione..</option>
                     </select>
                 </div>
             </div>
@@ -159,18 +158,40 @@
     $("#region").change(function(){
        var idRegion = $("#region").val();
        var selectProvincia = $("#provincia");
-        console.log(idRegion);
+       var selectComuna = $("#comuna");
         if(idRegion == ''){
             selectProvincia.empty();
+            selectComuna.empty();
             selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
         }
         $.ajax({
             url: "provincias/"+idRegion,
             method: "GET",
             success: function(provincias){
                 selectProvincia.empty();
+                selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
                 $.each(provincias,function(k,value){
                     selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
+                });
+            }
+        });
+    });
+
+    $("#provincia").change(function(){
+        var idProvincia = $("#provincia").val();
+        var selectComuna = $("#comuna");
+        if(idProvincia == ''){
+            selectComuna.empty();
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "comunas/"+idProvincia,
+            method: "GET",
+            success: function(comunas){
+                selectComuna.empty();
+                $.each(comunas,function(k,value){
+                    selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
                 });
             }
         });
