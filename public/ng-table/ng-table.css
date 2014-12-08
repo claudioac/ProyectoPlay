@@ -75,6 +75,9 @@
   -moz-opacity: 0.6;
   opacity: 0.6;
 }
+.ng-table th.filter{
+    background-color: #ffffff;
+}
 .ng-table th.filter .input-filter {
   margin: 0;
   display: block;

@@ -1,44 +1,112 @@
-<h3>Buscador de Clientes</h3>
-<br/>
 <div class="row" ng-controller="clientes">
-    <form>
-        <div class="col-lg-3" >
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control"/>
-              <span class="input-group-btn" >
-             <input type="submit" class="btn btn-default" ng-click="buscar()" value="Buscar"/>
-             </span>
+    <form class="form-horizontal well">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Buscador de Clientes</legend>
+            <!-- Multiple Radios -->
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="radios">Sexo</label>
+
+                    <div class="col-md-4">
+                        <div class="radio">
+                            <label for="radios-0">
+                                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label for="radios-1">
+                                <input type="radio" name="radios" id="radios-1" value="2">
+                                Feminino
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Select Basic -->
+                <div class="form-group col-md-6 col-md-pull-1">
+                    <label class="col-md-4 control-label" for="selectbasic">Comuna</label>
+                    <div class="col-md-8">
+                        <select id="selectbasic" name="selectbasic" class="form-control">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                </div>
+                <!-- Button (Double) -->
+                <div class="form-group col-md-2">
+                    <button id="button1id" name="button1id" class="btn btn-success" ng-click="buscar()">Buscar</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+    <br/>
+    <div id="clientes" style="display: none;">
+        <div class="row">
+            <div class="col-md-9"></div>
+            <div class="input-group col-md-3">
+                <input type="text" class="form-control" placeholder="Search" ng-model="buscadorClientes" name="q">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
             </div>
         </div>
-    </form>
-
-    <br/>
-    <br/>
-    <table class="table table-responsive" id="clientes" style="display: none;">
-        <tr>
-            <th>Nombres</th>
-            <th>Apellido Paterno</th>
-            <th>Apellido Materno</th>
-            <th>Rut</th>
-        </tr>
-        <tr ng-repeat="per in clientes">
-            <td>{{per.nombres}}</td>
-            <td>{{per.apellidoPaterno}}</td>
-            <td>{{per.apellidoMaterno}}</td>
-            <td>{{per.rut}}</td>
-        </tr>
-    </table>
+        <br/>
+        <table ng-table="tablaClientes" class="table table-hover table-bordered">
+            <tr ng-repeat="per in $data">
+                <td data-title="'Nombres'"  sortable="'nombres'">{{per.nombres}}</td>
+                <td data-title="'Apellido Paterno'">{{per.apellidoPaterno}}</td>
+                <td data-title="'Apellido Materno'">{{per.apellidoMaterno}}</td>
+                <td data-title="'rut'" sortable="'rut'">{{per.rut}}</td>
+            </tr>
+        </table>
+    </div>
 </div>
-
-<script>
-    app.controller("clientes", function($scope, $http) {
+<script type="text/javascript">
+    app.controller("clientes", function($scope, $http, ngTableParams,$filter) {
         $scope.buscar = function(){
-            $http.get('/buscar/getClientes').success(function(profesores){
-                $scope.clientes = profesores;
+            $http.get('/buscar/getClientes').success(function(clientes){
+                $scope.clientes = clientes;
                 $("#clientes").show();
                 //console.log(profesores);
+                var data = $scope.clientes;
+                $scope.tablaClientes = new ngTableParams({
+                    page: 1,            // show first page
+                    count: 10,           // count per page
+                    sorting: {
+                        name: 'asc'     // initial sorting
+                    }
+                }, {
+                    total: data.length, // length of data
+                    counts: [],
+                    getData: function($defer, params) {
+                        var buscadorClientes = buscandoClientes();
+                        var orderedData = params.sorting() ?
+                                $filter('orderBy')(buscadorClientes, params.orderBy()) :
+                                data;
+                        params.total(buscadorClientes.length); // set total for recalc pagination
+                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                    },
+                    $scope: { $data: {} }
+                });
+
+                $scope.$watch("buscandoCliente", function () {
+                    $scope.tablaClientes.reload();
+                });
+
+                var buscandoClientes = function() {
+                    if($scope.buscandoCliente){
+                        return $filter('filter')(data,$scope.buscandoCliente);
+                    }
+                    return data;
+                }
             });
         }
     });
-
 </script>
