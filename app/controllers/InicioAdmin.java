@@ -3,6 +3,7 @@ package controllers;
 import controllers.cruds.TipoUsuarios;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.Persona;
+import models.Provincia;
 import models.Region;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
@@ -20,36 +21,40 @@ public class InicioAdmin extends Controller {
 
     /**
      * Funcion que renderisa el escritorio del cliente
-     *
      */
-    public static void index(String altKey){
+    public static void index(String altKey) {
 
         Persona persona = Persona.findPersonabyAltKey(altKey);
         render(persona);
     }
 
-    public static void clientes(){
+    public static void clientes() {
         List<Region> regiones = Region.getAllRegiones();
         render(regiones);
     }
 
-    public static void getPersonas(){
+    public static void getPersonas() {
         List<Persona> personas = Persona.getAllPersonas();
         renderJSON(personas);
     }
 
-    public static void getClientes(){
-        List<Persona>  clientes = Persona.getAllClientes();
+    public static void getClientes() {
+        List<Persona> clientes = Persona.getAllClientes();
         renderJSON(clientes);
     }
 
-    public static void getProfesores(){
+    public static void getProfesores() {
         List<Persona> profesores = Persona.getAllProfesores();
         renderJSON(profesores);
     }
 
-    public static void getPersona(String rut){
+    public static void getPersona(String rut) {
         Persona persona = Persona.findPersonaByRut(rut);
         renderJSON(persona);
+    }
+
+    public static void getProvincias(Long idRegion) {
+        List<Provincia> provincias = Provincia.getAllProvincias(idRegion);
+        renderJSON(provincias);
     }
 }

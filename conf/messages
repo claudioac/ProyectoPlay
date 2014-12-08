@@ -4,3 +4,5 @@
 validation.userRequired = Usuario Requerido.
 validation.passwordRequired = Password Requerido.
 validation.userNoFound = El usuario no existe
+
+nuevoCliente=¿Esta seguro de registrar ah este nuevo Cliente?
