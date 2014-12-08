@@ -43,7 +43,7 @@
 
                 <div class="col-md-8">
                     <input id="fechaNacimiento" name="fechaNacimiento" type="text" placeholder=""
-                           class="form-control input-md" >
+                           class="form-control input-md datepicker" >
 
                 </div>
             </div>
@@ -53,13 +53,13 @@
                 <div class="col-md-4">
                     <div class="radio">
                         <label for="sexo-0">
-                            <input type="radio" name="sexo" id="sexo-0" value="1" checked="checked">
+                            <input type="radio" name="sexo" id="sexo-0" value="0" checked="checked">
                             Masculino
                         </label>
                     </div>
                     <div class="radio">
                         <label for="sexo-1">
-                            <input type="radio" name="sexo" id="sexo-1" value="2">
+                            <input type="radio" name="sexo" id="sexo-1" value="1">
                             Femenino
                         </label>
                     </div>
@@ -150,6 +150,20 @@
 </form>
 #{i18n /}
 <script type="text/javascript">
+
+    $('#fechaNacimiento').datepicker({
+        endDate: "0",
+        language: 'es',
+        autoclose: true
+    });
+
+    $("#celular,#telefono").keypress(function (e){
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+    });
+
     $("#guardar").click(function(){
         bootbox.confirm(i18n('nuevoCliente'), function(result) {
         });
@@ -195,5 +209,14 @@
                 });
             }
         });
+    });
+
+    $("#rut").Rut({
+        on_error: function(){
+            bootbox.alert("Rut no valido",function(){
+                $("#rut").val('');
+            });
+        }
+
     });
 </script>

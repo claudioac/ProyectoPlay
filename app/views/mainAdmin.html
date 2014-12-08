@@ -47,6 +47,14 @@
 
 <script type="text/javascript">
     $(function () {
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            clearBtn: true,
+            language: 'es',
+            weekStart: 1,
+            keyboardNavigation: false
+        });
         $("#cerrarSession").click(function(){
             location.href ="@{Inicio.index()}";
         });
