@@ -1,6 +1,7 @@
 package models;
 
 import play.data.validation.Required;
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
@@ -30,5 +31,9 @@ public class TipoUsuario extends EntidadIdAutoLongAltKey {
     @Override
     public String toString() {
         return tipoUsuario;
+    }
+
+    public static TipoUsuario getById(Long idUsuario) {
+        return JPA.em().find(TipoUsuario.class,idUsuario);
     }
 }

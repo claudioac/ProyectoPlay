@@ -156,6 +156,14 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.tipoUsuario = tipoUsuario;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     /**
      * Funciones JPA
      */

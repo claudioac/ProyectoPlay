@@ -1,7 +1,7 @@
 package controllers.variblesEstaticas;
 
 /**
- * Created by claudio on 07-09-14.
+ * @author Claudio Acuña
  */
 public class TipoUsuariosDTO {
 

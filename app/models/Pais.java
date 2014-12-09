@@ -1,5 +1,6 @@
 package models;
 
+import play.db.jpa.JPA;
 import play.db.jpa.Model;
 
 import javax.persistence.Entity;
@@ -68,5 +69,9 @@ public class Pais extends Model {
     @Override
     public String toString() {
         return nacionalidad;
+    }
+
+    public static Pais findNacionalidadById(Long chilena) {
+        return JPA.em().find(Pais.class,chilena);
     }
 }

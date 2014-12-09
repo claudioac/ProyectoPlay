@@ -4,18 +4,25 @@
 
 # Home page
 GET     /                                                    Inicio.index
+
 GET     /usuario/{altKey}                                    InicioUsuario.indexUsuario
+
 GET     /administrador/{altKey}                              InicioAdmin.index
 GET     /administrador/{altKey}/getPersonas                  InicioAdmin.getPersonas
 GET     /admin/clientes                                      InicioAdmin.clientes
 GET     /admin/provincias/{idRegion}                         InicioAdmin.getProvincias
-GET     /admin/comunas/{idProvincia}                            InicioAdmin.getComunas
+GET     /admin/comunas/{idProvincia}                         InicioAdmin.getComunas
 GET     /buscar/getClientes                                  InicioAdmin.getClientes
 GET     /buscar/getProfesores                                InicioAdmin.getProfesores
 GET     /administrador/{altKey}/getPersona/{rut}             InicioAdmin.getPersona
+POST    /admin/registroCliente                               ClientesController.nuevoCliente
+
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
+
 GET     /profesor/{altKey}                                   InicioProfesor.index
+
 POST    /login                                               Inicio.login
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

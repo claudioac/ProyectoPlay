@@ -1,19 +1,18 @@
-<form class="form-horizontal well">
+<form class="form-horizontal well" name="cliente" id="nuevoCliente" action="@{ClientesController.nuevoCliente()}" method="post">
     <fieldset>
         <legend>Registro de Nuevo Cliente &nbsp;<i class="fa fa-user"></i></legend>
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="nombres">Nombres :</label>
                 <div class="col-md-8">
-                    <input id="nombres" name="nombres" type="text" placeholder="Nombres" class="form-control input-md"
-                           >
+                    <input id="nombres" name="cliente.nombres" type="text" placeholder="Nombres" class="form-control input-md">
                 </div>
             </div>
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="rut">R.U.T :</label>
 
                 <div class="col-md-8">
-                    <input id="rut" name="rut" type="text" placeholder="Rut" class="form-control input-md" >
+                    <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" >
                 </div>
             </div>
         </div>
@@ -22,7 +21,7 @@
                 <label class="col-md-4 control-label" for="apellidoMaterno">Apellido Materno:</label>
 
                 <div class="col-md-8">
-                    <input id="apellidoMaterno" name="apellidoMaterno" type="text" placeholder="Apellido Materno"
+                    <input id="apellidoMaterno" name="cliente.apellidoMaterno" type="text" placeholder="Apellido Materno"
                            class="form-control input-md">
 
                 </div>
@@ -31,7 +30,7 @@
                 <label class="col-md-4 control-label" for="apellidoPaterno">Apellido Paterno: </label>
 
                 <div class="col-md-8">
-                    <input id="apellidoPaterno" name="apellidoPaterno" type="text" placeholder="Apellido Paterno"
+                    <input id="apellidoPaterno" name="cliente.apellidoPaterno" type="text" placeholder="Apellido Paterno"
                            class="form-control input-md">
 
                 </div>
@@ -53,13 +52,13 @@
                 <div class="col-md-4">
                     <div class="radio">
                         <label for="sexo-0">
-                            <input type="radio" name="sexo" id="sexo-0" value="0" checked="checked">
+                            <input type="radio" name="cliente.genero" id="sexo-0" value="0" checked="checked">
                             Masculino
                         </label>
                     </div>
                     <div class="radio">
                         <label for="sexo-1">
-                            <input type="radio" name="sexo" id="sexo-1" value="1">
+                            <input type="radio" name="cliente.genero" id="sexo-1" value="1">
                             Femenino
                         </label>
                     </div>
@@ -69,7 +68,6 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="region">Region:</label>
-
                 <div class="col-md-8">
                     <select id="region" name="region" class="form-control">
                         <option value="">Seleccione..</option>
@@ -93,32 +91,40 @@
                 <label class="col-md-4 control-label" for="comuna">Comuna:</label>
 
                 <div class="col-md-8">
-                    <select id="comuna" name="comuna" class="form-control">
+                    <select id="comuna" name="cliente.comuna" class="form-control">
                         <option value="">Seleccione..</option>
                     </select>
                 </div>
             </div>
-            <div class="form-group col-md-6">
-                <label class="col-md-4 control-label" for="telefono">Telefono:</label>
-
+        </div>
+        <div class="row">
+            <div class="form-group col-md-9 col-md-pull-1">
+                <label class="col-md-4 control-label" for="direccion">Dirección:</label>
                 <div class="col-md-8">
-                    <input id="telefono" name="telefono" type="text" placeholder="Telefono" class="form-control input-md">
+                    <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control input-md">
                 </div>
+            </div>
+            <div class="col-md-3">
             </div>
         </div>
         <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="telefono">Telefono:</label>
+
+                    <div class="col-md-8">
+                        <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md">
+                    </div>
+                </div>
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="celular">Celular:</label>
 
                 <div class="col-md-8">
-                    <input id="celular" name="celular" type="text" placeholder="Celular" class="form-control input-md">
+                    <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md">
 
                 </div>
             </div>
-            <div class="col-md-6">
-            </div>
         </div>
-        <legend>Usuario/Contraseña</legend>
+        *{<legend>Usuario/Contraseña</legend>
         <div class="form-group">
             <label class="col-md-4 control-label" for="usuario">Usuario:</label>
 
@@ -133,15 +139,15 @@
             <div class="col-md-5">
                 <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md">
             </div>
-        </div>
+        </div>}*
         <div class="row">
             <div class="col-md-4">
             </div>
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-8 col-md-push-1">
                 <label class="col-md-4 control-label" for="cancelar"></label>
                 <div class="col-md-8">
-                    <button id="cancelar" name="cancelar" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Cancelar</button>
-                    <button id="guardar" name="guardar" class="btn btn-success">Guardar <i class="fa fa-check"></i></button>
+                    <button type="button" id="cancelar" name="cancelar" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Cancelar</button>
+                    <button type="submit" id="registrar" name="registrar" class="btn btn-success">Guardar <i class="fa fa-check"></i></button>
                 </div>
             </div>
         </div>
@@ -164,9 +170,14 @@
         }
     });
 
-    $("#guardar").click(function(){
-        bootbox.confirm(i18n('nuevoCliente'), function(result) {
+    $("#registrar").click(function(){
+        bootbox.confirm(i18n('nuevoCliente'),function(result){
+            if(result){
+                console.log("puta la wea");
+                $("#nuevoCliente").submit();
+            }
         });
+
     });
 
     $("#region").change(function(){
@@ -210,13 +221,12 @@
             }
         });
     });
-
     $("#rut").Rut({
         on_error: function(){
             bootbox.alert("Rut no valido",function(){
                 $("#rut").val('');
             });
         }
-
     });
+
 </script>

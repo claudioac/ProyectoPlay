@@ -45,4 +45,9 @@ public class Comuna extends Model {
         List<Comuna> comunaList = JPA.em().createQuery("Select c from Comuna c where c.provincia.id=?1 order by c.id",Comuna.class).setParameter(1,idProvincia).getResultList();
         return comunaList;
     }
+
+    public static Comuna getId(int comuna) {
+        Long idComuna = Long.valueOf(comuna);
+        return JPA.em().find(Comuna.class,idComuna);
+    }
 }
