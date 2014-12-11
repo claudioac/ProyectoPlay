@@ -5,4 +5,7 @@ validation.userRequired = Usuario Requerido.
 validation.passwordRequired = Password Requerido.
 validation.userNoFound = El usuario no existe
 
+validation.required= Campo Requerido
+validation.comuna= Necesita seleccionar al menos 1 comuna
+
 nuevoCliente=¿Esta seguro de registrar ah este nuevo Cliente?

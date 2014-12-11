@@ -5,6 +5,7 @@ import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.ClasesDTO.Cliente;
 import play.data.binding.As;
+import play.data.validation.Validation;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -17,6 +18,26 @@ import java.util.Date;
 public class ClientesController extends Controller {
 
     public static void nuevoCliente(Cliente cliente,@As("dd/MM/yyyy") Date fechaNacimiento){
+
+        Validation.required("cliente.nombres",cliente.nombres);
+        Validation.required("cliente.apellidoMaterno",cliente.apellidoMaterno);
+        Validation.required("cliente.apellidoPaterno",cliente.apellidoPaterno);
+        Validation.required("cliente.rut",cliente.rut);
+        Validation.required("cliente.celular",cliente.celular);
+        Validation.required("cliente.telefono",cliente.telefono);
+        Validation.required("cliente.genero",cliente.genero);
+        if (cliente.comuna == 0){
+            Validation.addError("cliente.comuna","validation.comuna");
+        }
+        Validation.required("cliente.direccion",cliente.direccion);
+        Validation.required("fechaNacimiento",fechaNacimiento);
+
+        if (Validation.hasErrors()){
+            params.flash();
+            Validation.keep();
+            InicioAdmin.clientes();
+        }
+
         Persona persona = new Persona();
         persona.setNombres(cliente.nombres);
         persona.setApellidoPaterno(cliente.apellidoPaterno);
