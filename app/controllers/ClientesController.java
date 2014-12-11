@@ -31,6 +31,8 @@ public class ClientesController extends Controller {
         }
         Validation.required("cliente.direccion",cliente.direccion);
         Validation.required("fechaNacimiento",fechaNacimiento);
+        Validation.required("cliente.email",cliente.email);
+        Validation.email("cliente.email",cliente.email);
 
         if (Validation.hasErrors()){
             params.flash();
@@ -38,6 +40,7 @@ public class ClientesController extends Controller {
             InicioAdmin.clientes();
         }
 
+        Usuario usuario = new Usuario();
         Persona persona = new Persona();
         persona.setNombres(cliente.nombres);
         persona.setApellidoPaterno(cliente.apellidoPaterno);
@@ -51,12 +54,9 @@ public class ClientesController extends Controller {
         persona.setComuna(Comuna.getId(cliente.comuna));
         persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
         persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));
-        persona.save();
-        Usuario usuario = new Usuario();
-        usuario.setUsuario(cliente.rut);
-        usuario.setPassword("123");
-        usuario.save();
+        usuario.setEmail(cliente.email);
         persona.setUsuario(usuario);
+        usuario.save();
         persona.save();
         redirect("/admin/clientes");
     }

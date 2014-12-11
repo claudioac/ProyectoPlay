@@ -15,4 +15,5 @@ public class Cliente {
     public String direccion;
     public String telefono;
     public String celular;
+    public String email;
 }

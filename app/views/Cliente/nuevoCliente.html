@@ -13,7 +13,7 @@
                 <label class="col-md-4 control-label" for="rut">R.U.T :</label>
 
                 <div class="col-md-8">
-                    <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" >
+                    <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" value="${flash['cliente.rut']}">
                     <strong><span class="text-danger">#{error 'cliente.rut'/}</span></strong>
                 </div>
             </div>
@@ -24,7 +24,7 @@
 
                 <div class="col-md-8">
                     <input id="apellidoMaterno" name="cliente.apellidoMaterno" type="text" placeholder="Apellido Materno"
-                           class="form-control input-md">
+                           class="form-control input-md" value="${flash['cliente.apellidoMaterno']}">
                     <strong><span class="text-danger">#{error 'cliente.apellidoMaterno'/}</span></strong>
 
                 </div>
@@ -34,7 +34,7 @@
 
                 <div class="col-md-8">
                     <input id="apellidoPaterno" name="cliente.apellidoPaterno" type="text" placeholder="Apellido Paterno"
-                           class="form-control input-md">
+                           class="form-control input-md" value="${flash['cliente.apellidoPaterno']}">
                     <strong><span class="text-danger">#{error 'cliente.apellidoPaterno'/}</span></strong>
 
                 </div>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-8">
                     <input id="fechaNacimiento" name="fechaNacimiento" type="text" placeholder=""
-                           class="form-control input-md datepicker" >
+                           class="form-control input-md datepicker" value="${flash['fechaNacimiento']}">
                     <strong><span class="text-danger">#{error 'fechaNacimiento'/}</span></strong>
                 </div>
             </div>
@@ -56,13 +56,13 @@
                 <div class="col-md-4">
                     <div class="radio">
                         <label for="sexo-0">
-                            <input type="radio" name="cliente.genero" id="sexo-0" value="0" checked="checked">
+                            <input type="radio" name="cliente.genero" id="sexo-0" value="0" checked="checked" ${flash['cliente.genero']} >
                             Masculino
                         </label>
                     </div>
                     <div class="radio">
                         <label for="sexo-1">
-                            <input type="radio" name="cliente.genero" id="sexo-1" value="1">
+                            <input type="radio" name="cliente.genero" id="sexo-1" value="1" ${flash['cliente.genero']}>
                             Femenino
                         </label>
                     </div>
@@ -74,10 +74,10 @@
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="region">Region:</label>
                 <div class="col-md-8">
-                    <select id="region" name="region" class="form-control">
+                    <select id="region" name="region" class="form-control" >
                         <option value="">Seleccione..</option>
                         #{list items:regiones, as:'region'}
-                            <option value="${region.id}">${region.nombre}</option>
+                            <option value="${region.id}" ${flash['region']}>${region.nombre}</option>
                         #{/list}
                     </select>
                 </div>
@@ -86,7 +86,7 @@
                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                 <div class="col-md-8">
                     <select id="provincia" name="provincia"  class="form-control">
-                        <option value="">Seleccione..</option>
+                        <option value="" ${flash['provincia']}>Seleccione..</option>
                     </select>
                 </div>
             </div>
@@ -97,7 +97,7 @@
 
                 <div class="col-md-8">
                     <select id="comuna" name="cliente.comuna" class="form-control">
-                        <option value="">Seleccione..</option>
+                        <option value="" ${flash['cliente.comuna']}>Seleccione..</option>
                     </select>
                     <strong><span class="text-danger">#{error 'cliente.comuna'/}</span></strong>
                 </div>
@@ -107,7 +107,7 @@
             <div class="form-group col-md-9 col-md-pull-1">
                 <label class="col-md-4 control-label" for="direccion">Dirección:</label>
                 <div class="col-md-8">
-                    <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control input-md">
+                    <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control input-md" value="${flash['cliente.direccion']}">
                     <strong><span class="text-danger">#{error 'cliente.direccion'/}</span></strong>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     <label class="col-md-4 control-label" for="telefono">Telefono:</label>
 
                     <div class="col-md-8">
-                        <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md">
+                        <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md" value="${flash['cliente.telefono']}">
                         <strong><span class="text-danger">#{error 'cliente.telefono'/}</span></strong>
                     </div>
                 </div>
@@ -127,27 +127,22 @@
                 <label class="col-md-4 control-label" for="celular">Celular:</label>
 
                 <div class="col-md-8">
-                    <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md">
+                    <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md" value="${flash['cliente.celular']}">
                     <strong><span class="text-danger">#{error 'cliente.celular'/}</span></strong>
                 </div>
             </div>
         </div>
-        *{<legend>Usuario/Contraseña</legend>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="usuario">Usuario:</label>
-
-            <div class="col-md-5">
-                <input id="usuario" name="usuario" type="text" placeholder="Usuario" class="form-control input-md">
-
+        <div class="row">
+            <div class="form-group col-md-9 col-md-pull-1">
+                <label class="col-md-4 control-label" for="email">E-mail:</label>
+                <div class="col-md-8">
+                    <input id="email" name="cliente.email" type="text" placeholder="E-mail" class="form-control input-md" value="${flash['cliente.email']}">
+                    <strong><span class="text-danger">#{error 'cliente.email'/}</span></strong>
+                </div>
+            </div>
+            <div class="col-md-3">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="password">Contraseña:</label>
-
-            <div class="col-md-5">
-                <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md">
-            </div>
-        </div>}*
         <div class="row">
             <div class="col-md-4">
             </div>

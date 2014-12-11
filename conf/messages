@@ -7,5 +7,6 @@ validation.userNoFound = El usuario no existe
 
 validation.required= Campo Requerido
 validation.comuna= Necesita seleccionar al menos 1 comuna
+validation.email= E-mail invalido.
 
 nuevoCliente=¿Esta seguro de registrar ah este nuevo Cliente?
