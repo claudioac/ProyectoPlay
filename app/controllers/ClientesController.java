@@ -30,7 +30,9 @@ public class ClientesController extends Controller {
             Validation.addError("cliente.comuna","validation.comuna");
         }
         Validation.required("cliente.direccion",cliente.direccion);
-        Validation.required("fechaNacimiento",fechaNacimiento);
+        if (fechaNacimiento == null){
+            Validation.addError("fechaNacimiento","validation.fechaRequerida");
+        }
         Validation.required("cliente.email",cliente.email);
         Validation.email("cliente.email",cliente.email);
 
@@ -58,7 +60,7 @@ public class ClientesController extends Controller {
         persona.setUsuario(usuario);
         usuario.save();
         persona.save();
-        redirect("/admin/clientes");
+        renderTemplate("InicioAdmin/Cliente/contratoCliente.html");
     }
 
 }
