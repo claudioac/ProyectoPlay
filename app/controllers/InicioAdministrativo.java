@@ -2,10 +2,12 @@ package controllers;
 
 import models.Persona;
 import play.mvc.Controller;
+import play.mvc.With;
 
 /**
  *@author Claudio Acuña
  */
+@With(AutenticarAdministracion.class)
 public class InicioAdministrativo extends Controller {
 
     /**

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * @author Claudio Acuña
  */
-@With(Autenticar.class)
+@With(AutenticarAdministracion.class)
 public class InicioAdmin extends Controller {
 
     /**

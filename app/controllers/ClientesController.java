@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  *@author Claudio Acuña
  */
-@With(Autenticar.class)
+@With(AutenticarAdministracion.class)
 public class ClientesController extends Controller {
 
     public static void nuevoCliente(Cliente cliente,@As("dd/MM/yyyy") Date fechaNacimiento){
