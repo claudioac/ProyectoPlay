@@ -679,7 +679,7 @@ INSERT INTO comuna (id,nombre,provincia_id) VALUES (346,'Vitacura',(SELECT id FR
 
 
 --Tipo de Plan
-INSERT INTO tipoplan(id, activo, nombre)VALUES (1, true, 'Plan Mensual');
-INSERT INTO tipoplan(id, activo, nombre) VALUES (2, true, 'Plan Trimestral');
-INSERT INTO tipoplan(id, activo, nombre) VALUES (3, true, 'Plan Semestral');
-INSERT INTO tipoplan(id, activo, nombre) VALUES (4, true, 'Plan Anual');
+INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (1, False, 'Couta de Inscripción', 3000, 0);
+INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (2, true, 'Plan Anual', 240000, 20000);
+INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (3, true, 'Plan Semestral', 300000, 25000);
+INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (4, true, 'Plan Trimestral', 360000, 30000);

@@ -72,11 +72,12 @@ public class ClientesController extends Controller {
     }
 
     public static void contratoCliente(Persona user){
-        List<TipoPlan> tipoDePlanes = TipoPlan.findAll();
+        List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
+        TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
         Persona persona = Persona.findById(15L);
         Date fechaActual = new Date();
         int anos = (fechaActual.getYear()-persona.fechaNacimiento.getYear());
-        renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos);
+        renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos,cuotaDeIncorporacion);
     }
 
     public static void generarContrato(){
@@ -89,6 +90,11 @@ public class ClientesController extends Controller {
         Options options = new Options();
         options.filename = "Reglamento"+".pdf";
         renderPDF(options);
+    }
+
+    public static void getValoresDePlan(Long id){
+        TipoPlan plan = TipoPlan.getValoresDePlan(id);
+        renderJSON(plan);
     }
 
 }

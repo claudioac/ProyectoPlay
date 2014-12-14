@@ -1,14 +1,17 @@
 <h2 class="text-center">Datos del Usuario</h2>
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xs-offset-0 col-sm-offset-0" >
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xs-offset-0 col-sm-offset-0">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">${persona.nombres}&nbsp;${persona.apellidoPaterno}&nbsp;${persona.apellidoMaterno}</h3>
+                    <h3 class="panel-title"><strong>${persona.nombres}&nbsp;${persona.apellidoPaterno}
+                        &nbsp;${persona.apellidoMaterno}</strong></h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+                        <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic"
+                                                                            src="@{'/public/images/photo.png'}"
+                                                                            class="img-circle"></div>
                         <div class=" col-md-9 col-lg-9 ">
                             <table class="table table-user-information">
                                 <tbody>
@@ -44,19 +47,39 @@
                                     <td><a href="mailto:${persona.usuario.email}">${persona.usuario.email}</a></td>
                                 </tr>
                                 <td>Telefonos:</td>
-                                <td>${persona.telefono}(Red Fija)<br><br>555-4567-890(Celular)
+                                <td>${persona.telefono}&nbsp;&nbsp;<i class="fa fa-phone-square help"
+                                                                      title="Red Fija"></i><br><br>${persona.celular}
+                                    &nbsp;&nbsp;<i class="fa fa-mobile-phone help" title="Celular"></i>
                                 </td>
 
                                 </tr>
                                 <tr>
                                     <th style="vertical-align: middle;"><Strong>Tipo de Plan</Strong></th>
                                     <td>
-                                    <select name="tipoDePlan" class="form-control" id="tipoDePlan">
-                                        <option value="">Seleccione...</option>
-                                       #{list items:tipoDePlanes, as:'plan'}
-                                           <option value="${plan.id}">${plan.nombre}</option>
-                                       #{/list}
-                                    </select>
+                                        <select name="tipoDePlan" id="tipoDePlan" class="form-control" id="tipoDePlan">
+                                            <option value="">Seleccione...</option>
+                                        #{list items:tipoDePlanes, as:'plan'}
+                                            <option value="${plan.id}">${plan.nombre}</option>
+                                        #{/list}
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Cuota de Incorporación</strong></th>
+                                    <td>
+                                        $&nbsp;${cuotaDeIncorporacion.valorTotalPlan}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Mensualidad</strong></th>
+                                    <td id="valorMensualidad">
+                                        0
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Costo Total de Plan</strong></th>
+                                    <td id="valorTotalPlan">
+                                        0
                                     </td>
                                 </tr>
                                 </tbody>
@@ -64,21 +87,27 @@
                         </div>
                     </div>
                     <div class="row">
-                       <div class="col-xs-9  col-lg-9" align="center">
-                       </div>
-                       <div class="col-xs-9 col-lg-3">
-                            <button class="btn btn-primary" id="reglamento">Reglamento</button>
-                            <button class="btn btn-primary" id="generarContrato">Generar Contrato</button>
-                       </div>
+                        <div class="col-xs-9  col-lg-8" align="center">
+                        </div>
+                        <div class="col-xs-9 col-lg-4">
+                            <button class="btn btn-primary help" id="reglamento"
+                                    title="Descargar Reglamento Interno del Gimnasio">Reglamento&nbsp;<i
+                                    class="fa fa-file-pdf-o"></i></button>
+                            <button class="btn btn-primary help" id="generarContrato"
+                                    title="Descargar Contrato a Firmar por el cliente">Generar Contrato&nbsp;<i
+                                    class="fa fa-file-pdf-o"></i></button>
+                        </div>
                     </div>
                     <br/>
                     <br/>
+
                     <div class="row">
-                        <div class="col-xs-9  col-lg-9" align="center">
+                        <div class="col-xs-8  col-lg-8" align="center">
                         </div>
-                        <div class="col-xs-9  col-lg-3">
-                            <button type="button" class="btn btn-danger">Cancelar</button>
-                            <button type="button" class="btn btn-success">Completar Registro</button>
+                        <div class="col-xs-4  col-lg-4">
+                            <button type="button" class="btn btn-danger" id="descartarCliente">Descartar</button>
+                            <button type="button" class="btn btn-success" id="completarRegistro">Completar Registro <i
+                                    class="fa fa-check"></i></button>
                         </div>
                     </div>
                 </div>
@@ -90,12 +119,50 @@
 
 <script type="text/javascript">
 
-    $("#generarContrato").click(function(){
+    $("#generarContrato").click(function () {
         window.open("/generarContrato");
     });
 
-    $("#reglamento").click(function(){
+    $("#reglamento").click(function () {
         window.open("/reglamento");
-    })
+    });
+
+    $("#completarRegistro").click(function () {
+        bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
+            if (result) {
+
+            }
+        });
+    });
+
+    $("#descartarCliente").click(function () {
+        bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
+            if (result) {
+
+            }
+        });
+    });
+
+    $("#tipoDePlan").change(function () {
+        var tipoDePlan = $("#tipoDePlan").val();
+        if (tipoDePlan != ""){
+            $.ajax({
+                url: "getValores/" + tipoDePlan,
+                method: "GET",
+                success: function (valores) {
+                    $("#valorMensualidad").text("$ " + valores.valorMensualidad);
+                    $("#valorTotalPlan").text("$ " + valores.valorTotalPlan);
+                },
+                error: function () {
+                    $("#valorMensualidad").text("0");
+                    $("#valorTotalPlan").text("0");
+                }
+
+            });
+        }else{
+            $("#valorMensualidad").text("0");
+            $("#valorTotalPlan").text("0");
+        }
+    });
 
 </script>

@@ -1,7 +1,11 @@
 package models;
 
+import models.ClasesDTO.TipoDePlanes;
+import play.db.jpa.JPA;
+
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
+import java.util.List;
 
 /**
  * Entidad que representa el tipo de plan contratado por el nuevo cliente y/o cliente ya registrado.
@@ -18,6 +22,10 @@ public class TipoPlan extends EntidadIdAutoLongTipos {
         return nombre;
     }
 
+    public Long valorTotalPlan;
+
+    public Long valorMensualidad;
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -25,5 +33,19 @@ public class TipoPlan extends EntidadIdAutoLongTipos {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    public static List<TipoPlan> findAllTipoDePlanActivo() {
+        return JPA.em().createQuery("select p from TipoPlan p where p.activo = true",TipoPlan.class).getResultList();
+    }
+
+    public static TipoPlan getCoutaDeIncorporacion() {
+        TipoPlan cuotaIncorporacion = JPA.em().createQuery("select p from TipoPlan p where p.id=?1",TipoPlan.class).setParameter(1,TipoDePlanes.CUOTA_DE_INCORPORACION).getSingleResult();
+        return cuotaIncorporacion;
+    }
+
+    public static TipoPlan getValoresDePlan(Long id) {
+        TipoPlan valores = JPA.em().createQuery("select p from TipoPlan p where p.id=?1",TipoPlan.class).setParameter(1,id).getSingleResult();
+        return valores;
     }
 }
