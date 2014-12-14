@@ -4,12 +4,19 @@ import controllers.variblesEstaticas.NacionalidadDTO;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.ClasesDTO.Cliente;
+import org.joda.time.Instant;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 import play.data.binding.As;
 import play.data.validation.Validation;
+import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.With;
 
 import java.util.Date;
+import java.util.List;
+
+import static play.modules.pdf.PDF.*;
 
 /**
  *@author Claudio Acuña
@@ -60,7 +67,28 @@ public class ClientesController extends Controller {
         persona.setUsuario(usuario);
         usuario.save();
         persona.save();
-        renderTemplate("InicioAdmin/Cliente/contratoCliente.html");
+        JPA.em().flush();
+        contratoCliente(persona);
+    }
+
+    public static void contratoCliente(Persona user){
+        List<TipoPlan> tipoDePlanes = TipoPlan.findAll();
+        Persona persona = Persona.findById(15L);
+        Date fechaActual = new Date();
+        int anos = (fechaActual.getYear()-persona.fechaNacimiento.getYear());
+        renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos);
+    }
+
+    public static void generarContrato(){
+        Options options = new Options();
+        options.filename = "Contrato"+".pdf";
+        renderPDF(options);
+    }
+
+    public static void reglamento(){
+        Options options = new Options();
+        options.filename = "Reglamento"+".pdf";
+        renderPDF(options);
     }
 
 }

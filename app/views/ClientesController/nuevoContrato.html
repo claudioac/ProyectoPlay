@@ -1,0 +1,101 @@
+<h2 class="text-center">Datos del Usuario</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xs-offset-0 col-sm-offset-0" >
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">${persona.nombres}&nbsp;${persona.apellidoPaterno}&nbsp;${persona.apellidoMaterno}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Rut:</td>
+                                    <td>${persona.rut}</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td>Genero:</td>
+                                    <td>
+                                    #{if persona.genero == 0}
+                                        Masculino
+                                    #{/if}
+                                    #{else }
+                                        Femenino
+                                    #{/else}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edad:</td>
+                                    <td>${anos} &nbsp;años</td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>${persona.direccion}</td>
+                                </tr>
+                                <tr>
+                                    <td>Comuna:</td>
+                                    <td>${persona.comuna.nombre}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td><a href="mailto:${persona.usuario.email}">${persona.usuario.email}</a></td>
+                                </tr>
+                                <td>Telefonos:</td>
+                                <td>${persona.telefono}(Red Fija)<br><br>555-4567-890(Celular)
+                                </td>
+
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: middle;"><Strong>Tipo de Plan</Strong></th>
+                                    <td>
+                                    <select name="tipoDePlan" class="form-control" id="tipoDePlan">
+                                        <option value="">Seleccione...</option>
+                                       #{list items:tipoDePlanes, as:'plan'}
+                                           <option value="${plan.id}">${plan.nombre}</option>
+                                       #{/list}
+                                    </select>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-xs-9  col-lg-9" align="center">
+                       </div>
+                       <div class="col-xs-9 col-lg-3">
+                            <button class="btn btn-primary" id="reglamento">Reglamento</button>
+                            <button class="btn btn-primary" id="generarContrato">Generar Contrato</button>
+                       </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-9  col-lg-9" align="center">
+                        </div>
+                        <div class="col-xs-9  col-lg-3">
+                            <button type="button" class="btn btn-danger">Cancelar</button>
+                            <button type="button" class="btn btn-success">Completar Registro</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#generarContrato").click(function(){
+        window.open("/generarContrato");
+    });
+
+    $("#reglamento").click(function(){
+        window.open("/reglamento");
+    })
+
+</script>

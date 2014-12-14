@@ -30,6 +30,9 @@ public class Persona extends EntidadIdAutoLongAltKey {
     @Temporal(TemporalType.TIMESTAMP)
     public Date fechaNacimiento;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date fechaDeIncorporacion;
+
     /**
      * Genero 0.- Masculino
      *        1.- Femenino
@@ -53,6 +56,10 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     @ManyToOne
     public TipoUsuario tipoUsuario;
+
+    @ManyToOne
+    public TipoPlan tipoDePlan;
+
 
     /**
      * Setter y Getters de atributos
@@ -162,6 +169,14 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public TipoPlan getTipoDePlan() {
+        return tipoDePlan;
+    }
+
+    public void setTipoDePlan(TipoPlan tipoDePlan) {
+        this.tipoDePlan = tipoDePlan;
     }
 
     /**

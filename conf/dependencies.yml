@@ -3,4 +3,5 @@
 require:
     - play -> crud
     - play -> secure
+    - play -> pdf 0.9
     - play
