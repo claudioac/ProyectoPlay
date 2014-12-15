@@ -98,4 +98,8 @@ public class ClientesController extends Controller {
         renderJSON(plan);
     }
 
+    public static  void completarRegistro(Long tipoDePlan){
+        List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
+    }
+
 }

@@ -131,7 +131,9 @@
     $("#completarRegistro").click(function () {
         bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
             if (result) {
-
+                var tipoDePlan = $("#tipoDePlan").val();
+                console.log(tipoDePlan);
+                $.post("/completarRegistro",{tipoDePlan : tipoDePlan});
             }
         });
     });
