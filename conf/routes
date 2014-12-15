@@ -19,7 +19,7 @@ POST    /admin/registroCliente                               ClientesController.
 GET     /contrato                                            ClientesController.contratoCliente
 GET    /generarContrato                                      ClientesController.generarContrato
 GET    /reglamento                                           ClientesController.reglamento
-GET    /getValores/{id}                              ClientesController.getValoresDePlan
+GET    /getValores/{id}                                      ClientesController.getValoresDePlan
 n
 
 

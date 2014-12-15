@@ -24,7 +24,7 @@ import static play.modules.pdf.PDF.*;
 @With(AutenticarAdministracion.class)
 public class ClientesController extends Controller {
 
-    public static void nuevoCliente(Cliente cliente,@As("dd/MM/yyyy") Date fechaNacimiento){
+    public static void nuevoCliente(Cliente cliente,@As("dd/mm/yyyy") Date fechaNacimiento){
 
         Validation.required("cliente.nombres",cliente.nombres);
         Validation.required("cliente.apellidoMaterno",cliente.apellidoMaterno);
@@ -68,13 +68,14 @@ public class ClientesController extends Controller {
         usuario.save();
         persona.save();
         JPA.em().flush();
-        contratoCliente(persona);
+        contratoCliente(persona.altKey);
     }
 
-    public static void contratoCliente(Persona user){
+    public static void contratoCliente(String altKey){
         List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
         TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
         Persona persona = Persona.findById(15L);
+        //Persona persona = Persona.findPersonabyAltKey(altKey);
         Date fechaActual = new Date();
         int anos = (fechaActual.getYear()-persona.fechaNacimiento.getYear());
         renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos,cuotaDeIncorporacion);
