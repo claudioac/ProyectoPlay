@@ -41,7 +41,7 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public String direccion;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     public Comuna comuna;
 
     @ManyToOne
@@ -56,9 +56,6 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     @ManyToOne
     public TipoUsuario tipoUsuario;
-
-    @ManyToOne
-    public TipoPlan tipoDePlan;
 
 
     /**
@@ -171,12 +168,12 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.usuario = usuario;
     }
 
-    public TipoPlan getTipoDePlan() {
-        return tipoDePlan;
+    public Date getFechaDeIncorporacion() {
+        return fechaDeIncorporacion;
     }
 
-    public void setTipoDePlan(TipoPlan tipoDePlan) {
-        this.tipoDePlan = tipoDePlan;
+    public void setFechaDeIncorporacion(Date fechaDeIncorporacion) {
+        this.fechaDeIncorporacion = fechaDeIncorporacion;
     }
 
     /**

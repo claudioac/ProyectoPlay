@@ -98,8 +98,24 @@ public class ClientesController extends Controller {
         renderJSON(plan);
     }
 
-    public static  void completarRegistro(Long tipoDePlan){
-        List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
+    public static  void completarRegistro(Long tipoDePlan, String altKeyPersona){
+        Persona persona = Persona.findPersonabyAltKey(altKeyPersona);
+        TipoPlan tipoPlan = TipoPlan.findById(tipoDePlan);
+        Date fechaIncorporacion = new Date();
+        Contrato contrato = new Contrato();
+        contrato.setPersona(persona);
+        contrato.setFechaCreacion(fechaIncorporacion);
+        contrato.setTipoPlan(tipoPlan);
+        contrato.setVigente(true);
+        contrato.save();
+        persona.setFechaDeIncorporacion(fechaIncorporacion);
+        persona.save();
+        JPA.em().flush();
+        mesualidadInicial(contrato);
+    }
+
+    private static void mesualidadInicial(Contrato contrato) {
+
     }
 
 }
