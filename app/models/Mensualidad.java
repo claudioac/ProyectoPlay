@@ -22,6 +22,8 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
     @Temporal(TemporalType.TIMESTAMP)
     public Date fechaVencimiento;
 
+    public Long montoCancelado;
+
     public Contrato getContrato() {
         return contrato;
     }
@@ -44,5 +46,13 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
 
     public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public Long getMontoCancelado() {
+        return montoCancelado;
+    }
+
+    public void setMontoCancelado(Long montoCancelado) {
+        this.montoCancelado = montoCancelado;
     }
 }

@@ -13,6 +13,7 @@ import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.With;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -115,7 +116,15 @@ public class ClientesController extends Controller {
     }
 
     private static void mesualidadInicial(Contrato contrato) {
-
+        Mensualidad mensualidad = new Mensualidad();
+        mensualidad.setContrato(contrato);
+        mensualidad.setFechaPago(contrato.getFechaCreacion());
+        Calendar vencimiento = Calendar.getInstance();
+        vencimiento.setTime(contrato.getFechaCreacion());
+        vencimiento.add(Calendar.MONTH,1);
+        mensualidad.setFechaVencimiento(vencimiento.getTime());
+        mensualidad.setMontoCancelado(contrato.getTipoPlan().getValorMensualidad());
+        mensualidad.save();
     }
 
 }

@@ -30,6 +30,22 @@ public class TipoPlan extends EntidadIdAutoLongTipos {
         this.nombre = nombre;
     }
 
+    public Long getValorTotalPlan() {
+        return valorTotalPlan;
+    }
+
+    public void setValorTotalPlan(Long valorTotalPlan) {
+        this.valorTotalPlan = valorTotalPlan;
+    }
+
+    public Long getValorMensualidad() {
+        return valorMensualidad;
+    }
+
+    public void setValorMensualidad(Long valorMensualidad) {
+        this.valorMensualidad = valorMensualidad;
+    }
+
     @Override
     public String toString() {
         return nombre;

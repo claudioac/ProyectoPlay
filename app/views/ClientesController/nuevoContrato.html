@@ -5,7 +5,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>${persona.nombres}&nbsp;${persona.apellidoPaterno}
-                        &nbsp;${persona.apellidoMaterno}</strong> <a href="" class="help pull-right" title="editar"><span class="glyphicon glyphicon-pencil"></span></a></h3>
+                        &nbsp;${persona.apellidoMaterno}</strong> <a href="#" data-toggle="modal" data-target="#editCliente" class="help pull-right" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></h3>
 
                 </div>
                 <div class="panel-body">
@@ -118,6 +118,8 @@
         </div>
     </div>
 </div>
+
+#{include 'ClientesController/fragments/editCliente.html'/}
 
 <script type="text/javascript">
 
