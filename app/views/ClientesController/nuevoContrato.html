@@ -122,9 +122,10 @@
 #{include 'ClientesController/fragments/editCliente.html'/}
 
 <script type="text/javascript">
+    var personaAltKey = $("#personaAltKey").val();
 
     $("#generarContrato").click(function () {
-        window.open("/generarContrato");
+        window.open("/generarContrato/"+personaAltKey);
     });
 
     $("#reglamento").click(function () {
@@ -135,7 +136,6 @@
         bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
             if (result) {
                 var tipoDePlan = $("#tipoDePlan").val();
-                var personaAltKey = $("#personaAltKey").val();
                 $.post("/completarRegistro",{tipoDePlan : tipoDePlan, altKeyPersona: personaAltKey});
             }
         });
@@ -174,5 +174,6 @@
             $("#valorTotalPlan").text("0");
         }
     });
+
 
 </script>

@@ -11,7 +11,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-4 control-label" for="nombres">Nombres :</label>
                                 <div class="col-md-8">
-                                    <input id="nombres" name="cliente.nombres" type="text" placeholder="Nombres" value="${flash['cliente.nombres']}" class="form-control input-md">
+                                    <input id="nombres" name="cliente.nombres" type="text" placeholder="Nombres" value="${persona.nombres}" class="form-control input-md">
                                     <strong><span class="text-danger">#{error 'cliente.nombres'/}</span></strong>
                                 </div>
                             </div>
@@ -19,7 +19,7 @@
                                 <label class="col-md-4 control-label" for="rut">R.U.T :</label>
 
                                 <div class="col-md-8">
-                                    <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" value="${flash['cliente.rut']}">
+                                    <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" value="${persona.rut}">
                                     <strong><span class="text-danger">#{error 'cliente.rut'/}</span></strong>
                                 </div>
                             </div>
@@ -30,7 +30,7 @@
 
                                 <div class="col-md-8">
                                     <input id="apellidoMaterno" name="cliente.apellidoMaterno" type="text" placeholder="Apellido Materno"
-                                           class="form-control input-md" value="${flash['cliente.apellidoMaterno']}">
+                                           class="form-control input-md" value="${persona.apellidoMaterno}">
                                     <strong><span class="text-danger">#{error 'cliente.apellidoMaterno'/}</span></strong>
 
                                 </div>
@@ -40,7 +40,7 @@
 
                                 <div class="col-md-8">
                                     <input id="apellidoPaterno" name="cliente.apellidoPaterno" type="text" placeholder="Apellido Paterno"
-                                           class="form-control input-md" value="${flash['cliente.apellidoPaterno']}">
+                                           class="form-control input-md" value="${persona.apellidoPaterno}">
                                     <strong><span class="text-danger">#{error 'cliente.apellidoPaterno'/}</span></strong>
 
                                 </div>
@@ -51,8 +51,8 @@
                                 <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento:</label>
 
                                 <div class="col-md-8">
-                                    <input id="fechaNacimiento" name="fechaNacimiento" type="text" placeholder=""
-                                           class="form-control input-md datepicker" value="${flash['fechaNacimiento']}">
+                                    <input id="fechaNacimiento1" name="fechaNacimiento" type="text" placeholder=""
+                                           class="form-control input-md" value="${persona.fechaNacimiento.format('dd/MM/yyyy','es')}">
                                     <strong><span class="text-danger">#{error 'fechaNacimiento'/}</span></strong>
                                 </div>
                             </div>
@@ -62,13 +62,13 @@
                                 <div class="col-md-4">
                                     <div class="radio">
                                         <label for="sexo-0">
-                                            <input type="radio" name="cliente.genero" id="sexo-0" value="0" checked="checked" ${flash['cliente.genero']} >
+                                            <input type="radio" name="cliente.genero" id="sexo-0" value="0" ${persona.genero == 0?"checked":""} >
                                             Masculino
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label for="sexo-1">
-                                            <input type="radio" name="cliente.genero" id="sexo-1" value="1" ${flash['cliente.genero']}>
+                                            <input type="radio" name="cliente.genero" id="sexo-1" value="1" ${persona.genero == 1?"checked":""}>
                                             Femenino
                                         </label>
                                     </div>
@@ -83,7 +83,7 @@
                                     <select id="region" name="region" class="form-control" >
                                         <option value="">Seleccione..</option>
                                     #{list items:regiones, as:'region'}
-                                        <option value="${region.id}" ${flash['region']}>${region.nombre}</option>
+                                        <option value="${region.id}">${region.nombre}</option>
                                     #{/list}
                                     </select>
                                 </div>
@@ -92,7 +92,7 @@
                                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                                 <div class="col-md-8">
                                     <select id="provincia" name="provincia"  class="form-control">
-                                        <option value="" ${flash['provincia']}>Seleccione..</option>
+                                        <option value="" >Seleccione..</option>
                                     </select>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
 
                                 <div class="col-md-8">
                                     <select id="comuna" name="cliente.comuna" class="form-control">
-                                        <option value="" ${flash['cliente.comuna']}>Seleccione..</option>
+                                        <option value="">Seleccione..</option>
                                     </select>
                                     <strong><span class="text-danger">#{error 'cliente.comuna'/}</span></strong>
                                 </div>
@@ -113,7 +113,7 @@
                             <div class="form-group col-md-12">
                                 <label class="col-md-4 control-label" for="direccion">Dirección:</label>
                                 <div class="col-md-8 col-md-pull-2">
-                                    <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control" value="${flash['cliente.direccion']}">
+                                    <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control" value="${persona.direccion}">
                                     <strong><span class="text-danger">#{error 'cliente.direccion'/}</span></strong>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
                                 <label class="col-md-4 control-label" for="telefono">Telefono:</label>
 
                                 <div class="col-md-8">
-                                    <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md" value="${flash['cliente.telefono']}">
+                                    <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md" value="${persona.telefono}">
                                     <strong><span class="text-danger">#{error 'cliente.telefono'/}</span></strong>
                                 </div>
                             </div>
@@ -133,7 +133,7 @@
                                 <label class="col-md-4 control-label" for="celular">Celular:</label>
 
                                 <div class="col-md-8">
-                                    <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md" value="${flash['cliente.celular']}">
+                                    <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md" value="${persona.celular}">
                                     <strong><span class="text-danger">#{error 'cliente.celular'/}</span></strong>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@
                             <div class="form-group col-md-12">
                                 <label class="col-md-4 control-label" for="email">E-mail:</label>
                                 <div class="col-md-8 col-md-pull-2">
-                                    <input id="email" name="cliente.email" type="text" placeholder="E-mail" class="form-control" value="${flash['cliente.email']}">
+                                    <input id="email" name="cliente.email" type="text" placeholder="E-mail" class="form-control" value="${persona.usuario.email}">
                                     <strong><span class="text-danger">#{error 'cliente.email'/}</span></strong>
                                 </div>
                             </div>
@@ -153,8 +153,67 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-success">Guardar</button>
+                <button type="button" id="guardar" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $('#fechaNacimiento1').datepicker({
+        endDate: "0",
+        language: 'es',
+        autoclose: true
+    });
+
+    $("#region").change(function(){
+        var idRegion = $("#region").val();
+        var selectProvincia = $("#provincia");
+        var selectComuna = $("#comuna");
+        if(idRegion == ''){
+            selectProvincia.empty();
+            selectComuna.empty();
+            selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "admin/provincias/"+idRegion,
+            method: "GET",
+            success: function(provincias){
+                selectProvincia.empty();
+                selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                $.each(provincias,function(k,value){
+                    selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
+                });
+            }
+        });
+    });
+
+    $("#provincia").change(function(){
+        var idProvincia = $("#provincia").val();
+        var selectComuna = $("#comuna");
+        if(idProvincia == ''){
+            selectComuna.empty();
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "admin/comunas/"+idProvincia,
+            method: "GET",
+            success: function(comunas){
+                selectComuna.empty();
+                $.each(comunas,function(k,value){
+                    selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
+                });
+            }
+        });
+    });
+    $("#rut").Rut({
+        on_error: function(){
+            bootbox.alert("Rut no valido",function(){
+                $("#rut").val('');
+            });
+        }
+    });
+
+</script>

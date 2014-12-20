@@ -75,17 +75,19 @@ public class ClientesController extends Controller {
     public static void contratoCliente(String altKey){
         List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
         TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
+        List<Region> regiones = Region.getAllRegiones();
         Persona persona = Persona.findById(15L);
         //Persona persona = Persona.findPersonabyAltKey(altKey);
         Date fechaActual = new Date();
         int anos = (fechaActual.getYear()-persona.fechaNacimiento.getYear());
-        renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos,cuotaDeIncorporacion);
+        renderTemplate("InicioAdmin/Cliente/contratoCliente.html",tipoDePlanes,persona,anos,cuotaDeIncorporacion,regiones);
     }
 
-    public static void generarContrato(){
+    public static void generarContrato(String altKey){
+        Persona persona = Persona.findPersonabyAltKey(altKey);
         Options options = new Options();
         options.filename = "Contrato"+".pdf";
-        renderPDF(options);
+        renderPDF(options,persona);
     }
 
     public static void reglamento(){
