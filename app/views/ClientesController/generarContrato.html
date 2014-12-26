@@ -20,7 +20,7 @@
 
 <p>
     El presente contrato es celebrado entre el usuario <strong>${persona.nombres}&nbsp;${persona.apellidoPaterno}
-    &nbsp;${persona.apellidoMaterno}</strong> y el gimnasio “Planet GYM”, en la que
+    &nbsp;${persona.apellidoMaterno}</strong> <strong>RUT:&nbsp;${persona.rut}</strong> y el gimnasio “Planet GYM”, en la que
     el (los) usuario(s) del gimnasio se comprometen a realizar el pago de los servicios así como el poder utilizar estas
     instalaciones en un periodo de un año, que se contará a partir de la fecha marcada en este contrato.
     La asociación con contractual de estas dos partes podrá disolverse por parte de la empresa Planet GYM, por vía
@@ -36,8 +36,8 @@
     <b>Primera.-</b> Planet GYM, pondrá a disposición de los usuarios las instalaciones, adecuándose plenamente al
     tipo de membresía elegida y al reglamento interno de esta institución deportiva.
 
-    En compensación correspondiente, el usuario pagará a Body fitness Atlacolpan, una compensación económica que será de
-    $ 520.00 pesos M/N mensual, correspondientes al tipo de membresía seleccionada y que podrán pagarse por adelantado o
+    En compensación correspondiente, el usuario pagará a Planet GYM, una compensación económica que será de
+    ${contrato.tipoPlan.valorMensualidad.formatCurrency('CLP').raw()} pesos M/N mensual, correspondientes al tipo de membresía seleccionada y que podrán pagarse por adelantado o
     mensualmente en la fecha indicada en este contrato; el usuario tendrá la posibilidad de domiciliar su pago en cuenta
     bancaria, siempre y cuando sea aceptado por la institución bancaria.
 
@@ -52,28 +52,26 @@
 <p>
     <b>Tercera.-</b> El usuario permitirá y cederá el uso de sus datos para la formación de un expediente, el cual se
     mantendrá
-    en secrecía conforme a la ley de datos públicos y permitirá que se le forme y entregue una credencial con chip que
-    llevará los datos y créditos correspondientes, abarcando los pagos y bonificaciones a que sea acreedor.
+    en secrecía conforme a la ley de datos públicos y permitirá que se le forme y entregue una credencial que
+    llevará los datos y créditos correspondientes que sea acreedor.
 </p>
 
 <p>
-    <b>Cuarto.-</b> El usuario Acepta plenamente al leer y firmar este contrato que Body fitness Atlacolpan, no
+    <b>Cuarto.-</b> El usuario Acepta plenamente al leer y firmar este contrato que Planet GYM, no
     reembolsará
     cuotas de inscripción ya pagadas en el plan mensual, y en el pago anual solo serán reembolsados los meses restantes
     menos el costo correspondiente a medio mes como compensación.
-
 </p>
 
 <p>
     <b>Quinto.-</b> Los usuarios usarán su credencial para acceder a las instalaciones y quedan conformes en que por vía
     informática se lleve registro de sus entradas y salidas así como el que los usuarios se comprometen a conducirse
     conforme al reglamento de usuarios correspondiente.
-
 </p>
 
 <p>
     <b>Sexto.-</b> En caso de pérdida de la credencial, se invalidará y se expedirá una nueva, generando un costo extra
-    correspondiente $100.00 pesos.
+    correspondiente $ 2.000 pesos.
 
 </p>
 
@@ -81,11 +79,10 @@
     <b>Séptimo.-</b> Planet Gym notificará al usuario de cualquier cambio en el contrato con cinco días
     de anticipación y sólo en este caso la dimisión por parte del usuario no generará costo alguno en caso de así
     desearla.
-
 </p>
 
 <p>
-    <b>Octavio.-</b> En caso de destrucción accidental de artículos deportivos o de las instalaciones, el costo será
+    <b>Octavo.-</b> En caso de destrucción accidental de artículos deportivos o de las instalaciones, el costo será
     absorbido
     por Planet Gym, previo examen y peritaje y en caso de destrucción dolosa y previa
     comprobación, Planet Gym no se hará cargo de los gastos y podrá en caso necesario consignar
@@ -114,17 +111,12 @@
     sabiéndose que con la compra del derecho de estacionamiento, mensualmente se paga el sueldo de los seis cuidadores.
     Los cuidadores cuentan con su correspondiente gafete y credencial con chip, el cual les da acceso a todos los
     cajones de estacionamiento, por lo que Planet Gym exige a sus usuarios que mantengan bien
-    cerrados sus vehículos para evitar inconvenientes. El Servicio de video grabación de estacionamiento lleva un costo
-    de $50.00 pesos mensuales.
-
+    cerrados sus vehículos para evitar inconvenientes.
 </p>
 
 <p>
-    <b>Décimo segunda.-</b> Si al vencimiento de la membresía el usuario no la renueva en el lapso de dos meces, en caso
-    de
-    abrirla se tendrá que realizar trámite nuevo perdiendo sus derechos acumulados, compensaciones y el cajón de
-    estacionamiento, por lo que se deberá seleccionar o asignar un nuevo cajón y se acomodará a los nuevos parámetros de
-    las membresías.
+    <b>Décimo segunda.-</b> Si al vencimiento de la membresía el usuario no la renueva en el lapso de dos semanas, en caso
+    de abrirla se tendrá que realizar trámite nuevo perdiendo sus derechos acumulados.
 
 </p>
 
@@ -136,20 +128,13 @@
 </p>
 
 <p>
-    <b>Décimo cuarta.-</b> Las partes que celebran este contrato, quedan conformes a renunciar a su derecho de a
-    someterse a
-    los tribunales de los estados del país sometiéndose exclusivamente a los del Distrito Federal.
-
-</p>
-
-<p>
-    <b>Décimo quinta.-</b> La recesión de este contrato se causará por incumplimiento de cualquiera de las clausulas
+    <b>Décimo cuarta.-</b> La recesión de este contrato se causará por incumplimiento de cualquiera de las clausulas
     establecidas o por fallas graves del reglamento.
 
 </p>
 
 <p>
-    Este contrato es celebrado el día 26 de mayo de 2014, en las instalaciones ubicadas en Avda. México #2627, Local del
+    Este contrato es celebrado el día ${fechaActual.format("dd MMMM yyyy","es")}, en las instalaciones ubicadas en Avda. México #2627, Local del
     201 al 207.
 
 </p>

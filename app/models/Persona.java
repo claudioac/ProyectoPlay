@@ -41,7 +41,7 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public String direccion;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne
     public Comuna comuna;
 
     @ManyToOne
@@ -51,7 +51,7 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public String celular;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.ALL})
     public Usuario usuario;
 
     @ManyToOne

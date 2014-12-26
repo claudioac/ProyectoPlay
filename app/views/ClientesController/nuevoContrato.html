@@ -144,6 +144,7 @@
     $("#descartarCliente").click(function () {
         bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
             if (result) {
+                $.post("/descartarRegistro",{altKeyPersona: personaAltKey});
                 console.log(usuario);
             }
         });
@@ -155,7 +156,7 @@
             $("#generarContrato, #reglamento").removeClass("disabled");
             $("#completarRegistro").removeClass("disabled");
             $.ajax({
-                url: "getValores/" + tipoDePlan,
+                url: "getValores/" + tipoDePlan + "/"+personaAltKey,
                 method: "GET",
                 success: function (valores) {
                     $("#valorMensualidad").text("$ " + valores.valorMensualidad);
