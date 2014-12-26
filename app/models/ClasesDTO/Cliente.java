@@ -10,6 +10,7 @@ public class Cliente {
     public String apellidoPaterno;
     public String apellidoMaterno;
     public String rut;
+    public String altKey;
     public int genero;
     public int comuna;
     public String direccion;

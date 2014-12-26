@@ -138,6 +138,48 @@ public class ClientesController extends Controller {
         renderTemplate("InicioAdmin/clientes.html");
     }
 
+
+    public static void editarCliente(Cliente cliente, @As("dd/mm/yyyy") Date fechaNacimiento){
+            Validation.required("cliente.nombres", cliente.nombres);
+            Validation.required("cliente.apellidoMaterno", cliente.apellidoMaterno);
+            Validation.required("cliente.apellidoPaterno", cliente.apellidoPaterno);
+            Validation.required("cliente.rut", cliente.rut);
+            Validation.required("cliente.celular", cliente.celular);
+            Validation.required("cliente.telefono", cliente.telefono);
+            Validation.required("cliente.genero", cliente.genero);
+            if (cliente.comuna == 0) {
+                Validation.addError("cliente.comuna", "validation.comuna");
+            }
+            Validation.required("cliente.direccion", cliente.direccion);
+            if (fechaNacimiento == null) {
+                Validation.addError("fechaNacimiento", "validation.fechaRequerida");
+            }
+            Validation.required("cliente.email", cliente.email);
+            Validation.email("cliente.email", cliente.email);
+
+            if (Validation.hasErrors()) {
+                params.flash();
+                Validation.keep();
+                InicioAdmin.clientes();
+            }
+            Persona persona = Persona.findPersonabyAltKey(cliente.altKey);
+            persona.setNombres(cliente.nombres);
+            persona.setApellidoPaterno(cliente.apellidoPaterno);
+            persona.setApellidoMaterno(cliente.apellidoMaterno);
+            persona.setRut(cliente.rut);
+            persona.setFechaNacimiento(fechaNacimiento);
+            persona.setTelefono(cliente.telefono);
+            persona.setCelular(cliente.celular);
+            persona.setDireccion(cliente.direccion);
+            persona.setGenero(cliente.genero);
+            persona.setComuna(Comuna.getId(cliente.comuna));
+            persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
+            persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));
+            persona.usuario.setEmail(cliente.email);
+            persona.save();
+
+    }
+
     public static void completarRegistro(Long tipoDePlan, String altKeyPersona) {
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyPersona);
         mesualidadInicial(contrato);

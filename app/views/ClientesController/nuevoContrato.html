@@ -145,7 +145,6 @@
         bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
             if (result) {
                 $.post("/descartarRegistro",{altKeyPersona: personaAltKey});
-                console.log(usuario);
             }
         });
     });
@@ -174,6 +173,18 @@
             $("#valorMensualidad").text("0");
             $("#valorTotalPlan").text("0");
         }
+    });
+
+    $("#editarCliente").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "/editarCliente",
+            data: $("#editarClienteForm").serialize(),
+            success: function(){
+                $("#editCliente").modal('toggle');
+                location.reload();
+            }
+        });
     });
 
 

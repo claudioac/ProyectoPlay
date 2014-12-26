@@ -6,7 +6,8 @@
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i>&nbsp;Editar</h4>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form action="@{ClientesController.editarCliente()}" id="editarClienteForm">
+                    <input type="hidden" value="${persona.altKey}" name="cliente.altKey"/>
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label class="col-md-4 control-label" for="nombres">Nombres :</label>
@@ -153,7 +154,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                <button type="button" id="guardar" class="btn btn-success">Guardar</button>
+                <button type="button" id="editarCliente" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </div>
@@ -215,5 +216,6 @@
             });
         }
     });
+
 
 </script>

@@ -22,6 +22,7 @@ GET    /reglamento                                           ClientesController.
 GET    /getValores/{id}/{altKey}                                      ClientesController.getValoresDePlan
 POST   /completarRegistro                                    ClientesController.completarRegistro
 POST   /descartarRegistro                                    ClientesController.descartarRegistro
+POST   /editarCliente                                        ClientesController.editarCliente
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 
