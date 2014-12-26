@@ -76,9 +76,9 @@ public class ClientesController extends Controller {
         List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
         TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
         List<Region> regiones = Region.getAllRegiones();
-        Persona persona = Persona.findById(20L);
+        //Persona persona = Persona.findById(20L);
         //TODO Cambiar a modo producción.
-        //Persona persona = Persona.findPersonabyAltKey(altKey);
+        Persona persona = Persona.findPersonabyAltKey(altKey);
         Date fechaActual = new Date();
         int anos = (fechaActual.getYear() - persona.fechaNacimiento.getYear());
         renderTemplate("InicioAdmin/Cliente/contratoCliente.html", tipoDePlanes, persona, anos, cuotaDeIncorporacion, regiones);
@@ -135,7 +135,9 @@ public class ClientesController extends Controller {
         }else {
             persona.delete();
         }
-        renderTemplate("InicioAdmin/clientes.html");
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/clientes.html");
+        }
     }
 
 
@@ -180,9 +182,12 @@ public class ClientesController extends Controller {
 
     }
 
-    public static void completarRegistro(Long tipoDePlan, String altKeyPersona) {
+    public static void completarRegistro(String altKeyPersona) {
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyPersona);
         mesualidadInicial(contrato);
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            redirect("/admin/clientes");
+        }
     }
 
     private static void mesualidadInicial(Contrato contrato) {
