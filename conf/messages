@@ -6,7 +6,7 @@ validation.passwordRequired = Password Requerido.
 validation.userNoFound = El usuario no existe
 
 validation.required= Campo Requerido
-validation.comuna= Necesita seleccionar al menos 1 comuna
+validation.comuna= Necesita seleccionar una comuna
 validation.email= E-mail invalido.
 validation.fechaRequerida=Necesita ingresar una fecha.
 

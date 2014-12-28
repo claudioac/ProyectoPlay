@@ -24,9 +24,9 @@ public class InicioAdmin extends Controller {
      * Funcion que renderisa el escritorio del cliente
      */
     public static void index(String altKey) {
-
+        List<Region> regiones = Region.getAllRegiones();
         Persona persona = Persona.findPersonabyAltKey(altKey);
-        render(persona);
+        render(persona,regiones);
     }
 
     public static void clientes() {
