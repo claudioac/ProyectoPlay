@@ -46,8 +46,8 @@
                                 <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento:</label>
 
                                 <div class="col-md-8">
-                                    <input id="fechaNacimiento1" name="fechaNacimiento" type="text" placeholder=""
-                                           class="form-control input-md datepicker" value="${persona.fechaNacimiento.format('dd/MM/yyyy','es')}">
+                                    <input id="fechaNacimiento1" name="fechaNacimiento" type="text" value="${persona.fechaNacimiento.format('dd/MM/yyyy','es')}"
+                                           class="form-control input-md datepicker" >
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -149,62 +149,68 @@
 
 <script type="text/javascript">
 
-    $('#fechaNacimiento1').datepicker({
-        endDate: "0",
-        language: 'es',
-        autoclose: true
-    });
+    $(function(){
 
-    $("#region").change(function(){
-        var idRegion = $("#region").val();
-        var selectProvincia = $("#provincia");
-        var selectComuna = $("#comuna");
-        if(idRegion == ''){
-            selectProvincia.empty();
-            selectComuna.empty();
-            selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
-            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
-        }
-        $.ajax({
-            url: "admin/provincias/"+idRegion,
-            method: "GET",
-            success: function(provincias){
+        $('#fechaNacimiento1').datepicker({
+            endDate: "0",
+            language: 'es',
+            autoclose: true
+        });
+
+
+        $("#region").change(function(){
+            var idRegion = $("#region").val();
+            var selectProvincia = $("#provincia");
+            var selectComuna = $("#comuna");
+            if(idRegion == ''){
                 selectProvincia.empty();
                 selectComuna.empty();
                 selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
                 selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
-                $.each(provincias,function(k,value){
-                    selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
-                });
             }
-        });
-    });
-
-    $("#provincia").change(function(){
-        var idProvincia = $("#provincia").val();
-        var selectComuna = $("#comuna");
-        if(idProvincia == ''){
-            selectComuna.empty();
-            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
-        }
-        $.ajax({
-            url: "admin/comunas/"+idProvincia,
-            method: "GET",
-            success: function(comunas){
-                selectComuna.empty();
-                $.each(comunas,function(k,value){
-                    selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
-                });
-            }
-        });
-    });
-    $("#rut").Rut({
-        on_error: function(){
-            bootbox.alert("Rut no valido",function(){
-                $("#rut").val('');
+            $.ajax({
+                url: "/admin/provincias/"+idRegion,
+                method: "GET",
+                success: function(provincias){
+                    selectProvincia.empty();
+                    selectComuna.empty();
+                    selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                    selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+                    $.each(provincias,function(k,value){
+                        selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
+                    });
+                }
             });
-        }
-    });
+        });
+
+        $("#provincia").change(function(){
+            var idProvincia = $("#provincia").val();
+            var selectComuna = $("#comuna");
+            if(idProvincia == ''){
+                selectComuna.empty();
+                selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+            }
+            $.ajax({
+                url: "/admin/comunas/"+idProvincia,
+                method: "GET",
+                success: function(comunas){
+                    selectComuna.empty();
+                    $.each(comunas,function(k,value){
+                        selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
+                    });
+                }
+            });
+        });
+        $("#rut").Rut({
+            on_error: function(){
+                bootbox.alert("Rut no valido",function(){
+                    $("#rut").val('');
+                });
+            }
+        });
+    })
+
+
 
 
 </script>
