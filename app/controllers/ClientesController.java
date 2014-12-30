@@ -80,7 +80,7 @@ public class ClientesController extends Controller {
         usuario.save();
         persona.save();
         JPA.em().flush();
-        ok();
+        renderJSON(persona);
     }
 
     public static void contratoCliente(String altKey) {

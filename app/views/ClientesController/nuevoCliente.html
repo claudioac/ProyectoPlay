@@ -182,8 +182,7 @@
                     method: "post",
                     data: $clienteForm.serialize(),
                     success: function(resp){
-                        console.log(resp);
-                        //location.href = "/contrato/";
+                        location.href = "/contrato/"+resp.altKey;
                     },
                     error :function(resp){
                         console.log(resp);
