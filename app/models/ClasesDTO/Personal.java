@@ -11,7 +11,9 @@ public class Personal {
     public String rut;
     public String altKey;
     public int genero;
-    public int comuna;
+    public Integer region;
+    public Integer provincia;
+    public Integer comuna;
     public String direccion;
     public String telefono;
     public String celular;

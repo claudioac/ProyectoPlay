@@ -175,14 +175,14 @@
     var $clienteForm = $("#nuevoClienteForm");
     $("#registrar").click(function(){
         bootbox.confirm(i18n('nuevoCliente'),function(result){
-            $("#nuevoClienteForm ul").remove();
+            $("#nuevoClienteForm ul.errors-fields").remove();
             if(result){
                 $.ajax({
                     url : "@{ClientesController.nuevoCliente()}",
                     method: "post",
                     data: $clienteForm.serialize(),
                     success: function(resp){
-                        location.href = "/contrato/"+resp.altKey;
+                        location.href = "/contrato/"+resp;
                     },
                     error :function(resp){
                         console.log(resp);
@@ -190,7 +190,13 @@
                             $.each(resp.responseJSON.fieldErrors, function(name, errors){
                                 var $input = $(":input[name='" + name + "']", $clienteForm);
                                 $input.closest("div.form-group").addClass("has-error");
-                                $input.closest("div").append("<ul class='list-inline'><li class='text-danger'>-" + errors + "</li></ul>");
+                               var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                                $.each(errors,function(i,elem){
+                                    var $li = $("<li class='text-danger'/>");
+                                    $li.text(elem);
+                                    $ul.append($li);
+                                });
+                                $input.after($ul);
                                 console.log(errors);
                             });
                             console.log(resp.responseJSON);

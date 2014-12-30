@@ -23,7 +23,6 @@
                     <div class="col-md-8">
                         <input id="nombres" name="personal.nombres" type="text" placeholder="Nombres"
                                value="${flash['personal.nombres']}" class="form-control input-md" disabled>
-                        <strong><span class="text-danger">#{error 'personal.nombres'/}</span></strong>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -32,7 +31,6 @@
                     <div class="col-md-8">
                         <input id="rut" name="personal.rut" type="text" placeholder="Rut" class="form-control input-md "
                                value="${flash['personal.rut']}" disabled>
-                        <strong><span class="text-danger">#{error 'personal.rut'/}</span></strong>
                     </div>
                 </div>
             </div>
@@ -44,8 +42,6 @@
                         <input id="apellidoMaterno" name="personal.apellidoMaterno" type="text"
                                placeholder="Apellido Materno"
                                class="form-control input-md " value="${flash['personal.apellidoMaterno']}" disabled>
-                        <strong><span class="text-danger">#{error 'personal.apellidoMaterno'/}</span></strong>
-
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -55,8 +51,6 @@
                         <input id="apellidoPaterno" name="personal.apellidoPaterno" type="text"
                                placeholder="Apellido Paterno" disabled
                                class="form-control input-md " value="${flash['personal.apellidoPaterno']}">
-                        <strong><span class="text-danger">#{error 'personal.apellidoPaterno'/}</span></strong>
-
                     </div>
                 </div>
             </div>
@@ -67,7 +61,6 @@
                     <div class="col-md-8">
                         <input id="fechaNacimiento" name="fechaNacimiento" type="text"  disabled
                                class="form-control input-md datepicker " value="${flash['fechaNacimiento']}">
-                        <strong><span class="text-danger">#{error 'fechaNacimiento'/}</span></strong>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -88,7 +81,6 @@
                                 Femenino
                             </label>
                         </div>
-                        <strong><span class="text-danger">#{error 'personal.genero'/}</span></strong>
                     </div>
                 </div>
             </div>
@@ -97,7 +89,7 @@
                     <label class="col-md-4 control-label" for="region">Region:</label>
 
                     <div class="col-md-8">
-                        <select id="region" name="region" class="form-control" disabled >
+                        <select id="region" name="personal.region" class="form-control" disabled >
                             <option value="">Seleccione..</option>
                         #{list items:regiones, as:'region'}
                             <option value="${region.id}" ${flash['region']}>${region.nombre}</option>
@@ -109,7 +101,7 @@
                     <label class="col-md-4 control-label" for="provincia">Provincia:</label>
 
                     <div class="col-md-8">
-                        <select id="provincia" name="provincia" class="form-control" disabled>
+                        <select id="provincia" name="personal.provincia" class="form-control" disabled>
                             <option value="" ${flash['provincia']}>Seleccione..</option>
                         </select>
                     </div>
@@ -123,7 +115,6 @@
                         <select id="comuna" name="personal.comuna" class="form-control" disabled>
                             <option value="" ${flash['personal.comuna']}>Seleccione..</option>
                         </select>
-                        <strong><span class="text-danger">#{error 'personal.comuna'/}</span></strong>
                     </div>
                 </div>
             </div>
@@ -134,7 +125,6 @@
                     <div class="col-md-8">
                         <input id="direccion" name="personal.direccion" type="text" placeholder="Dirección" disabled
                                class="form-control input-md " value="${flash['personal.direccion']}">
-                        <strong><span class="text-danger">#{error 'personal.direccion'/}</span></strong>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -147,7 +137,6 @@
                     <div class="col-md-8">
                         <input id="telefono" name="personal.telefono" type="text" placeholder="Telefono" disabled
                                class="form-control input-md " value="${flash['personal.telefono']}">
-                        <strong><span class="text-danger">#{error 'personal.telefono'/}</span></strong>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -156,7 +145,6 @@
                     <div class="col-md-8">
                         <input id="celular" name="personal.celular" type="text" placeholder="Celular" disabled
                                class="form-control input-md " value="${flash['personal.celular']}">
-                        <strong><span class="text-danger">#{error 'personal.celular'/}</span></strong>
                     </div>
                 </div>
             </div>
@@ -167,7 +155,6 @@
                     <div class="col-md-8">
                         <input id="email" name="personal.email" type="text" placeholder="E-mail" disabled
                                class="form-control input-md " value="${flash['personal.email']}">
-                        <strong><span class="text-danger">#{error 'personal.email'/}</span></strong>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -216,15 +203,6 @@
         }
     });
 
-    $("#registrar").click(function () {
-        bootbox.confirm(i18n('nuevopersonal'), function (result) {
-            if (result) {
-                console.log("puta la wea");
-                $("#nuevopersonalForm").submit();
-            }
-        });
-
-    });
 
     $("#region").change(function () {
         var idRegion = $("#region").val();
@@ -273,6 +251,43 @@
                 $("#rut").val('');
             });
         }
+    });
+
+    var $clienteForm = $("#nuevopersonalForm");
+    $("#registrar").click(function(){
+        bootbox.confirm(i18n('nuevoCliente'),function(result){
+            $("#nuevopersonalForm ul.errors-fields").remove();
+            if(result){
+                $.ajax({
+                    url : "@{Personal.nuevoPersonalInterno()}",
+                    method: "post",
+                    data: $clienteForm.serialize(),
+                    success: function(resp){
+                        location.href = "/";
+                    },
+                    error :function(resp){
+                        console.log(resp);
+                        if (resp.status == 400) {
+                            $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                                var $input = $(":input[name='" + name + "']", $clienteForm);
+                                $input.closest("div.form-group").addClass("has-error");
+                                var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                                $.each(errors,function(i,elem){
+                                    var $li = $("<li class='text-danger'/>");
+                                    $li.text(elem);
+                                    $ul.append($li);
+                                });
+                                $input.after($ul);
+                                console.log(errors);
+                            });
+                            console.log(resp.responseJSON);
+                        }
+                    }
+                });
+
+            }
+        });
+
     });
 
 </script>

@@ -13,7 +13,6 @@
                                 <label class="col-md-4 control-label" for="nombres">Nombres :</label>
                                 <div class="col-md-8">
                                     <input id="nombres" name="cliente.nombres" type="text" placeholder="Nombres" value="${persona.nombres}" class="form-control input-md">
-                                    <strong><span class="text-danger">#{error 'cliente.nombres'/}</span></strong>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -21,7 +20,6 @@
 
                                 <div class="col-md-8">
                                     <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" value="${persona.rut}">
-                                    <strong><span class="text-danger">#{error 'cliente.rut'/}</span></strong>
                                 </div>
                             </div>
                         </div>
@@ -32,8 +30,6 @@
                                 <div class="col-md-8">
                                     <input id="apellidoMaterno" name="cliente.apellidoMaterno" type="text" placeholder="Apellido Materno"
                                            class="form-control input-md" value="${persona.apellidoMaterno}">
-                                    <strong><span class="text-danger">#{error 'cliente.apellidoMaterno'/}</span></strong>
-
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -42,8 +38,6 @@
                                 <div class="col-md-8">
                                     <input id="apellidoPaterno" name="cliente.apellidoPaterno" type="text" placeholder="Apellido Paterno"
                                            class="form-control input-md" value="${persona.apellidoPaterno}">
-                                    <strong><span class="text-danger">#{error 'cliente.apellidoPaterno'/}</span></strong>
-
                                 </div>
                             </div>
                         </div>
@@ -53,8 +47,7 @@
 
                                 <div class="col-md-8">
                                     <input id="fechaNacimiento1" name="fechaNacimiento" type="text" placeholder=""
-                                           class="form-control input-md" value="${persona.fechaNacimiento.format('dd/MM/yyyy','es')}">
-                                    <strong><span class="text-danger">#{error 'fechaNacimiento'/}</span></strong>
+                                           class="form-control input-md datepicker" value="${persona.fechaNacimiento.format('dd/MM/yyyy','es')}">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -73,7 +66,6 @@
                                             Femenino
                                         </label>
                                     </div>
-                                    <strong><span class="text-danger">#{error 'cliente.genero'/}</span></strong>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +98,6 @@
                                     <select id="comuna" name="cliente.comuna" class="form-control">
                                         <option value="${persona.comuna.id}">${persona.comuna.nombre}</option>
                                     </select>
-                                    <strong><span class="text-danger">#{error 'cliente.comuna'/}</span></strong>
                                 </div>
                             </div>
                         </div>
@@ -115,7 +106,6 @@
                                 <label class="col-md-4 control-label" for="direccion">Dirección:</label>
                                 <div class="col-md-8 col-md-pull-2">
                                     <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control" value="${persona.direccion}">
-                                    <strong><span class="text-danger">#{error 'cliente.direccion'/}</span></strong>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -127,7 +117,6 @@
 
                                 <div class="col-md-8">
                                     <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md" value="${persona.telefono}">
-                                    <strong><span class="text-danger">#{error 'cliente.telefono'/}</span></strong>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -135,7 +124,6 @@
 
                                 <div class="col-md-8">
                                     <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md" value="${persona.celular}">
-                                    <strong><span class="text-danger">#{error 'cliente.celular'/}</span></strong>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +132,6 @@
                                 <label class="col-md-4 control-label" for="email">E-mail:</label>
                                 <div class="col-md-8 col-md-pull-2">
                                     <input id="email" name="cliente.email" type="text" placeholder="E-mail" class="form-control" value="${persona.usuario.email}">
-                                    <strong><span class="text-danger">#{error 'cliente.email'/}</span></strong>
                                 </div>
                             </div>
                             <div class="form-group">
