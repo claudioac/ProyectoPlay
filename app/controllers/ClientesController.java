@@ -4,6 +4,7 @@ import controllers.variblesEstaticas.NacionalidadDTO;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.ClasesDTO.Cliente;
+import models.error.ErrorJSON;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
@@ -11,6 +12,7 @@ import play.data.binding.As;
 import play.data.validation.Validation;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.With;
 
 import java.util.Calendar;
@@ -34,9 +36,17 @@ public class ClientesController extends Controller {
         Validation.required("cliente.celular", cliente.celular);
         Validation.required("cliente.telefono", cliente.telefono);
         Validation.required("cliente.genero", cliente.genero);
-        if (cliente.comuna == 0) {
+
+        if(cliente.comuna == null){
             Validation.addError("cliente.comuna", "validation.comuna");
         }
+        if (cliente.region == null){
+            Validation.addError("cliente.region", "validation.region");
+        }
+        if(cliente.provincia == null){
+            Validation.addError("cliente.provincia", "validation.provincia");
+        }
+
         Validation.required("cliente.direccion", cliente.direccion);
         if (fechaNacimiento == null) {
             Validation.addError("fechaNacimiento", "validation.fechaRequerida");
@@ -45,9 +55,8 @@ public class ClientesController extends Controller {
         Validation.email("cliente.email", cliente.email);
 
         if (Validation.hasErrors()) {
-            params.flash();
-            Validation.keep();
-            InicioAdmin.clientes();
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
         }
 
         Usuario usuario = new Usuario();
@@ -61,6 +70,8 @@ public class ClientesController extends Controller {
         persona.setCelular(cliente.celular);
         persona.setDireccion(cliente.direccion);
         persona.setGenero(cliente.genero);
+        persona.setRegion(Region.getId(cliente.region));
+        persona.setProvincia(Provincia.getId(cliente.provincia));
         persona.setComuna(Comuna.getId(cliente.comuna));
         persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
         persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));
@@ -69,14 +80,14 @@ public class ClientesController extends Controller {
         usuario.save();
         persona.save();
         JPA.em().flush();
-        contratoCliente(persona.altKey);
+        ok();
     }
 
     public static void contratoCliente(String altKey) {
         List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
         TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
         List<Region> regiones = Region.getAllRegiones();
-        //Persona persona = Persona.findById(20L);
+        //Persona persona = Persona.findById(24L);
         //TODO Cambiar a modo producción.
         Persona persona = Persona.findPersonabyAltKey(altKey);
         Date fechaActual = new Date();
@@ -132,60 +143,60 @@ public class ClientesController extends Controller {
         if (contrato != null) {
             contrato.delete();
             persona.delete();
-        }else {
+        } else {
             persona.delete();
         }
-        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
             renderTemplate("InicioAdmin/clientes.html");
         }
     }
 
 
-    public static void editarCliente(Cliente cliente, @As("dd/mm/yyyy") Date fechaNacimiento){
-            Validation.required("cliente.nombres", cliente.nombres);
-            Validation.required("cliente.apellidoMaterno", cliente.apellidoMaterno);
-            Validation.required("cliente.apellidoPaterno", cliente.apellidoPaterno);
-            Validation.required("cliente.rut", cliente.rut);
-            Validation.required("cliente.celular", cliente.celular);
-            Validation.required("cliente.telefono", cliente.telefono);
-            Validation.required("cliente.genero", cliente.genero);
-            if (cliente.comuna == 0) {
-                Validation.addError("cliente.comuna", "validation.comuna");
-            }
-            Validation.required("cliente.direccion", cliente.direccion);
-            if (fechaNacimiento == null) {
-                Validation.addError("fechaNacimiento", "validation.fechaRequerida");
-            }
-            Validation.required("cliente.email", cliente.email);
-            Validation.email("cliente.email", cliente.email);
+    public static void editarCliente(Cliente cliente, @As("dd/mm/yyyy") Date fechaNacimiento) {
+        Validation.required("cliente.nombres", cliente.nombres);
+        Validation.required("cliente.apellidoMaterno", cliente.apellidoMaterno);
+        Validation.required("cliente.apellidoPaterno", cliente.apellidoPaterno);
+        Validation.required("cliente.rut", cliente.rut);
+        Validation.required("cliente.celular", cliente.celular);
+        Validation.required("cliente.telefono", cliente.telefono);
+        Validation.required("cliente.genero", cliente.genero);
+        if (cliente.comuna == 0) {
+            Validation.addError("cliente.comuna", "validation.comuna");
+        }
+        Validation.required("cliente.direccion", cliente.direccion);
+        if (fechaNacimiento == null) {
+            Validation.addError("fechaNacimiento", "validation.fechaRequerida");
+        }
+        Validation.required("cliente.email", cliente.email);
+        Validation.email("cliente.email", cliente.email);
 
-            if (Validation.hasErrors()) {
-                params.flash();
-                Validation.keep();
-                InicioAdmin.clientes();
-            }
-            Persona persona = Persona.findPersonabyAltKey(cliente.altKey);
-            persona.setNombres(cliente.nombres);
-            persona.setApellidoPaterno(cliente.apellidoPaterno);
-            persona.setApellidoMaterno(cliente.apellidoMaterno);
-            persona.setRut(cliente.rut);
-            persona.setFechaNacimiento(fechaNacimiento);
-            persona.setTelefono(cliente.telefono);
-            persona.setCelular(cliente.celular);
-            persona.setDireccion(cliente.direccion);
-            persona.setGenero(cliente.genero);
-            persona.setComuna(Comuna.getId(cliente.comuna));
-            persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
-            persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));
-            persona.usuario.setEmail(cliente.email);
-            persona.save();
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
 
+        Persona persona = Persona.findPersonabyAltKey(cliente.altKey);
+        persona.setNombres(cliente.nombres);
+        persona.setApellidoPaterno(cliente.apellidoPaterno);
+        persona.setApellidoMaterno(cliente.apellidoMaterno);
+        persona.setRut(cliente.rut);
+        persona.setFechaNacimiento(fechaNacimiento);
+        persona.setTelefono(cliente.telefono);
+        persona.setCelular(cliente.celular);
+        persona.setDireccion(cliente.direccion);
+        persona.setGenero(cliente.genero);
+        persona.setComuna(Comuna.getId(cliente.comuna));
+        persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
+        persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));
+        persona.usuario.setEmail(cliente.email);
+        persona.save();
+        renderJSON(persona);
     }
 
     public static void completarRegistro(String altKeyPersona) {
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyPersona);
         mesualidadInicial(contrato);
-        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
             redirect("/admin/clientes");
         }
     }

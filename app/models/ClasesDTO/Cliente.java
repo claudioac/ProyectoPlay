@@ -12,7 +12,9 @@ public class Cliente {
     public String rut;
     public String altKey;
     public int genero;
-    public int comuna;
+    public Integer comuna;
+    public Integer region;
+    public Integer provincia;
     public String direccion;
     public String telefono;
     public String celular;

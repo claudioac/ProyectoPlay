@@ -42,6 +42,12 @@ public class Persona extends EntidadIdAutoLongAltKey {
     public String direccion;
 
     @ManyToOne
+    public Region region;
+
+    @ManyToOne
+    public Provincia provincia;
+
+    @ManyToOne
     public Comuna comuna;
 
     @ManyToOne
@@ -117,6 +123,22 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
     public Comuna getComuna() {

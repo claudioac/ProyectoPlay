@@ -76,4 +76,9 @@ public class Region extends Model {
         List<Region> regionesList = JPA.em().createQuery("SELECT r from Region r order by r.id",Region.class).getResultList();
         return regionesList;
     }
+
+    public static Region getId(int region) {
+        Long idRegion = Long.valueOf(region);
+        return JPA.em().find(Region.class,idRegion);
+    }
 }

@@ -84,7 +84,7 @@
                                     <select id="region" name="region" class="form-control" >
                                         <option value="">Seleccione..</option>
                                     #{list items:regiones, as:'region'}
-                                        <option value="${region.id}">${region.nombre}</option>
+                                        <option value="${region.id}" selected="${persona.region.id}">${region.nombre}</option>
                                     #{/list}
                                     </select>
                                 </div>
@@ -93,7 +93,7 @@
                                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                                 <div class="col-md-8">
                                     <select id="provincia" name="provincia"  class="form-control">
-                                        <option value="" >Seleccione..</option>
+                                        <option value="${persona.provincia.id}" >${persona.provincia.nombre}</option>
                                     </select>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
 
                                 <div class="col-md-8">
                                     <select id="comuna" name="cliente.comuna" class="form-control">
-                                        <option value="">Seleccione..</option>
+                                        <option value="${persona.comuna.id}">${persona.comuna.nombre}</option>
                                     </select>
                                     <strong><span class="text-danger">#{error 'cliente.comuna'/}</span></strong>
                                 </div>
@@ -183,7 +183,9 @@
             method: "GET",
             success: function(provincias){
                 selectProvincia.empty();
+                selectComuna.empty();
                 selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
                 $.each(provincias,function(k,value){
                     selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
                 });

@@ -74,7 +74,7 @@
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="region">Region:</label>
                 <div class="col-md-8">
-                    <select id="region" name="region" class="form-control" >
+                    <select id="region" name="cliente.region" class="form-control" >
                         <option value="">Seleccione..</option>
                         #{list items:regiones, as:'region'}
                             <option value="${region.id}" ${flash['region']}>${region.nombre}</option>
@@ -85,7 +85,7 @@
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                 <div class="col-md-8">
-                    <select id="provincia" name="provincia"  class="form-control">
+                    <select id="provincia" name="cliente.provincia"  class="form-control">
                         <option value="" ${flash['provincia']}>Seleccione..</option>
                     </select>
                 </div>
@@ -172,11 +172,33 @@
         }
     });
 
+    var $clienteForm = $("#nuevoClienteForm");
     $("#registrar").click(function(){
         bootbox.confirm(i18n('nuevoCliente'),function(result){
+            $("#nuevoClienteForm ul").remove();
             if(result){
-                console.log("puta la wea");
-                $("#nuevoClienteForm").submit();
+                $.ajax({
+                    url : "@{ClientesController.nuevoCliente()}",
+                    method: "post",
+                    data: $clienteForm.serialize(),
+                    success: function(resp){
+                        console.log(resp);
+                        //location.href = "/contrato/";
+                    },
+                    error :function(resp){
+                        console.log(resp);
+                        if (resp.status == 400) {
+                            $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                                var $input = $(":input[name='" + name + "']", $clienteForm);
+                                $input.closest("div.form-group").addClass("has-error");
+                                $input.closest("div").append("<ul class='list-inline'><li class='text-danger'>-" + errors + "</li></ul>");
+                                console.log(errors);
+                            });
+                            console.log(resp.responseJSON);
+                        }
+                    }
+                });
+
             }
         });
 

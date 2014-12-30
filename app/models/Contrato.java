@@ -16,7 +16,7 @@ public class Contrato extends EntidadIdAutoLongAltKey {
     @ManyToOne
     public TipoPlan tipoPlan;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public Persona persona;
 
     @Temporal(TemporalType.TIMESTAMP)

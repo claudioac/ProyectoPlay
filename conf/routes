@@ -16,7 +16,7 @@ GET     /buscar/getClientes                                  InicioAdmin.getClie
 GET     /buscar/getProfesores                                InicioAdmin.getProfesores
 GET     /administrador/{altKey}/getPersona/{rut}             InicioAdmin.getPersona
 POST    /admin/registroCliente                               ClientesController.nuevoCliente
-GET     /contrato                                            ClientesController.contratoCliente
+GET     /contrato/{altKey}                                            ClientesController.contratoCliente
 GET    /generarContrato/{altKey}                             ClientesController.generarContrato
 GET    /reglamento                                           ClientesController.reglamento
 GET    /getValores/{id}/{altKey}                             ClientesController.getValoresDePlan

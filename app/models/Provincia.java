@@ -8,9 +8,9 @@ import javax.persistence.ManyToOne;
 import java.util.List;
 
 /**
- *@author Claudio Acuña
- *
- * Entidad Provincia
+ * @author Claudio Acuña
+ *         <p/>
+ *         Entidad Provincia
  */
 @Entity
 public class Provincia extends Model {
@@ -42,7 +42,12 @@ public class Provincia extends Model {
     }
 
     public static List<Provincia> getAllProvincias(Long idRegion) {
-        List<Provincia> provinciaList = JPA.em().createQuery("SELECT p from Provincia p WHERE p.region.id=?1 order by p.id",Provincia.class).setParameter(1,idRegion).getResultList();
+        List<Provincia> provinciaList = JPA.em().createQuery("SELECT p from Provincia p WHERE p.region.id=?1 order by p.id", Provincia.class).setParameter(1, idRegion).getResultList();
         return provinciaList;
+    }
+
+    public static Provincia getId(int provincia) {
+        Long idProvincia = Long.valueOf(provincia);
+        return JPA.em().find(Provincia.class, idProvincia);
     }
 }
