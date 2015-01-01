@@ -174,14 +174,33 @@
         }
     });
 
+   var  $clienteEditarForm = $("#editarClienteForm");
     $("#editarCliente").click(function(){
         $.ajax({
-            type: "POST",
-            url: "/editarCliente",
-            data: $("#editarClienteForm").serialize(),
+            url: "@{ClientesController.editarCliente()}",
+            method: "POST",
+            data: $clienteEditarForm.serialize(),
             success: function(){
+                console.log("asdas");
                 $("#editCliente").modal('toggle');
                 location.reload();
+            },
+            error: function(resp){
+                if (resp.status == 400) {
+                    $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                        var $input = $(":input[name='" + name + "']", $clienteEditarForm);
+                        $input.closest("div.form-group").addClass("has-error");
+                        var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                        $.each(errors,function(i,elem){
+                            var $li = $("<li class='text-danger'/>");
+                            $li.text(elem);
+                            $ul.append($li);
+                        });
+                        $input.after($ul);
+                        console.log(errors);
+                    });
+                    console.log(resp.responseJSON);
+                }
             }
         });
     });

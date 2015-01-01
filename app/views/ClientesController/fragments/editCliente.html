@@ -73,7 +73,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-4 control-label" for="region">Region:</label>
                                 <div class="col-md-8">
-                                    <select id="region" name="region" class="form-control" >
+                                    <select id="region" name="cliente.region" class="form-control" >
                                         <option value="">Seleccione..</option>
                                     #{list items:regiones, as:'region'}
                                         <option value="${region.id}" selected="${persona.region.id}">${region.nombre}</option>
@@ -84,7 +84,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                                 <div class="col-md-8">
-                                    <select id="provincia" name="provincia"  class="form-control">
+                                    <select id="provincia" name="cliente.provincia"  class="form-control">
                                         <option value="${persona.provincia.id}" >${persona.provincia.nombre}</option>
                                     </select>
                                 </div>
@@ -209,8 +209,5 @@
             }
         });
     })
-
-
-
 
 </script>
