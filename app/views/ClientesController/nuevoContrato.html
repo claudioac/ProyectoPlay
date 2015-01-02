@@ -68,7 +68,7 @@
                                 <tr>
                                     <th><strong>Cuota de Incorporación</strong></th>
                                     <td>
-                                        $&nbsp;${cuotaDeIncorporacion.valorTotalPlan}
+                                        ${cuotaDeIncorporacion.valorTotalPlan.formatCurrency('CLP').raw()}
                                     </td>
                                 </tr>
                                 <tr>
@@ -154,7 +154,7 @@
             $("#generarContrato, #reglamento").removeClass("disabled");
             $("#completarRegistro").removeClass("disabled");
             $.ajax({
-                url: "getValores/" + tipoDePlan + "/"+personaAltKey,
+                url: "/getValores/" + tipoDePlan + "/"+personaAltKey,
                 method: "GET",
                 success: function (valores) {
                     $("#valorMensualidad").text("$ " + valores.valorMensualidad);

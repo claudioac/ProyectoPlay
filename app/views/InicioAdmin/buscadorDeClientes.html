@@ -96,13 +96,13 @@
                     $scope: { $data: {} }
                 });
 
-                $scope.$watch("buscandoCliente", function () {
+                $scope.$watch("buscadorClientes", function () {
                     $scope.tablaClientes.reload();
                 });
 
                 var buscandoClientes = function() {
-                    if($scope.buscandoCliente){
-                        return $filter('filter')(data,$scope.buscandoCliente);
+                    if($scope.buscadorClientes){
+                        return $filter('filter')(data,$scope.buscadorClientes);
                     }
                     return data;
                 }

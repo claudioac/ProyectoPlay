@@ -263,7 +263,10 @@
                     method: "post",
                     data: $clienteForm.serialize(),
                     success: function(resp){
-                        location.href = "/";
+                        bootbox.alert( i18n('registro.personal.interno'),function(){
+                            var $input = $(":input", $clienteForm);
+                            $input.val('');
+                        });
                     },
                     error :function(resp){
                         console.log(resp);

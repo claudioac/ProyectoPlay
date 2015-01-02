@@ -13,3 +13,4 @@ validation.email= E-mail invalido.
 validation.fechaRequerida=Necesita ingresar una fecha.
 
 nuevoCliente=¿Esta seguro de registrar ah este nuevo Cliente?
+registro.personal.interno= El registro fue creado existosamente.

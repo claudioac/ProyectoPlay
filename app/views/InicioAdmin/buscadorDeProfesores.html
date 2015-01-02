@@ -98,13 +98,13 @@
                     $scope: { $data: {} }
                 });
 
-                $scope.$watch("buscadorProfesor", function () {
+                $scope.$watch("buscadorProfesores", function () {
                     $scope.tablaProfesores.reload();
                 });
 
                 var buscandoProfesores = function() {
-                    if($scope.buscadorProfesor){
-                        return $filter('filter')(data,$scope.buscadorProfesor);
+                    if($scope.buscadorProfesores){
+                        return $filter('filter')(data,$scope.buscadorProfesores);
                     }
                     return data;
                 }

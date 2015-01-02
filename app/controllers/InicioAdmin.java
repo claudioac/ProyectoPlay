@@ -34,6 +34,10 @@ public class InicioAdmin extends Controller {
         render(regiones);
     }
 
+    public static void profesores(){
+        render();
+    }
+
     public static void getPersonas() {
         List<Persona> personas = Persona.getAllPersonas();
         renderJSON(personas);
