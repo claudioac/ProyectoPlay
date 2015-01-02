@@ -199,4 +199,11 @@ public class ClientesController extends Controller {
         mensualidad.save();
     }
 
+    public static void fichaDeCliente(String altKey){
+        Persona cliente = Persona.findPersonabyAltKey(altKey);
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
+            renderTemplate("InicioAdmin/Cliente/fichaCliente.html",cliente);
+        }
+    }
+
 }

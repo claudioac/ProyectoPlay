@@ -12,17 +12,18 @@ GET     /administrador/{altKey}/getPersonas                  InicioAdmin.getPers
 GET     /admin/clientes                                      InicioAdmin.clientes
 GET     /admin/provincias/{idRegion}                         InicioAdmin.getProvincias
 GET     /admin/comunas/{idProvincia}                         InicioAdmin.getComunas
-GET     /buscar/getClientes                                  InicioAdmin.getClientes
+POST     /buscar/getClientes                                 InicioAdmin.getClientes
 GET     /buscar/getProfesores                                InicioAdmin.getProfesores
 GET     /administrador/{altKey}/getPersona/{rut}             InicioAdmin.getPersona
 POST    /admin/registroCliente                               ClientesController.nuevoCliente
-GET     /contrato/{altKey}                                            ClientesController.contratoCliente
+GET     /contrato/{altKey}                                   ClientesController.contratoCliente
 GET    /generarContrato/{altKey}                             ClientesController.generarContrato
 GET    /reglamento                                           ClientesController.reglamento
 GET    /getValores/{id}/{altKey}                             ClientesController.getValoresDePlan
-GET    /completarRegistro/{altKey}                                    ClientesController.completarRegistro
+GET    /completarRegistro/{altKey}                           ClientesController.completarRegistro
 POST   /descartarRegistro                                    ClientesController.descartarRegistro
 POST   /editarCliente                                        ClientesController.editarCliente
+GET    /fichaCliente/{altKey}                                ClientesController.fichaDeCliente
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 

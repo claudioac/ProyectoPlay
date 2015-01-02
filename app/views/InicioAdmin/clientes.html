@@ -2,17 +2,16 @@
 <div class="row">
     <div class="col-sm-2">
         <ul class="nav nav-pills nav-stacked" role="tablist">
-            <li><a  href="#nuevoCliente" role="tab" data-toggle="pill"><i class="fa fa-share "></i> Nuevo Cliente</a></li>
             <li><a  href="#buscadorDeClientes" role="tab" data-toggle="pill"><i class="fa fa-user "></i> Buscar Cliente</a></li>
+            <li><a  href="#nuevoCliente" role="tab" data-toggle="pill"><i class="fa fa-share "></i> Nuevo Cliente</a></li>
         </ul>
     </div>
     <div class="col-sm-10 tab-content">
-
-        <div class="tab-pane" id="buscadorDeClientes">
+        <div class="tab-pane active" id="buscadorDeClientes">
         #{include 'InicioAdmin/buscadorDeClientes.html'/}
         </div>
-        <div class="tab-pane active" id="nuevoCliente">
-         #{include 'ClientesController/nuevoCliente.html'/}
+        <div class="tab-pane" id="nuevoCliente">
+        #{include 'ClientesController/nuevoCliente.html'/}
         </div>
     </div>
 </div>

@@ -1,0 +1,75 @@
+<h1 class="text-center"><i>Ficha de Cliente</i></h1>
+<div class="row">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 text-center">
+                        <img src="@{'/public/images/photo.png'}" alt="" class="center-block img-circle img-responsive">
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-8">
+                        <h2 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
+                            &nbsp;${cliente.apellidoMaterno}</h2>
+                        <hr/>
+                        <p><strong>Rut: </strong> ${cliente.rut} </p>
+
+                        <p><strong>Fecha Nacimiento: </strong> ${cliente.fechaNacimiento.format("dd MMMM yyyy","es")}
+                        </p>
+                        <p><strong>Sexo: </strong> #{if cliente.genero == 0}
+                            Masculino
+                        #{/if}
+                        #{else }
+                            Femenino
+                        #{/else} </p>
+                        <p><strong>Dirección: </strong> ${cliente.direccion}</p>
+                        <p><strong>Comuna: </strong> ${cliente.comuna.nombre}</p>
+                        <p><strong>E-mail: </strong> <a href="mailto:${cliente.usuario.email}">${cliente.usuario.email}</a></p>
+                        <p><strong>Telefono Fijo: </strong> ${cliente.telefono}</p>
+                        <p><strong>Celular: </strong> ${cliente.celular}</p>
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                        <button class="btn btn-success btn-block" id="mostrarContrato"><span class="fa fa-file-pdf-o"></span> Mostrar
+                            Contrato
+                        </button>
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                        <button class="btn btn-info btn-block"><span class="fa fa-history"></span> Historial de Pagos
+                        </button>
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                        <button type="button" class="btn btn-primary btn-block dropdown-toggle" aria-expanded="false"
+                                data-toggle="dropdown"
+                                id="opciones"><span class="fa fa-gear"></span> Options <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li role="presentation"><a href="#"><i class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
+                                Contrato</a></li>
+                            <li role="presentation"><a href="#"><i class="fa fa-plus-circle"></i>&nbsp;Ver Ficha de
+                                Salud</a></li>
+                        </ul>
+                    </div>
+                    <!--/col-->
+                </div>
+                <!--/row-->
+            </div>
+            <!--/panel-body-->
+        </div>
+        <!--/panel-->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+       var $personaAltKey = "${cliente.altKey}";
+        $("#mostrarContrato").click(function () {
+            window.open("/generarContrato/" + $personaAltKey);
+        });
+    });
+
+</script>
