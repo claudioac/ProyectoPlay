@@ -60,6 +60,7 @@ public class Personal extends Controller {
         persona.setApellidoMaterno(personal.apellidoMaterno);
         persona.setRut(personal.rut);
         persona.setFechaNacimiento(fechaNacimiento);
+        persona.setFechaDeIncorporacion(new Date());
         persona.setTelefono(personal.telefono);
         persona.setCelular(personal.celular);
         persona.setDireccion(personal.direccion);

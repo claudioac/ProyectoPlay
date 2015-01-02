@@ -120,7 +120,7 @@
 </div>
 
 #{include 'ClientesController/fragments/editCliente.html'/}
-
+#{i18n /}
 <script type="text/javascript">
     var personaAltKey = $("#personaAltKey").val();
 
@@ -143,7 +143,11 @@
     $("#descartarCliente").click(function () {
         bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
             if (result) {
-                $.post("/descartarRegistro",{altKeyPersona: personaAltKey});
+                $.post("/descartarRegistro",{altKeyPersona: personaAltKey},function(){
+                    bootbox.alert(i18n('registro.cliente.descartar'),function(){
+                       location.href = "/administrador/admin";
+                    });
+                });
             }
         });
     });

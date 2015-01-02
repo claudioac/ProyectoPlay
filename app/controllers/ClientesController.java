@@ -91,9 +91,9 @@ public class ClientesController extends Controller {
         List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
         TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
         List<Region> regiones = Region.getAllRegiones();
-        Persona persona = Persona.findById(23L);
+        //Persona persona = Persona.findById(23L);
         //TODO Cambiar a modo producción.
-        //Persona persona = Persona.findPersonabyAltKey(altKey);
+        Persona persona = Persona.findPersonabyAltKey(altKey);
         Date fechaActual = new Date();
         int anos = (fechaActual.getYear() - persona.fechaNacimiento.getYear());
         renderTemplate("InicioAdmin/Cliente/contratoCliente.html", tipoDePlanes, persona, anos, cuotaDeIncorporacion, regiones);
