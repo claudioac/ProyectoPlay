@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<table class="table table-responsive table-bordered table-hover">
+<table id="mensualidades" class="table table-responsive table-bordered table-hover" style="display: none;">
     <thead >
     <tr class="warning">
         <th class="text-center">Fecha de Pago</th>
@@ -96,6 +96,7 @@
     app.controller('fichaCliente',function($scope,$http){
         $scope.buscarMensualidades = function (){
             $http.get('/buscarMensualidades/'+$personaAltKey).success(function(mensualidades){
+                $("#mensualidades").show();
                 console.log(mensualidades);
                 $scope.mensualidad = mensualidades;
                 if(mensualidades.length == 0){
