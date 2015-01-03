@@ -61,7 +61,7 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
 
     public static List<Mensualidad> mensualidadesByAltkeyCliente(String altKey) {
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
-        List<Mensualidad> mensualidades = JPA.em().createQuery("SELECT m from Mensualidad m where m.contrato=?1",Mensualidad.class).setParameter(1,contrato).getResultList();
+        List<Mensualidad> mensualidades = JPA.em().createQuery("SELECT m from Mensualidad m where m.contrato=?1",Mensualidad.class).setParameter(1,contrato).setMaxResults(12).getResultList();
         return mensualidades;
     }
 }
