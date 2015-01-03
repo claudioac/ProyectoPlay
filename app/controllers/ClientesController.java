@@ -206,4 +206,9 @@ public class ClientesController extends Controller {
         }
     }
 
+    public static void buscarMensualidades(String altKey){
+        List<Mensualidad>  mensualidades = Mensualidad.mensualidadesByAltkeyCliente(altKey);
+        renderJSON(mensualidades);
+    }
+
 }

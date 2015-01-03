@@ -1,3 +1,4 @@
+<div ng-controller="fichaCliente">
 <h1 class="text-center"><i>Ficha de Cliente</i></h1>
 <div class="row">
     <div>
@@ -36,9 +37,9 @@
                         </button>
                     </div>
                     <!--/col-->
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-12 col-sm-4" >
                         <br/>
-                        <button class="btn btn-info btn-block"><span class="fa fa-history"></span> Historial de Pagos
+                        <button class="btn btn-info btn-block" ng-click="buscarMensualidades()"><span class="fa fa-history"></span> Historial de Pagos
                         </button>
                     </div>
                     <!--/col-->
@@ -64,12 +65,43 @@
         <!--/panel-->
     </div>
 </div>
+
+<table class="table table-responsive table-bordered table-hover">
+    <thead >
+    <tr class="warning">
+        <th class="text-center">Fecha de Pago</th>
+        <th class="text-center">Fecha de Vencimiento</th>
+        <th class="text-center">Monto Cancelado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="men in mensualidad">
+        <td class="text-center">{{toJsDate(men.fechaPago) | date :'dd/MM/yyyy'}}</td>
+        <td class="text-center">{{toJsDate(men.fechaVencimiento) | date:'dd/MM/yyyy'}}</td>
+        <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
 <script type="text/javascript">
+    var $personaAltKey = "${cliente.altKey}";
     $(function () {
-       var $personaAltKey = "${cliente.altKey}";
         $("#mostrarContrato").click(function () {
             window.open("/generarContrato/" + $personaAltKey);
         });
+
+    });
+    app.controller('fichaCliente',function($scope,$http){
+        $scope.buscarMensualidades = function (){
+            $http.get('/buscarMensualidades/'+$personaAltKey).success(function(mensualidades){
+                console.log(mensualidades);
+                $scope.mensualidad = mensualidades;
+            });
+        }
+        $scope.toJsDate = function (str) {
+            if(!str)return null;
+            return new Date(str);
+        }
     });
 
 </script>

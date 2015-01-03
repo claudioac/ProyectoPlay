@@ -2,8 +2,11 @@ package models;
 
 
 
+import play.db.jpa.JPA;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -54,5 +57,11 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
 
     public void setMontoCancelado(Long montoCancelado) {
         this.montoCancelado = montoCancelado;
+    }
+
+    public static List<Mensualidad> mensualidadesByAltkeyCliente(String altKey) {
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        List<Mensualidad> mensualidades = JPA.em().createQuery("SELECT m from Mensualidad m where m.contrato=?1",Mensualidad.class).setParameter(1,contrato).getResultList();
+        return mensualidades;
     }
 }
