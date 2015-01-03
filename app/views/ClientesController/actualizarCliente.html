@@ -1,0 +1,212 @@
+<div class="page-header">
+    <h2>Actualización de Datos
+        <small>cambio de planes y/o información personal.</small>
+    </h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xs-offset-0 col-sm-offset-0">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>${persona.nombres}&nbsp;${persona.apellidoPaterno}
+                        &nbsp;${persona.apellidoMaterno}</strong> <a href="#" data-toggle="modal"
+                                                                     data-target="#editCliente" class="help pull-right"
+                                                                     title="Editar"><span
+                            class="glyphicon glyphicon-pencil"></span></a></h3>
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic"
+                                                                            src="@{'/public/images/photo.png'}"
+                                                                            class="img-circle"></div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Rut:</td>
+                                    <td>${persona.rut}</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td>Genero:</td>
+                                    <td>
+                                    #{if persona.genero == 0}
+                                        Masculino
+                                    #{/if}
+                                    #{else }
+                                        Femenino
+                                    #{/else}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edad:</td>
+                                    <td>${anos} &nbsp;años</td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>${persona.direccion}</td>
+                                </tr>
+                                <tr>
+                                    <td>Comuna:</td>
+                                    <td>${persona.comuna.nombre}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td><a href="mailto:${persona.usuario.email}">${persona.usuario.email}</a></td>
+                                </tr>
+                                <td>Telefonos:</td>
+                                <td>${persona.telefono}&nbsp;&nbsp;<i class="fa fa-phone-square help"
+                                                                      title="Red Fija"></i><br><br>${persona.celular}
+                                    &nbsp;&nbsp;<i class="fa fa-mobile-phone help" title="Celular"></i>
+                                </td>
+
+                                </tr>
+                                <tr>
+                                    <th style="vertical-align: middle;"><Strong>Tipo de Plan</Strong></th>
+                                    <td>
+                                    #{select 'tipoDePlanes',items :tipoDePlanes,value:contrato.tipoPlan.id, id:'tipoDePlan', class:'form-control', name:'tipoDePlan'}
+                                        #{/select}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Cuota de Incorporación</strong></th>
+                                    <td>
+                                    ${cuotaDeIncorporacion.valorTotalPlan.formatCurrency('CLP').raw()}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Mensualidad</strong></th>
+                                    <td id="valorMensualidad">
+                                    ${contrato.tipoPlan.valorMensualidad.formatCurrency('CLP').raw()}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><strong>Costo Total de Plan</strong></th>
+                                    <td id="valorTotalPlan">
+                                    ${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input type="hidden" id="personaAltKey" value="${persona.altKey}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9  col-lg-8" align="center">
+                        </div>
+                        <div class="col-xs-9 col-lg-4">
+                            <button class="btn btn-primary help " id="reglamento"
+                                    title="Descargar Reglamento Interno del Gimnasio">Reglamento&nbsp;<i
+                                    class="fa fa-file-pdf-o"></i></button>
+                            <button class="btn btn-primary help " id="generarContrato"
+                                    title="Descargar Contrato a Firmar por el cliente">Generar Contrato&nbsp;<i
+                                    class="fa fa-file-pdf-o"></i></button>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-xs-8  col-lg-8" align="center">
+                        </div>
+                        <div class="col-xs-4  col-lg-4">
+                            <button type="button" class="btn btn-danger" id="descartarCliente">Eliminar Persona <i class="fa fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-success" id="completarRegistro">Finalizar<i
+                                        class="fa fa-check"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+#{include 'ClientesController/fragments/editCliente.html'/}
+#{i18n /}
+<script type="text/javascript">
+    var personaAltKey = $("#personaAltKey").val();
+
+    $("#generarContrato").click(function () {
+        window.open("/generarContrato/" + personaAltKey);
+    });
+
+    $("#reglamento").click(function () {
+        window.open("/reglamento");
+    });
+
+    $("#completarRegistro").click(function () {
+        bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
+            if (result) {
+                location.href = "completarRegistro/" + personaAltKey;
+            }
+        });
+    });
+
+    $("#descartarCliente").click(function () {
+        bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
+            if (result) {
+                $.post("/descartarRegistro", {altKeyPersona: personaAltKey}, function () {
+                    bootbox.alert(i18n('registro.cliente.descartar'), function () {
+                        location.href = "/administrador/admin";
+                    });
+                });
+            }
+        });
+    });
+
+    $("#tipoDePlan").change(function () {
+        bootbox.confirm("¿Esta seguro de cambiar el contrato ya registrado?", function (result) {
+            if (result) {
+
+                    $.ajax({
+                        url: "/updateContrato/" + tipoDePlan + "/" + personaAltKey,
+                        method: "GET",
+                        success: function (valores) {
+                            $("#valorMensualidad").text("$ " + valores.valorMensualidad);
+                            $("#valorTotalPlan").text("$ " + valores.valorTotalPlan);
+                        },
+                        error: function () {
+                            $("#valorMensualidad").text("0");
+                            $("#valorTotalPlan").text("0");
+                        }
+
+                    });
+            }
+        });
+
+    });
+
+    var $clienteEditarForm = $("#editarClienteForm");
+    $("#editarCliente").click(function () {
+        $.ajax({
+            url: "@{ClientesController.editarCliente()}",
+            method: "POST",
+            data: $clienteEditarForm.serialize(),
+            success: function () {
+                console.log("asdas");
+                $("#editCliente").modal('toggle');
+                location.reload();
+            },
+            error: function (resp) {
+                if (resp.status == 400) {
+                    $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                        var $input = $(":input[name='" + name + "']", $clienteEditarForm);
+                        $input.closest("div.form-group").addClass("has-error");
+                        var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                        $.each(errors, function (i, elem) {
+                            var $li = $("<li class='text-danger'/>");
+                            $li.text(elem);
+                            $ul.append($li);
+                        });
+                        $input.after($ul);
+                        console.log(errors);
+                    });
+                    console.log(resp.responseJSON);
+                }
+            }
+        });
+    });
+
+
+</script>

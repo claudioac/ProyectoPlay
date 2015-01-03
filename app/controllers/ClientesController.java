@@ -211,4 +211,31 @@ public class ClientesController extends Controller {
         renderJSON(mensualidades);
     }
 
+    public static void actualizarCliente(String altKey){
+        List<TipoPlan> tipoDePlanes = TipoPlan.findAllTipoDePlanActivo();
+        Persona persona = Persona.findPersonabyAltKey(altKey);
+        TipoPlan cuotaDeIncorporacion = TipoPlan.getCoutaDeIncorporacion();
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        List<Region> regiones = Region.getAllRegiones();
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/Cliente/actualizarClienteAdmin.html",persona,cuotaDeIncorporacion,regiones,tipoDePlanes,contrato);
+        }
+    }
+
+    public static void updateContrato(Long id, String altKey){
+        TipoPlan plan = TipoPlan.getValoresDePlan(id);
+        Persona persona = Persona.findPersonabyAltKey(altKey);
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        contrato.setVigente(false);
+        contrato.save();
+        Contrato contrato1 = new Contrato();
+        contrato1.setPersona(persona);
+        contrato1.setTipoPlan(plan);
+        contrato1.setVigente(true);
+        contrato1.setFechaCreacion(new Date());
+        contrato1.save();
+        renderJSON(plan);
+
+    }
+
 }

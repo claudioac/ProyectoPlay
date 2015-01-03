@@ -59,7 +59,7 @@ public class Contrato extends EntidadIdAutoLongAltKey {
     public static Contrato findContratoByAltKeyPersona(String altKey) {
         Persona pers = Persona.findPersonabyAltKey(altKey);
         try{
-            Contrato contrato = JPA.em().createQuery("select c from Contrato c where c.persona=?1", Contrato.class).setParameter(1, pers).getSingleResult();
+            Contrato contrato = JPA.em().createQuery("select c from Contrato c where c.persona=?1 and c.vigente=true", Contrato.class).setParameter(1, pers).getSingleResult();
             return contrato;
         }catch (NoResultException e){
             return null;

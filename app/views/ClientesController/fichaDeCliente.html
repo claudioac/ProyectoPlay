@@ -1,6 +1,8 @@
 
 <div ng-controller="fichaCliente">
-<h1 class="text-center"><i>Ficha de Cliente</i></h1>
+<div class="page-header">
+    <h2 class="text-center"><i>Ficha de Cliente</i></h2>
+</div>
 <div class="row">
     <div>
         <div class="panel panel-default">
@@ -11,8 +13,8 @@
                     </div>
                     <!--/col-->
                     <div class="col-xs-12 col-sm-8">
-                        <h2 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
-                            &nbsp;${cliente.apellidoMaterno}</h2>
+                        <h3 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
+                            &nbsp;${cliente.apellidoMaterno}</h3>
                         <hr/>
                         <p><strong>Rut: </strong> ${cliente.rut} </p>
 
@@ -51,7 +53,7 @@
                                 id="opciones"><span class="fa fa-gear"></span> Options <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li role="presentation"><a href="#"><i class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
+                            <li role="presentation"><a href="@{ClientesController.actualizarCliente(cliente.altKey)}"><i class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
                                 Contrato</a></li>
                             <li role="presentation"><a href="#"><i class="fa fa-plus-circle"></i>&nbsp;Ver Ficha de
                                 Salud</a></li>

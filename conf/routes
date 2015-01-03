@@ -20,6 +20,7 @@ GET     /contrato/{altKey}                                   ClientesController.
 GET    /generarContrato/{altKey}                             ClientesController.generarContrato
 GET    /reglamento                                           ClientesController.reglamento
 GET    /getValores/{id}/{altKey}                             ClientesController.getValoresDePlan
+GET    /updateContrato/{id}/{altKey}                         ClientesController.updateContrato
 GET    /completarRegistro/{altKey}                           ClientesController.completarRegistro
 POST   /descartarRegistro                                    ClientesController.descartarRegistro
 POST   /editarCliente                                        ClientesController.editarCliente
