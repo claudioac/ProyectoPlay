@@ -68,23 +68,30 @@
         <!--/panel-->
     </div>
 </div>
-
-<table id="mensualidades" class="table table-responsive table-bordered table-hover" style="display: none;">
-    <thead >
-    <tr class="warning">
-        <th class="text-center">Fecha de Pago</th>
-        <th class="text-center">Fecha de Vencimiento</th>
-        <th class="text-center">Monto Cancelado</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="men in mensualidad">
-        <td class="text-center">{{toJsDate(men.fechaPago) | date :'dd/MM/yyyy'}}</td>
-        <td class="text-center">{{toJsDate(men.fechaVencimiento) | date:'dd/MM/yyyy'}}</td>
-        <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
-    </tr>
-    </tbody>
-</table>
+<div id="mensualidades"  style="display: none;">
+    <table  class="table table-responsive table-bordered table-hover" >
+        <thead >
+        <tr class="warning">
+            <th class="text-center">Fecha de Pago</th>
+            <th class="text-center">Fecha de Vencimiento</th>
+            <th class="text-center">Monto Cancelado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="men in mensualidad">
+            <td class="text-center">{{toJsDate(men.fechaPago) | date :'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{toJsDate(men.fechaVencimiento) | date:'dd/MM/yyyy'}}</td>
+            <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-xs-2 col-lg-2">
+            <button type="button" class="btn btn-primary">Cancelar Mensualidad <i class="fa fa-money"></i></button>
+        </div>
+        <div class="col-xs-10 col-lg-10"></div>
+    </div>
+</div>
 </div>
 #{i18n /}
 <script type="text/javascript">

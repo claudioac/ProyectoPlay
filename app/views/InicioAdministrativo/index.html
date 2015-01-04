@@ -3,13 +3,17 @@
 
 <div class="row">
     <div class="col-sm-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"><i class="fa fa-home "></i> Inicio</a></li>
-            <li><a href="#"><i class="fa fa-user "></i> Buscar Cliente</a></li>
-            <li><a href="#"><i class="fa fa-mortar-board "></i> Buscar Profesor</a></li>
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li><a href="#buscadorDePersonas" role="tab" data-toggle="pill"><i class="fa fa-home "></i> Inicio</a></li>
+            <li><a href="#nuevoPersonal" role="tab" data-toggle="pill"><i class="fa fa-users"></i> Nuevo Personal</a></li>
         </ul>
     </div>
-    <div class="col-sm-10">
-        Hola Administrativo
+    <div class="col-sm-10 tab-content">
+        <div class="tab-pane active" id="buscadorDePersonas">
+        #{include 'InicioAdmin/buscadorDePersonas.html'/}
+        </div>
+        <div class="tab-pane" id="nuevoPersonal">
+        #{include 'InicioAdmin/nuevoPersonal.html'/}
+        </div>
     </div>
 </div>
