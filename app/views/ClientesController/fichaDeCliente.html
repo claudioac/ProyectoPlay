@@ -31,6 +31,8 @@
                         <p><strong>E-mail: </strong> <a href="mailto:${cliente.usuario.email}">${cliente.usuario.email}</a></p>
                         <p><strong>Telefono Fijo: </strong> ${cliente.telefono}</p>
                         <p><strong>Celular: </strong> ${cliente.celular}</p>
+                        <p><strong>Nº de Contrato: </strong>${contrato.tipoPlan.id}</p>
+                        <p><strong>Tipo de Contrato: </strong>${contrato.tipoPlan.nombre}</p>
                     </div>
                     <!--/col-->
                     <div class="col-xs-12 col-sm-4">
@@ -50,7 +52,7 @@
                         <br/>
                         <button type="button" class="btn btn-primary btn-block dropdown-toggle" aria-expanded="false"
                                 data-toggle="dropdown"
-                                id="opciones"><span class="fa fa-gear"></span> Options <span class="caret"></span>
+                                id="opciones"><span class="fa fa-gear"></span> Opciones <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation"><a href="@{ClientesController.actualizarCliente(cliente.altKey)}"><i class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
@@ -68,7 +70,9 @@
         <!--/panel-->
     </div>
 </div>
-<div id="mensualidades"  style="display: none;">
+<div id="mensualidades"  class="bs-callout bs-callout-danger"  style="display: none;">
+    <h4>Historial de Mensualidades Canceladas</h4>
+    <br/>
     <table  class="table table-responsive table-bordered table-hover" >
         <thead >
         <tr class="warning">
@@ -84,15 +88,30 @@
             <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
         </tr>
         </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="2" class="text-right success">Cancelado:</th>
+            <td class="text-center">$&nbsp;{{totalCancelado() | number:0}}</td>
+        </tr>
+        <tr>
+            <th colspan="2" class="text-right info">Monto Total Plan:</th>
+            <td class="text-center">${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}</td>
+        </tr>
+        <tr>
+            <th colspan="2" class="text-right danger">Sub-Total:</th>
+            <td class="text-center">$&nbsp;{{subTotal() | number:0}}</td>
+        </tr>
+        </tfoot>
     </table>
     <div class="row">
         <div class="col-xs-2 col-lg-2">
-            <button type="button" class="btn btn-primary">Cancelar Mensualidad <i class="fa fa-money"></i></button>
+            <button type="button" class="btn btn-primary" id="cancelarMensualidad" data-toggle="modal" data-target="#pagoMensualidad">Ingresar Pago de Mensualidad <i class="fa fa-money"></i></button>
         </div>
         <div class="col-xs-10 col-lg-10"></div>
     </div>
 </div>
 </div>
+#{include 'ClientesController/fragments/pagoMensualidad.html'/}
 #{i18n /}
 <script type="text/javascript">
     var $personaAltKey = "${cliente.altKey}";
@@ -107,7 +126,26 @@
             $http.get('/buscarMensualidades/'+$personaAltKey).success(function(mensualidades){
                 $("#mensualidades").show();
                 console.log(mensualidades);
+                console.log(mensualidades.length);
                 $scope.mensualidad = mensualidades;
+                var $totalContratado = ${contrato.tipoPlan.valorTotalPlan};
+                $scope.totalCancelado = function (){
+                    var total = 0;
+                    for(var i=0; i< mensualidades.length; i++){
+                        total = total + mensualidades[i].montoCancelado;
+                    }
+                    return total;
+                }
+
+                $scope.subTotal = function (){
+                    var total = 0;
+                    for(var i=0; i< mensualidades.length; i++){
+                        total = total + mensualidades[i].montoCancelado;
+                    }
+                    return $totalContratado-total;
+                }
+
+
                 if(mensualidades.length == 0){
                     $.growl({
                         icon: "glyphicon glyphicon-warning-sign",

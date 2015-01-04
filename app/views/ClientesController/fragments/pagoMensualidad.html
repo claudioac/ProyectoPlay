@@ -1,0 +1,43 @@
+<div class="modal fade" id="pagoMensualidad">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center">Ingresar Pago de Mensualidad</h4>
+                <h5 class="text-center text-muted">Pago efectuado por el cliente.</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="fechaVencimiento">Fecha de Vencimiento&nbsp;:</label>
+
+                        <div class="col-md-5">
+                            <p id="fechaVencimiento"></p>
+                            <span class="help-block">Ultimo plazo que dispone el cliente para renovar su membresía.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="fechaDePago">Fecha de Pago&nbsp;</label>
+                        <div class="col-md-5">
+                            <input id="fechaDePago" name="fechaDePago" type="text" placeholder="placeholder"
+                                   class="form-control input-md">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="montoMensualidad">Monto a Cancelar&nbsp;:</label>
+                        <div class="col-md-5">
+                            <input id="montoMensualidad" name="montoMensualidad" type="text" placeholder="placeholder"
+                                   class="form-control input-md" readonly>
+                            <span class="help-block">Monto que debe ser cancelado</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Ingresar Pago</button>
+            </div>
+        </div>
+    </div>
+</div>
