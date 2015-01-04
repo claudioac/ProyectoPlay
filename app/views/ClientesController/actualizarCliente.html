@@ -145,7 +145,7 @@
     });
 
     $("#completarRegistro").click(function () {
-        bootbox.confirm("¿Desea Completar la Actualización de este Registro?", function (result) {
+        bootbox.confirm(i18n('confirmacion.NuevoContrato'), function (result) {
             if (result) {
                 $.get("/completarRegistro/"+personaAltKey,function(){
                     $("#completarRegistro").addClass("disabled");
