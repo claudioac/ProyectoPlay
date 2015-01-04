@@ -107,12 +107,21 @@
                     <br/>
 
                     <div class="row">
-                        <div class="col-xs-8  col-lg-8" align="center">
+                        <div class="col-xs-7  col-lg-7" align="center">
                         </div>
-                        <div class="col-xs-4  col-lg-4">
-                            <button type="button" class="btn btn-danger" id="descartarCliente">Eliminar Persona <i class="fa fa-trash-o"></i></button>
-                            <button type="button" class="btn btn-success" id="completarRegistro">Finalizar<i
+                        <div class="col-xs-5  col-lg-5">
+                            <button type="button" class="btn btn-danger help" title="&{'elimnarCliente'}" id="descartarCliente">Eliminar Persona <i class="fa fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-success help" title="&{'cambioContrato'}" id="completarRegistro">Finalizar Cambio de Contrato<i
                                         class="fa fa-check"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2 col-lg-2">
+                            <a href="@{ClientesController.fichaDeCliente(persona.altKey)}">
+                                <button type="button" class="btn btn-primary">Volver</button>
+                            </a>
+                        </div>
+                        <div class="col-xs-10 col-lg-10">
                         </div>
                     </div>
                 </div>
@@ -136,9 +145,31 @@
     });
 
     $("#completarRegistro").click(function () {
-        bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
+        bootbox.confirm("¿Desea Completar la Actualización de este Registro?", function (result) {
             if (result) {
-                location.href = "completarRegistro/" + personaAltKey;
+                $.get("/completarRegistro/"+personaAltKey,function(){
+                    $("#completarRegistro").addClass("disabled");
+                    $.growl({
+                        icon: "glyphicon glyphicon-ok-circle",
+                        title: "&nbsp;<strong>Cambio Exitoso</strong><br>",
+                        message: i18n('primera.mensualidad')
+                    },{
+                        element: 'body',
+                        type: "success",
+                        placement : {
+                            form: "top",
+                            align: "center"
+                        },
+                        spacing: 10,
+                        offset: 20,
+                        z_index: 1031,
+                        delay: 6000,
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutLeft'
+                        }
+                    });
+                });
             }
         });
     });
@@ -156,15 +187,16 @@
     });
 
     $("#tipoDePlan").change(function () {
+        var tipoDePlan = $("#tipoDePlan").val();
         bootbox.confirm("¿Esta seguro de cambiar el contrato ya registrado?", function (result) {
             if (result) {
-
                     $.ajax({
                         url: "/updateContrato/" + tipoDePlan + "/" + personaAltKey,
                         method: "GET",
                         success: function (valores) {
                             $("#valorMensualidad").text("$ " + valores.valorMensualidad);
                             $("#valorTotalPlan").text("$ " + valores.valorTotalPlan);
+                            $("#completarRegistro").removeClass("disabled");
                         },
                         error: function () {
                             $("#valorMensualidad").text("0");
@@ -172,7 +204,10 @@
                         }
 
                     });
+            }else{
+                location.reload();
             }
+
         });
 
     });
