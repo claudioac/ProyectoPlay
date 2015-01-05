@@ -64,8 +64,12 @@
                                 <tr>
                                     <th style="vertical-align: middle;"><Strong>Tipo de Plan</Strong></th>
                                     <td>
+                                    #{if contrato != null}
                                     #{select 'tipoDePlanes',items :tipoDePlanes,value:contrato.tipoPlan.id, id:'tipoDePlan', class:'form-control', name:'tipoDePlan'}
-                                        #{/select}
+                                    #{/select}
+                                    #{/if}#{else }
+                                    #{select 'tipoDePlanes',items :tipoDePlanes, id:'tipoDePlan', class:'form-control', name:'tipoDePlan'}
+                                    #{/select}#{/else}
                                     </td>
                                 </tr>
                                 <tr>
@@ -77,13 +81,13 @@
                                 <tr>
                                     <th><strong>Mensualidad</strong></th>
                                     <td id="valorMensualidad">
-                                    ${contrato.tipoPlan.valorMensualidad.formatCurrency('CLP').raw()}
+                                    ${contrato != null ? contrato.tipoPlan.valorMensualidad.formatCurrency('CLP').raw(): 0}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th><strong>Costo Total de Plan</strong></th>
                                     <td id="valorTotalPlan">
-                                    ${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}
+                                    ${contrato != null?contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw() : 0}
                                     </td>
                                 </tr>
                                 </tbody>

@@ -1,115 +1,153 @@
-
 <div ng-controller="fichaCliente">
-<div class="page-header">
-    <h2 class="text-center"><i>Ficha de Cliente</i></h2>
-</div>
-<div class="row">
-    <div>
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-4 text-center">
-                        <img src="@{'/public/images/photo.png'}" alt="" class="center-block img-circle img-responsive">
-                    </div>
-                    <!--/col-->
-                    <div class="col-xs-12 col-sm-8">
-                        <h3 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
-                            &nbsp;${cliente.apellidoMaterno}</h3>
-                        <hr/>
-                        <p><strong>Rut: </strong> ${cliente.rut} </p>
-
-                        <p><strong>Fecha Nacimiento: </strong> ${cliente.fechaNacimiento.format("dd MMMM yyyy","es")}
-                        </p>
-                        <p><strong>Sexo: </strong> #{if cliente.genero == 0}
-                            Masculino
-                        #{/if}
-                        #{else }
-                            Femenino
-                        #{/else} </p>
-                        <p><strong>Dirección: </strong> ${cliente.direccion}</p>
-                        <p><strong>Comuna: </strong> ${cliente.comuna.nombre}</p>
-                        <p><strong>E-mail: </strong> <a href="mailto:${cliente.usuario.email}">${cliente.usuario.email}</a></p>
-                        <p><strong>Telefono Fijo: </strong> ${cliente.telefono}</p>
-                        <p><strong>Celular: </strong> ${cliente.celular}</p>
-                        <p><strong>Nº de Contrato: </strong>${contrato.tipoPlan.id}</p>
-                        <p><strong>Tipo de Contrato: </strong>${contrato.tipoPlan.nombre}</p>
-                    </div>
-                    <!--/col-->
-                    <div class="col-xs-12 col-sm-4">
-                        <br/>
-                        <button class="btn btn-success btn-block" id="mostrarContrato"><span class="fa fa-file-pdf-o"></span> Mostrar
-                            Contrato
-                        </button>
-                    </div>
-                    <!--/col-->
-                    <div class="col-xs-12 col-sm-4" >
-                        <br/>
-                        <button class="btn btn-info btn-block" ng-click="buscarMensualidades()"><span class="fa fa-history"></span> Historial de Pagos
-                        </button>
-                    </div>
-                    <!--/col-->
-                    <div class="col-xs-12 col-sm-4">
-                        <br/>
-                        <button type="button" class="btn btn-primary btn-block dropdown-toggle" aria-expanded="false"
-                                data-toggle="dropdown"
-                                id="opciones"><span class="fa fa-gear"></span> Opciones <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                            <li role="presentation"><a href="@{ClientesController.actualizarCliente(cliente.altKey)}"><i class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
-                                Contrato</a></li>
-                            <li role="presentation"><a href="#" id="verFichaDeSalud"><i class="fa fa-plus-circle"></i>&nbsp;Ver Ficha de
-                                Salud</a></li>
-                        </ul>
-                    </div>
-                    <!--/col-->
-                </div>
-                <!--/row-->
-            </div>
-            <!--/panel-body-->
-        </div>
-        <!--/panel-->
+    <div class="page-header">
+        <h2 class="text-center"><i>Ficha de Cliente</i></h2>
     </div>
-</div>
-<div id="mensualidades"  class="bs-callout bs-callout-danger"  style="display: none;">
-    <h4>Historial de Mensualidades Canceladas</h4>
-    <br/>
-    <table  class="table table-responsive table-bordered table-hover" >
-        <thead >
-        <tr class="warning">
-            <th class="text-center">Fecha de Pago</th>
-            <th class="text-center">Fecha de Vencimiento</th>
-            <th class="text-center">Monto Cancelado</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="men in mensualidad">
-            <td class="text-center">{{toJsDate(men.fechaPago) | date :'dd/MM/yyyy'}}</td>
-            <td class="text-center">{{toJsDate(men.fechaVencimiento) | date:'dd/MM/yyyy'}}</td>
-            <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <th colspan="2" class="text-right success">Cancelado:</th>
-            <td class="text-center">$&nbsp;{{totalCancelado() | number:0}}</td>
-        </tr>
-        <tr>
-            <th colspan="2" class="text-right info">Monto Total Plan:</th>
-            <td class="text-center">${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}</td>
-        </tr>
-        <tr>
-            <th colspan="2" class="text-right danger">Sub-Total:</th>
-            <td class="text-center">$&nbsp;{{subTotal() | number:0}}</td>
-        </tr>
-        </tfoot>
-    </table>
+    <div class="row">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <img src="@{'/public/images/photo.png'}" alt=""
+                                 class="center-block img-circle img-responsive">
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-8">
+                            <h3 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
+                                &nbsp;${cliente.apellidoMaterno}</h3>
+                            <hr/>
+                            <p><strong>Rut: </strong> ${cliente.rut} </p>
+
+                            <p><strong>Fecha
+                                Nacimiento: </strong> ${cliente.fechaNacimiento.format("dd MMMM yyyy","es")}
+                            </p>
+
+                            <p><strong>Sexo: </strong> #{if cliente.genero == 0}
+                                Masculino
+                            #{/if}
+                            #{else }
+                                Femenino
+                            #{/else} </p>
+
+                            <p><strong>Dirección: </strong> ${cliente.direccion}</p>
+
+                            <p><strong>Comuna: </strong> ${cliente.comuna.nombre}</p>
+
+                            <p><strong>E-mail: </strong> <a
+                                    href="mailto:${cliente.usuario.email}">${cliente.usuario.email}</a></p>
+
+                            <p><strong>Telefono Fijo: </strong> ${cliente.telefono}</p>
+
+                            <p><strong>Celular: </strong> ${cliente.celular}</p>
+                        #{if contrato !=null}
+                            <p><strong>Nº de
+                                Contrato: </strong>${contrato.tipoPlan.id != null ? contrato.tipoPlan.id:''}</p>
+
+                            <p><strong>Tipo de
+                                Contrato: </strong>${contrato.tipoPlan.nombre ? contrato.tipoPlan.nombre: ''}</p>
+                        #{/if}#{else }
+                            <p><strong>Celular: </strong>
+
+                            <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;&nbsp;&nbsp;El
+                                cliente no tiene definido un tipo de Plan
+                            </div>
+                            </p>
+                        #{/else}
+                        </div>
+                        <!--/col-->
+
+                        <div class="col-xs-12 col-sm-4">
+                            <br/>
+                        #{if contrato !=null}
+                            <button class="btn btn-success btn-block help"
+                                    title="Descarga el Contrato Firmado por el Cliente" id="mostrarContrato"><span
+                                    class="fa fa-file-pdf-o"></span> Mostrar
+                                Contrato
+                            </button>#{/if}
+                        </div>
+
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <br/>
+                            <button class="btn btn-info btn-block help"
+                                    title="Muestra El Historial de Mensualidades Pagadas"
+                                    ng-click="buscarMensualidades()"><span
+                                    class="fa fa-history"></span> Historial de Pagos
+                            </button>
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-4">
+                            <br/>
+                            <button type="button" class="btn btn-primary btn-block dropdown-toggle"
+                                    aria-expanded="false"
+                                    data-toggle="dropdown"
+                                    id="opciones"><span class="fa fa-gear"></span> Opciones <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li role="presentation"><a
+                                        href="@{ClientesController.actualizarCliente(cliente.altKey)}"><i
+                                        class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
+                                    Contrato</a></li>
+                                <li role="presentation"><a href="#" id="verFichaDeSalud"><i
+                                        class="fa fa-plus-circle"></i>&nbsp;Ver Ficha de
+                                    Salud</a></li>
+                            </ul>
+                        </div>
+                        <!--/col-->
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+    <div id="mensualidades" class="bs-callout bs-callout-danger" style="display: none;">
+        <h4>Historial de Mensualidades Canceladas</h4>
+        <br/>
+        <table class="table table-responsive table-bordered table-hover">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Fecha de Pago</th>
+                <th class="text-center">Fecha de Vencimiento</th>
+                <th class="text-center">Monto Cancelado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="men in mensualidad">
+                <td class="text-center">{{toJsDate(men.fechaPago) | date :'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{toJsDate(men.fechaVencimiento) | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">$&nbsp;{{men.montoCancelado | number:0}}</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="2" class="text-right success">Cancelado:</th>
+                <td class="text-center">$&nbsp;{{totalCancelado() | number:0}}</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right info">Monto Total Plan:</th>
+                <td class="text-center">#{if contrato != null}${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}#{/if}</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right danger">Sub-Total:</th>
+                <td class="text-center">$&nbsp;{{subTotal() | number:0}}</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="alert alert-danger" id="mensualidadesNulas" style="display: none;">
+        <p><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;&nbsp;&nbsp;&{'mensualidades.nulas'}</p>
+    </div>
+#{if contrato !=null}
     <div class="row">
         <div class="col-xs-2 col-lg-2">
-            <button type="button" class="btn btn-primary" id="cancelarMensualidad" data-toggle="modal" data-target="#pagoMensualidad">Ingresar Pago de Mensualidad <i class="fa fa-money"></i></button>
+            <button type="button" class="btn btn-primary" id="cancelarMensualidad" data-toggle="modal"
+                    data-target="#pagoMensualidad">Ingresar Pago de Mensualidad <i class="fa fa-money"></i></button>
         </div>
         <div class="col-xs-10 col-lg-10"></div>
     </div>
-</div>
+#{/if}
 </div>
 #{include 'ClientesController/fragments/pagoMensualidad.html'/}
 #{i18n /}
@@ -121,74 +159,78 @@
         });
 
     });
-    app.controller('fichaCliente',function($scope,$http){
-        $scope.buscarMensualidades = function (){
-            $http.get('/buscarMensualidades/'+$personaAltKey).success(function(mensualidades){
-                $("#mensualidades").show();
+    app.controller('fichaCliente', function ($scope, $http) {
+        $scope.buscarMensualidades = function () {
+            $http.get('/buscarMensualidades/' + $personaAltKey).success(function (mensualidades) {
                 console.log(mensualidades);
                 console.log(mensualidades.length);
                 $scope.mensualidad = mensualidades;
-                var $totalContratado = ${contrato.tipoPlan.valorTotalPlan};
-                $scope.totalCancelado = function (){
+            #{if contrato != null}
+                var $totalContratado = ${contrato.tipoPlan.valorTotalPlan != null ? contrato.tipoPlan.valorTotalPlan:0};
+            #{/if}
+                $scope.totalCancelado = function () {
                     var total = 0;
-                    for(var i=0; i< mensualidades.length; i++){
+                    for (var i = 0; i < mensualidades.length; i++) {
                         total = total + mensualidades[i].montoCancelado;
                     }
                     return total;
                 }
 
-                $scope.subTotal = function (){
+                $scope.subTotal = function () {
                     var total = 0;
-                    for(var i=0; i< mensualidades.length; i++){
+                    for (var i = 0; i < mensualidades.length; i++) {
                         total = total + mensualidades[i].montoCancelado;
                     }
-                    return $totalContratado-total;
+                    return $totalContratado - total;
                 }
 
 
-                if(mensualidades.length == 0){
+                if (mensualidades.length == 0) {
+                    $('#mensualidadesNulas').show();
                     $.growl({
                         icon: "glyphicon glyphicon-warning-sign",
                         title: "&nbsp;<strong>No registra información</strong><br>",
                         message: i18n('mensualidades.nulas')
-                    },{
+                    }, {
                         element: 'body',
                         type: "danger",
-                        placement : {
+                        placement: {
                             form: "top",
                             align: "center"
                         },
-                       spacing: 10,
-                       offset: 20,
-                       z_index: 1031,
-                       delay: 6000,
-                       animate: {
-                           enter: 'animated fadeInRight',
-                           exit: 'animated fadeOutLeft'
-                       }
+                        spacing: 10,
+                        offset: 20,
+                        z_index: 1031,
+                        delay: 6000,
+                        animate: {
+                            enter: 'animated fadeInRight',
+                            exit: 'animated fadeOutLeft'
+                        }
                     });
+                } else {
+                    $("#mensualidades").show();
                 }
             });
         }
         $scope.toJsDate = function (str) {
-            if(!str)return null;
+            if (!str)return null;
             return new Date(str);
         }
     });
 
 
-    $("#verFichaDeSalud").click(function(){
-        $.get("/fichaDeSaludCliente/"+$personaAltKey,function(){
+    $("#verFichaDeSalud").click(function () {
+        $.get("/fichaDeSaludCliente/" + $personaAltKey, function () {
 
-        }).fail(function(){
+        }).fail(function () {
             $.growl({
                 icon: "glyphicon glyphicon-warning-sign",
                 title: "&nbsp;<strong>No registra una Ficha de Salud Asociada</strong><br>",
                 message: i18n('fichaCliente.notFound')
-            },{
+            }, {
                 element: 'body',
                 type: "danger",
-                placement : {
+                placement: {
                     form: "top",
                     align: "center"
                 },

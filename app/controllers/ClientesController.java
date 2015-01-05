@@ -202,8 +202,9 @@ public class ClientesController extends Controller {
     public static void fichaDeCliente(String altKey){
         Persona cliente = Persona.findPersonabyAltKey(altKey);
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        Mensualidad mensualidad = Mensualidad.lastMensualidadByAltkeyCliente(altKey);
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
-            renderTemplate("InicioAdmin/Cliente/fichaCliente.html",cliente,contrato);
+            renderTemplate("InicioAdmin/Cliente/fichaCliente.html",cliente,contrato,mensualidad);
         }
     }
 

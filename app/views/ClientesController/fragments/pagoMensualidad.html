@@ -8,36 +8,66 @@
                 <h5 class="text-center text-muted">Pago efectuado por el cliente.</h5>
             </div>
             <div class="modal-body">
+            #{if mensualidad !=null && mensualidad.montoCancelado.equals(contrato.tipoPlan.valorTotalPlan)}
+                <div class="alert alert-success">
+                    <p>El plan ya está cancelado en su totalidad.</p>
+                </div>
+            #{/if}
+            #{else }
                 <form class="form-horizontal">
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="fechaVencimiento">Fecha de Vencimiento&nbsp;:</label>
 
                         <div class="col-md-5">
-                            <p id="fechaVencimiento"></p>
+                            <p id="fechaVencimiento"
+                               class="form-control alert-danger">#{if mensualidad != null}${mensualidad.fechaVencimiento.format('dd/MM/yyyy')}#{/if}#{else }
+                                Primera Mensualidad#{/else}</p>
                             <span class="help-block">Ultimo plazo que dispone el cliente para renovar su membresía.</span>
                         </div>
                     </div>
+                    <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="fechaDePago">Fecha de Pago&nbsp;</label>
+                        <label class="col-md-4 control-label" for="numeroBoleta">Nº de Boleta&nbsp;:</label>
+
                         <div class="col-md-5">
-                            <input id="fechaDePago" name="fechaDePago" type="text" placeholder="placeholder"
+                            <input id="numeroBoleta" name="numeroBoleta" type="text" placeholder=""
                                    class="form-control input-md">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="montoMensualidad">Monto a Cancelar&nbsp;:</label>
+                        <label class="col-md-4 control-label" for="fechaDePago">Fecha de Pago&nbsp;:</label>
+
                         <div class="col-md-5">
-                            <input id="montoMensualidad" name="montoMensualidad" type="text" placeholder="placeholder"
-                                   class="form-control input-md" readonly>
+                            <input id="fechaDePago" name="fechaDePago" type="text"
+                                   class="form-control input-md datepicker">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="montoMensualidad">Monto a Cancelar&nbsp;:</label>
+
+                        <div class="col-md-5">
+                        <input id="montoMensualidad" name="montoMensualidad" type="text"
+                               class="form-control input-md" placeholder="#{if contrato !=null}#{if mensualidad != null}${mensualidad.montoCancelado.formatCurrency('CLP').raw()}#{/if}#{else }${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}#{/else}#{/if}">
                             <span class="help-block">Monto que debe ser cancelado</span>
                         </div>
                     </div>
                 </form>
+            #{/else}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Ingresar Pago</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            #{if mensualidad !=null && !mensualidad.montoCancelado.equals(contrato.tipoPlan.valorTotalPlan)}
+                <button type="button" class="btn btn-success">Ingresar Pago</button>
+            #{/if}
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#numeroBoleta,#montoMensualidad").keypress(function (e) {
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+    });
+</script>

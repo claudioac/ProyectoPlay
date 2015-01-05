@@ -27,6 +27,8 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
 
     public Long montoCancelado;
 
+    public Long numeroBoleta;
+
     public Contrato getContrato() {
         return contrato;
     }
@@ -59,9 +61,28 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
         this.montoCancelado = montoCancelado;
     }
 
+    public Long getNumeroBoleta() {
+        return numeroBoleta;
+    }
+
+    public void setNumeroBoleta(Long numeroBoleta) {
+        this.numeroBoleta = numeroBoleta;
+    }
+
     public static List<Mensualidad> mensualidadesByAltkeyCliente(String altKey) {
         Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
         List<Mensualidad> mensualidades = JPA.em().createQuery("SELECT m from Mensualidad m where m.contrato=?1",Mensualidad.class).setParameter(1,contrato).setMaxResults(12).getResultList();
         return mensualidades;
+    }
+
+    public static Mensualidad lastMensualidadByAltkeyCliente(String altKey){
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        try {
+            Mensualidad mensualidad = JPA.em().createQuery("SELECT m from Mensualidad m where m.contrato=?1 order by m.id desc",Mensualidad.class).setParameter(1,contrato).setMaxResults(1).getSingleResult();
+            return mensualidad;
+        }catch (NoResultException e){
+            return null;
+        }
+
     }
 }
