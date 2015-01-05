@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by claudio on 29-12-14.
+ * @author Alonso Rivera.
  */
 public class ErrorJSON {
     public List<String> globalErrors = new ArrayList<String>();

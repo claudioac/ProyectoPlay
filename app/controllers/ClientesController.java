@@ -3,7 +3,8 @@ package controllers;
 import controllers.variblesEstaticas.NacionalidadDTO;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
-import models.ClasesDTO.Cliente;
+import models.ClasesDTO.*;
+import models.Mensualidad;
 import models.error.ErrorJSON;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
@@ -238,6 +239,16 @@ public class ClientesController extends Controller {
         contrato1.save();
         renderJSON(plan);
 
+    }
+
+    public static void pagoMensualidad(models.ClasesDTO.Mensualidad mensualidad,String personaAltkey){
+        Validation.required("mensualidad.fechaPago",mensualidad.fechaPago);
+        Validation.required("mensualidad.montoCancelado",mensualidad.montoCancelado);
+        Validation.required("mensualidad.numeroBoleta",mensualidad.numeroBoleta);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
     }
 
 }

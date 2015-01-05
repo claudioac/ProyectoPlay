@@ -26,6 +26,7 @@ POST   /descartarRegistro                                    ClientesController.
 POST   /editarCliente                                        ClientesController.editarCliente
 GET    /fichaCliente/{altKey}                                ClientesController.fichaDeCliente
 GET    /buscarMensualidades/{altKey}                         ClientesController.buscarMensualidades
+POST   /pagoMensualidad                                      ClientesController.pagoMensualidad
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 

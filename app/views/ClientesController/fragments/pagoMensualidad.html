@@ -14,7 +14,7 @@
                 </div>
             #{/if}
             #{else }
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="mensualidadForm">
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="fechaVencimiento">Fecha de Vencimiento&nbsp;:</label>
 
@@ -30,15 +30,15 @@
                         <label class="col-md-4 control-label" for="numeroBoleta">Nº de Boleta&nbsp;:</label>
 
                         <div class="col-md-5">
-                            <input id="numeroBoleta" name="numeroBoleta" type="text" placeholder=""
+                            <input id="numeroBoleta" name="mensualidad.numeroBoleta" type="text" placeholder=""
                                    class="form-control input-md">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="fechaDePago">Fecha de Pago&nbsp;:</label>
+                        <label class="col-md-4 control-label" for="fechaPago">Fecha de Pago&nbsp;:</label>
 
                         <div class="col-md-5">
-                            <input id="fechaDePago" name="fechaDePago" type="text"
+                            <input id="fechaDePago" name="mensualidad.fechaPago" type="text"
                                    class="form-control input-md datepicker">
                         </div>
                     </div>
@@ -46,28 +46,52 @@
                         <label class="col-md-4 control-label" for="montoMensualidad">Monto a Cancelar&nbsp;:</label>
 
                         <div class="col-md-5">
-                        <input id="montoMensualidad" name="montoMensualidad" type="text"
+                        <input id="montoMensualidad" name="mensualidad.montoCancelado" type="text"
                                class="form-control input-md" placeholder="#{if contrato !=null}#{if mensualidad != null}${mensualidad.montoCancelado.formatCurrency('CLP').raw()}#{/if}#{else }${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}#{/else}#{/if}">
                             <span class="help-block">Monto que debe ser cancelado</span>
                         </div>
                     </div>
+                    <input type="hidden" name="personaAltkey" value="${cliente.altKey}"/>
                 </form>
             #{/else}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             #{if mensualidad !=null && !mensualidad.montoCancelado.equals(contrato.tipoPlan.valorTotalPlan)}
-                <button type="button" class="btn btn-success">Ingresar Pago</button>
+                <button type="button" class="btn btn-success" id="pagar">Ingresar Pago&nbsp;<i class="fa fa-money"></i></button>
             #{/if}
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    var $mensualidadForm = $('#mensualidadForm');
     $("#numeroBoleta,#montoMensualidad").keypress(function (e) {
         var charCode = (e.which) ? e.which : e.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
     });
+    $("#pagar").click(function(){
+        $.post("/pagoMensualidad",$mensualidadForm.serialize(),function(){
+
+        }).fail(function(resp){
+            if (resp.status == 400) {
+                $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                    var $input = $(":input[name='" + name + "']", $mensualidadForm);
+                    $input.closest("div.form-group").addClass("has-error");
+                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                    $.each(errors,function(i,elem){
+                        var $li = $("<li class='text-danger'/>");
+                        $li.text(elem);
+                        $ul.append($li);
+                    });
+                    $input.after($ul);
+                    console.log(errors);
+                });
+                console.log(resp.responseJSON);
+            }
+        });
+    });
+
 </script>
