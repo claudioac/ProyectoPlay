@@ -108,7 +108,8 @@
                         </div>
                         <div class="col-xs-4  col-lg-4">
                             <button type="button" class="btn btn-danger" id="descartarCliente">Descartar</button>
-                            <button type="button" class="btn btn-success disabled" id="completarRegistro">Completar Registro <i
+                            <button type="button" class="btn btn-success disabled" data-toggle="modal"
+                                    data-target="#pagoMensualidad" id="completarRegistro">Completar Registro <i
                                     class="fa fa-check"></i></button>
                         </div>
                     </div>
@@ -120,6 +121,7 @@
 </div>
 
 #{include 'ClientesController/fragments/editCliente.html'/}
+#{include 'ClientesController/fragments/pagoMensualidad.html'/}
 #{i18n /}
 <script type="text/javascript">
     var personaAltKey = $("#personaAltKey").val();
@@ -132,13 +134,7 @@
         window.open("/reglamento");
     });
 
-    $("#completarRegistro").click(function () {
-        bootbox.confirm("¿Desea Completar Este Registro?", function (result) {
-            if (result) {
-                location.href = "completarRegistro/"+personaAltKey;
-            }
-        });
-    });
+
 
     $("#descartarCliente").click(function () {
         bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
@@ -205,6 +201,29 @@
                     });
                     console.log(resp.responseJSON);
                 }
+            }
+        });
+    });
+
+    $("#pagar").click(function(){
+        $.post("/pagoMensualidad",$mensualidadForm.serialize(),function(){
+            $("#pagoMensualidad").modal('toggle');
+            location.href = "/fichaCliente/"+personaAltKey;
+        }).fail(function(resp){
+            if (resp.status == 400) {
+                $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                    var $input = $(":input[name='" + name + "']", $mensualidadForm);
+                    $input.closest("div.form-group").addClass("has-error");
+                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                    $.each(errors,function(i,elem){
+                        var $li = $("<li class='text-danger'/>");
+                        $li.text(elem);
+                        $ul.append($li);
+                    });
+                    $input.after($ul);
+                    console.log(errors);
+                });
+                console.log(resp.responseJSON);
             }
         });
     });

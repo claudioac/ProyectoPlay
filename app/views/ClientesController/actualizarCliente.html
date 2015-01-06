@@ -115,7 +115,8 @@
                         </div>
                         <div class="col-xs-5  col-lg-5">
                             <button type="button" class="btn btn-danger help" title="&{'elimnarCliente'}" id="descartarCliente">Eliminar Persona <i class="fa fa-trash-o"></i></button>
-                            <button type="button" class="btn btn-success help" title="&{'cambioContrato'}" id="completarRegistro">Finalizar Cambio de Contrato<i
+                            <button type="button" class="btn btn-success help disabled" data-toggle="modal"
+                                    data-target="#pagoMensualidad" title="&{'cambioContrato'}" id="completarRegistro">Cancelar Primera Mensualidad.<i
                                         class="fa fa-check"></i></button>
                         </div>
                     </div>
@@ -136,6 +137,7 @@
 </div>
 
 #{include 'ClientesController/fragments/editCliente.html'/}
+#{include 'ClientesController/fragments/pagoMensualidad.html'/}
 #{i18n /}
 <script type="text/javascript">
     var personaAltKey = $("#personaAltKey").val();
@@ -148,35 +150,6 @@
         window.open("/reglamento");
     });
 
-    $("#completarRegistro").click(function () {
-        bootbox.confirm(i18n('confirmacion.NuevoContrato'), function (result) {
-            if (result) {
-                $.get("/completarRegistro/"+personaAltKey,function(){
-                    $("#completarRegistro").addClass("disabled");
-                    $.growl({
-                        icon: "glyphicon glyphicon-ok-circle",
-                        title: "&nbsp;<strong>Cambio Exitoso</strong><br>",
-                        message: i18n('primera.mensualidad')
-                    },{
-                        element: 'body',
-                        type: "success",
-                        placement : {
-                            form: "top",
-                            align: "center"
-                        },
-                        spacing: 10,
-                        offset: 20,
-                        z_index: 1031,
-                        delay: 6000,
-                        animate: {
-                            enter: 'animated fadeInRight',
-                            exit: 'animated fadeOutLeft'
-                        }
-                    });
-                });
-            }
-        });
-    });
 
     $("#descartarCliente").click(function () {
         bootbox.confirm("¿Esta seguro de  descartar este nuevo registro?", function (result) {
@@ -243,6 +216,29 @@
                     });
                     console.log(resp.responseJSON);
                 }
+            }
+        });
+    });
+
+    $("#pagar").click(function(){
+        $.post("/pagoMensualidad",$mensualidadForm.serialize(),function(){
+            $("#pagoMensualidad").modal('toggle');
+            location.href = "/fichaCliente/"+personaAltKey;
+        }).fail(function(resp){
+            if (resp.status == 400) {
+                $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                    var $input = $(":input[name='" + name + "']", $mensualidadForm);
+                    $input.closest("div.form-group").addClass("has-error");
+                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                    $.each(errors,function(i,elem){
+                        var $li = $("<li class='text-danger'/>");
+                        $li.text(elem);
+                        $ul.append($li);
+                    });
+                    $input.after($ul);
+                    console.log(errors);
+                });
+                console.log(resp.responseJSON);
             }
         });
     });

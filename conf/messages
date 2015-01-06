@@ -16,7 +16,7 @@ nuevoCliente=¿Esta seguro de registrar ah este nuevo Cliente?
 elimnarCliente=Acción que elimina todo registro de la persona.
 registro.personal.interno= El registro fue creado existosamente.
 registro.cliente.descartar = El registro recientemente ingresado fue eliminado correctamente.
-cambioContrato= Una vez cambiado el tipo de contrato debe ser finalizado para crear la primera mensualidad que debe ser cancelada
+cambioContrato= Una vez cambiado el tipo de contrato el cliente tiene el deber de pagar la primera mensualidad de su membresia inicial.
 confirmacion.NuevoContrato= Se creara una nueva mensualidad asociado al contrato que es especificado. ¿Desea continuar con la operación?
 
 mensualidades.nulas = El cliente en especifico no registra mensualidades pagadas.

@@ -180,25 +180,25 @@ public class ClientesController extends Controller {
         persona.save();
     }
 
-    public static void completarRegistro(String altKeyPersona) {
-        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyPersona);
-        mesualidadInicial(contrato);
-        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
-            redirect("/admin/clientes");
-        }
-    }
-
-    private static void mesualidadInicial(Contrato contrato) {
-        Mensualidad mensualidad = new Mensualidad();
-        mensualidad.setContrato(contrato);
-        mensualidad.setFechaPago(contrato.getFechaCreacion());
-        Calendar vencimiento = Calendar.getInstance();
-        vencimiento.setTime(contrato.getFechaCreacion());
-        vencimiento.add(Calendar.MONTH, 1);
-        mensualidad.setFechaVencimiento(vencimiento.getTime());
-        mensualidad.setMontoCancelado(contrato.getTipoPlan().getValorMensualidad());
-        mensualidad.save();
-    }
+//    public static void completarRegistro(String altKeyPersona) {
+//        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyPersona);
+//        mesualidadInicial(contrato);
+//        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
+//            redirect("/admin/clientes");
+//        }
+//    }
+//
+//    private static void mesualidadInicial(Contrato contrato) {
+//        Mensualidad mensualidad = new Mensualidad();
+//        mensualidad.setContrato(contrato);
+//        mensualidad.setFechaPago(contrato.getFechaCreacion());
+//        Calendar vencimiento = Calendar.getInstance();
+//        vencimiento.setTime(contrato.getFechaCreacion());
+//        vencimiento.add(Calendar.MONTH, 1);
+//        mensualidad.setFechaVencimiento(vencimiento.getTime());
+//        mensualidad.setMontoCancelado(contrato.getTipoPlan().getValorMensualidad());
+//        mensualidad.save();
+//    }
 
     public static void fichaDeCliente(String altKey){
         Persona cliente = Persona.findPersonabyAltKey(altKey);

@@ -47,17 +47,17 @@
 
                         <div class="col-md-5">
                         <input id="montoMensualidad" name="mensualidad.montoCancelado" type="text"
-                               class="form-control input-md" placeholder="#{if contrato !=null}#{if mensualidad != null}${mensualidad.montoCancelado.formatCurrency('CLP').raw()}#{/if}#{else }${contrato.tipoPlan.valorTotalPlan.formatCurrency('CLP').raw()}#{/else}#{/if}">
+                               class="form-control input-md" placeholder="#{if contrato !=null}#{if mensualidad != null}${mensualidad.montoCancelado.formatCurrency('CLP').raw()}#{/if}#{else }${contrato.tipoPlan.valorMensualidad.formatCurrency('CLP').raw()}#{/else}#{/if}">
                             <span class="help-block">Monto que debe ser cancelado</span>
                         </div>
                     </div>
-                    <input type="hidden" name="personaAltkey" value="${cliente.altKey}"/>
+                    <input type="hidden" name="personaAltkey" value="${cliente != null ? cliente.altKey:persona.altKey}"/>
                 </form>
             #{/else}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-            #{if mensualidad !=null && !mensualidad.montoCancelado.equals(contrato.tipoPlan.valorTotalPlan)}
+            #{if mensualidad == null || !mensualidad.montoCancelado.equals(contrato.tipoPlan.valorTotalPlan)}
                 <button type="button" class="btn btn-success" id="pagar">Ingresar Pago&nbsp;<i class="fa fa-money"></i></button>
             #{/if}
             </div>
