@@ -249,6 +249,18 @@ public class ClientesController extends Controller {
             response.status = Http.StatusCode.BAD_REQUEST;
             renderJSON(ErrorJSON.fromValidation());
         }
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(personaAltkey);
+        Mensualidad pago = new Mensualidad();
+        pago.setContrato(contrato);
+        pago.setFechaPago(mensualidad.fechaPago);
+        Calendar vencimiento = Calendar.getInstance();
+        vencimiento.setTime(mensualidad.fechaPago);
+        vencimiento.add(Calendar.MONTH, 1);
+        pago.setFechaVencimiento(vencimiento.getTime());
+        pago.setMontoCancelado(mensualidad.montoCancelado);
+        pago.setNumeroBoleta(mensualidad.numeroBoleta);
+        pago.save();
+
     }
 
 }

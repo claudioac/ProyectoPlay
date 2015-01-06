@@ -65,33 +65,20 @@
     </div>
 </div>
 <script type="text/javascript">
+
+    $('#fechaDePago').datepicker({
+        format: "dd/mm/yyyy",
+        startDate: "0",
+        language: 'es',
+        autoclose: true
+    });
+
     var $mensualidadForm = $('#mensualidadForm');
     $("#numeroBoleta,#montoMensualidad").keypress(function (e) {
         var charCode = (e.which) ? e.which : e.keyCode;
         if (charCode > 31 && (charCode < 48 || charCode > 57)) {
             return false;
         }
-    });
-    $("#pagar").click(function(){
-        $.post("/pagoMensualidad",$mensualidadForm.serialize(),function(){
-
-        }).fail(function(resp){
-            if (resp.status == 400) {
-                $.each(resp.responseJSON.fieldErrors, function(name, errors){
-                    var $input = $(":input[name='" + name + "']", $mensualidadForm);
-                    $input.closest("div.form-group").addClass("has-error");
-                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
-                    $.each(errors,function(i,elem){
-                        var $li = $("<li class='text-danger'/>");
-                        $li.text(elem);
-                        $ul.append($li);
-                    });
-                    $input.after($ul);
-                    console.log(errors);
-                });
-                console.log(resp.responseJSON);
-            }
-        });
     });
 
 </script>
