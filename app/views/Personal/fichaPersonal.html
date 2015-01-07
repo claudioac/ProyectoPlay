@@ -1,0 +1,80 @@
+<div class="page-header">
+    <h2>Ficha de Trabajo&nbsp;&nbsp;&nbsp;<small>ficha personal interno del gimnasio</small></h2>
+</div>
+
+<div class="row">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 text-center">
+                        <img src="@{'/public/images/photo.png'}" alt=""
+                             class="center-block img-circle img-responsive">
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-8">
+                        <h3 class="text-center">${personal.nombres}&nbsp;${personal.apellidoPaterno}
+                            &nbsp;${personal.apellidoMaterno}</h3>
+                        <hr/>
+                        <p><strong>Rut: </strong> ${personal.rut} </p>
+
+                        <p><strong>Fecha
+                            Nacimiento: </strong> ${personal.fechaNacimiento.format("dd MMMM yyyy","es")}
+                        </p>
+
+                        <p><strong>Sexo: </strong> #{if personal.genero == 0}
+                            Masculino
+                        #{/if}
+                        #{else }
+                            Femenino
+                        #{/else} </p>
+
+                        <p><strong>Dirección: </strong> ${personal.direccion}</p>
+
+                        <p><strong>Comuna: </strong> ${personal.comuna.nombre}</p>
+
+                        <p><strong>E-mail: </strong> <a
+                                href="mailto:${personal.usuario.email}">${personal.usuario.email}</a></p>
+
+                        <p><strong>Telefono Fijo: </strong> ${personal.telefono}</p>
+
+                        <p><strong>Celular: </strong> ${personal.celular}</p>
+                    </div>
+                    <!--/col-->
+
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                    </div>
+
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                    </div>
+                    <!--/col-->
+                    <div class="col-xs-12 col-sm-4">
+                        <br/>
+                        <button type="button" class="btn btn-primary btn-block dropdown-toggle"
+                                aria-expanded="false"
+                                data-toggle="dropdown"
+                                id="opciones"><span class="fa fa-gear"></span> Opciones <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li role="presentation"><a
+                                    href="#"><i
+                                    class="fa fa-recycle"></i>&nbsp;Actualizar Antecedentes Personales</a></li>
+                        </ul>
+                    </div>
+                    <!--/col-->
+                </div>
+                <!--/row-->
+            </div>
+            <!--/panel-body-->
+        </div>
+        <!--/panel-->
+    </div>
+</div>
+
+<div class="bs-callout bs-callout-danger">
+    <h4 class="text-center">Horario</h4>
+    <hr/>
+</div>

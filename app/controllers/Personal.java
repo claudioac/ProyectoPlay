@@ -86,4 +86,11 @@ public class Personal extends Controller {
         persona.save();
     }
 
+    public static void fichaPersonalInterno(String altKey){
+        Persona personal = Persona.findPersonabyAltKey(altKey);
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/Personal/fichaDePersonal.html",personal);
+        }
+    }
+
 }

@@ -27,6 +27,7 @@ POST   /editarCliente                                        ClientesController.
 GET    /fichaCliente/{altKey}                                ClientesController.fichaDeCliente
 GET    /buscarMensualidades/{altKey}                         ClientesController.buscarMensualidades
 POST   /pagoMensualidad                                      ClientesController.pagoMensualidad
+GET    /fichaPersonalInterno/{altKey}                        Personal.fichaPersonalInterno
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 
