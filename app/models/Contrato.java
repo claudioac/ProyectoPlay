@@ -24,6 +24,9 @@ public class Contrato extends EntidadIdAutoLongAltKey {
 
     public boolean vigente;
 
+    @ManyToOne
+    public ContratoEstado estado;
+
     public TipoPlan getTipoPlan() {
         return tipoPlan;
     }

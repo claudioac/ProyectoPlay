@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.cruds.Regiones;
 import controllers.variblesEstaticas.NacionalidadDTO;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
@@ -11,6 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -92,5 +94,14 @@ public class Personal extends Controller {
             renderTemplate("InicioAdmin/Personal/fichaDePersonal.html",personal);
         }
     }
+
+    public static void actualizarPersonalInterno(String altKey){
+        Persona personal = Persona.findPersonabyAltKey(altKey);
+        List<Region> regiones = Region.getAllRegiones();
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/Personal/actualizarPersonalAdmin.html",personal,regiones);
+        }
+    }
+
 
 }

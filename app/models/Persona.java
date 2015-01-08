@@ -63,7 +63,7 @@ public class Persona extends EntidadIdAutoLongAltKey {
     @ManyToOne
     public TipoUsuario tipoUsuario;
 
-    @OneToMany(mappedBy = "persona")
+    @OneToMany(mappedBy = "persona", cascade = {CascadeType.REMOVE})
     public List<Horario> horarios;
 
 

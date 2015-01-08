@@ -39,6 +39,7 @@
                         <p><strong>Telefono Fijo: </strong> ${personal.telefono}</p>
 
                         <p><strong>Celular: </strong> ${personal.celular}</p>
+                        <p class="text-success"><Strong>Cargo:</Strong> ${personal.tipoUsuario.tipoUsuario.toUpperCase()}</p>
                     </div>
                     <!--/col-->
 
@@ -60,7 +61,7 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" role="menu">
                             <li role="presentation"><a
-                                    href="#"><i
+                                    href="@{Personal.actualizarPersonalInterno(personal.altKey)}"><i
                                     class="fa fa-recycle"></i>&nbsp;Actualizar Antecedentes Personales</a></li>
                         </ul>
                     </div>
@@ -72,9 +73,4 @@
         </div>
         <!--/panel-->
     </div>
-</div>
-
-<div class="bs-callout bs-callout-danger">
-    <h4 class="text-center">Horario</h4>
-    <hr/>
 </div>

@@ -1,0 +1,214 @@
+<div class="modal fade" id="editPersonal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i>&nbsp;Editar</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@{ClientesController.editarCliente()}" id="editarPersonalForm">
+                    <input type="hidden" value="${personal.altKey}" name="cliente.altKey"/>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="nombres">Nombres :</label>
+                            <div class="col-md-8">
+                                <input id="nombres" name="cliente.nombres" type="text" placeholder="Nombres" value="${personal.nombres}" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="rut">R.U.T :</label>
+
+                            <div class="col-md-8">
+                                <input id="rut" name="cliente.rut" type="text" placeholder="Rut" class="form-control input-md" value="${personal.rut}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="apellidoPaterno">Apellido Paterno: </label>
+
+                            <div class="col-md-8">
+                                <input id="apellidoPaterno" name="cliente.apellidoPaterno" type="text" placeholder="Apellido Paterno"
+                                       class="form-control input-md" value="${personal.apellidoPaterno}">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="apellidoMaterno">Apellido Materno:</label>
+
+                            <div class="col-md-8">
+                                <input id="apellidoMaterno" name="cliente.apellidoMaterno" type="text" placeholder="Apellido Materno"
+                                       class="form-control input-md" value="${personal.apellidoMaterno}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento:</label>
+
+                            <div class="col-md-8">
+                                <input id="fechaNacimiento1" name="fechaNacimiento" type="text" value="${personal.fechaNacimiento.format('dd/MM/yyyy','es')}"
+                                       class="form-control input-md datepicker" >
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="sexo">Sexo:</label>
+
+                            <div class="col-md-4">
+                                <div class="radio">
+                                    <label for="sexo-0">
+                                        <input type="radio" name="cliente.genero" id="sexo-0" value="0" ${personal.genero == 0?"checked":""} >
+                                        Masculino
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label for="sexo-1">
+                                        <input type="radio" name="cliente.genero" id="sexo-1" value="1" ${personal.genero == 1?"checked":""}>
+                                        Femenino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="region">Region:</label>
+                            <div class="col-md-8">
+                                <select id="region" name="cliente.region" class="form-control" >
+                                    <option value="">Seleccione..</option>
+                                #{list items:regiones, as:'region'}
+                                    <option value="${region.id}" selected="${personal.region.id}">${region.nombre}</option>
+                                #{/list}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="provincia">Provincia:</label>
+                            <div class="col-md-8">
+                                <select id="provincia" name="cliente.provincia"  class="form-control">
+                                    <option value="${personal.provincia.id}" >${personal.provincia.nombre}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="comuna">Comuna:</label>
+
+                            <div class="col-md-8">
+                                <select id="comuna" name="cliente.comuna" class="form-control">
+                                    <option value="${personal.comuna.id}">${personal.comuna.nombre}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-4 control-label" for="direccion">Dirección:</label>
+                            <div class="col-md-8 col-md-pull-2">
+                                <input id="direccion" name="cliente.direccion" type="text" placeholder="Dirección" class="form-control" value="${personal.direccion}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="telefono">Telefono:</label>
+
+                            <div class="col-md-8">
+                                <input id="telefono" name="cliente.telefono" type="text" placeholder="Telefono" class="form-control input-md" value="${personal.telefono}">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-4 control-label" for="celular">Celular:</label>
+
+                            <div class="col-md-8">
+                                <input id="celular" name="cliente.celular" type="text" placeholder="Celular" class="form-control input-md" value="${personal.celular}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-4 control-label" for="email">E-mail:</label>
+                            <div class="col-md-8 col-md-pull-2">
+                                <input id="email" name="cliente.email" type="text" placeholder="E-mail" class="form-control" value="${personal.usuario.email}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="editarPersonal" class="btn btn-success">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+
+        $('#fechaNacimiento1').datepicker({
+            endDate: "0",
+            language: 'es',
+            autoclose: true
+        });
+
+
+        $("#region").change(function(){
+            var idRegion = $("#region").val();
+            var selectProvincia = $("#provincia");
+            var selectComuna = $("#comuna");
+            if(idRegion == ''){
+                selectProvincia.empty();
+                selectComuna.empty();
+                selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+            }
+            $.ajax({
+                url: "/admin/provincias/"+idRegion,
+                method: "GET",
+                success: function(provincias){
+                    selectProvincia.empty();
+                    selectComuna.empty();
+                    selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                    selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+                    $.each(provincias,function(k,value){
+                        selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
+                    });
+                }
+            });
+        });
+
+        $("#provincia").change(function(){
+            var idProvincia = $("#provincia").val();
+            var selectComuna = $("#comuna");
+            if(idProvincia == ''){
+                selectComuna.empty();
+                selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+            }
+            $.ajax({
+                url: "/admin/comunas/"+idProvincia,
+                method: "GET",
+                success: function(comunas){
+                    selectComuna.empty();
+                    $.each(comunas,function(k,value){
+                        selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
+                    });
+                }
+            });
+        });
+        $("#rut").Rut({
+            on_error: function(){
+                bootbox.alert("Rut no valido",function(){
+                    $("#rut").val('');
+                });
+            }
+        });
+    })
+
+
+</script>

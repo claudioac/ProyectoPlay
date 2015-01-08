@@ -1,0 +1,124 @@
+<div class="page-header">
+    <h2>Actualización de Datos
+        <small>cambio de planes y/o información personal.</small>
+    </h2>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-12 col-xs-offset-0 col-sm-offset-0">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>${personal.nombres}&nbsp;${personal.apellidoPaterno}
+                        &nbsp;${personal.apellidoMaterno}</strong> <a href="#" data-toggle="modal"
+                                                                     data-target="#editPersonal" class="help pull-right"
+                                                                     title="Editar"><span
+                            class="glyphicon glyphicon-pencil"></span></a></h3>
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"><img alt="User Pic"
+                                                                            src="@{'/public/images/photo.png'}"
+                                                                            class="img-circle"></div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>Rut:</td>
+                                    <td>${personal.rut}</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td>Genero:</td>
+                                    <td>
+                                    #{if personal.genero == 0}
+                                        Masculino
+                                    #{/if}
+                                    #{else }
+                                        Femenino
+                                    #{/else}</td>
+                                </tr>
+                                <tr>
+                                    <td>Edad:</td>
+                                    <td>${anos} &nbsp;años</td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>${personal.direccion}</td>
+                                </tr>
+                                <tr>
+                                    <td>Comuna:</td>
+                                    <td>${personal.comuna.nombre}</td>
+                                </tr>
+                                <tr>
+                                    <td>Email:</td>
+                                    <td><a href="mailto:${personal.usuario.email}">${personal.usuario.email}</a></td>
+                                </tr>
+                                <td>Telefonos:</td>
+                                <td>${personal.telefono}&nbsp;&nbsp;<i class="fa fa-phone-square help"
+                                                                      title="Red Fija"></i><br><br>${personal.celular}
+                                    &nbsp;&nbsp;<i class="fa fa-mobile-phone help" title="Celular"></i>
+                                </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <input type="hidden" id="personalAltKey" value="${personal.altKey}"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-10  col-lg-10" align="center">
+                        </div>
+                        <div class="col-xs-2  col-lg-2">
+                            <button type="button" class="btn btn-danger help" title="&{'elimnarCliente'}" id="descartarCliente">Eliminar Profesional <i class="fa fa-trash-o"></i></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2 col-lg-2">
+                            <a href="@{personal.fichapersonalInterno(personal.altKey)}">
+                                <button type="button" class="btn btn-primary">Volver</button>
+                            </a>
+                        </div>
+                        <div class="col-xs-10 col-lg-10">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+#{include 'Personal/fragments/editPersonal.html'/}
+<script type="text/javascript">
+    var $clienteEditarForm = $("#editarPersonalForm");
+    $("#editarPersonal").click(function () {
+        $.ajax({
+            url: "@{ClientesController.editarCliente()}",
+            method: "POST",
+            data: $clienteEditarForm.serialize(),
+            success: function () {
+                console.log("asdas");
+                $("#editCliente").modal('toggle');
+                location.reload();
+            },
+            error: function (resp) {
+                if (resp.status == 400) {
+                    $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                        var $input = $(":input[name='" + name + "']", $clienteEditarForm);
+                        $input.closest("div.form-group").addClass("has-error");
+                        var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                        $.each(errors, function (i, elem) {
+                            var $li = $("<li class='text-danger'/>");
+                            $li.text(elem);
+                            $ul.append($li);
+                        });
+                        $input.after($ul);
+                        console.log(errors);
+                    });
+                    console.log(resp.responseJSON);
+                }
+            }
+        });
+    });
+</script>

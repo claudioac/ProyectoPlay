@@ -60,10 +60,8 @@
         <br/>
         <table ng-table="tablaClientes" class="table table-hover table-bordered">
             <tr ng-repeat="per in $data">
-                <td data-title="'Nombres'"  sortable="'nombres'">{{per.nombres}}</td>
-                <td data-title="'Apellido Paterno'">{{per.apellidoPaterno}}</td>
-                <td data-title="'Apellido Materno'">{{per.apellidoMaterno}}</td>
-                <td data-title="'Rut'" sortable="'rut'">{{per.rut}}</td>
+                <td data-title="'Nombres'" class="text-center" sortable="'nombres'">{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
+                <td data-title="'Rut'" class="text-center" sortable="'rut'">{{per.rut}}</td>
                 <td data-title="'Acción'" class="text-center"><a href="/fichaCliente/{{per.altKey}}"><i class="fa fa-search help" title="Ver Cliente"></i></a></td>
             </tr>
         </table>
