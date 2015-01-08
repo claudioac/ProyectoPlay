@@ -1,9 +1,10 @@
 package models.ClasesDTO;
 
+
 /**
  * @author Claudio Acuña
  */
-public class Personal {
+public class PersonaDTO {
 
     public String nombres;
     public String apellidoPaterno;
@@ -11,9 +12,9 @@ public class Personal {
     public String rut;
     public String altKey;
     public int genero;
+    public Integer comuna;
     public Integer region;
     public Integer provincia;
-    public Integer comuna;
     public String direccion;
     public String telefono;
     public String celular;
@@ -67,6 +68,14 @@ public class Personal {
         this.genero = genero;
     }
 
+    public Integer getComuna() {
+        return comuna;
+    }
+
+    public void setComuna(Integer comuna) {
+        this.comuna = comuna;
+    }
+
     public Integer getRegion() {
         return region;
     }
@@ -81,14 +90,6 @@ public class Personal {
 
     public void setProvincia(Integer provincia) {
         this.provincia = provincia;
-    }
-
-    public Integer getComuna() {
-        return comuna;
-    }
-
-    public void setComuna(Integer comuna) {
-        this.comuna = comuna;
     }
 
     public String getDireccion() {

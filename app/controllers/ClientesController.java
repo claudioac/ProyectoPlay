@@ -5,6 +5,7 @@ import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.ClasesDTO.*;
 import models.Mensualidad;
+import models.Persona;
 import models.error.ErrorJSON;
 import org.joda.time.Instant;
 import org.joda.time.LocalDate;
@@ -211,7 +212,7 @@ public class ClientesController extends Controller {
 
     public static void buscarMensualidades(String altKey){
         List<Mensualidad>  mensualidades = Mensualidad.mensualidadesByAltkeyCliente(altKey);
-        renderJSON(mensualidades);
+        renderJSON(Mensualidad.mensualidadesListDTO(mensualidades));
     }
 
     public static void actualizarCliente(String altKey){

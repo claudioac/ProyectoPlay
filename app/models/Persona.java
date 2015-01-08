@@ -1,19 +1,19 @@
 package models;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
-import play.data.validation.Required;
+import models.ClasesDTO.PersonaDTO;
 import play.db.jpa.JPA;
-import play.db.jpa.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * @author Claudio Acuña
- *
- *
- * Entidad Persona
+ *         <p/>
+ *         <p/>
+ *         Entidad Persona
  */
 @Entity
 @SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_login")
@@ -35,19 +35,19 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     /**
      * Genero 0.- Masculino
-     *        1.- Femenino
+     * 1.- Femenino
      */
     public int genero;
 
     public String direccion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public Region region;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public Provincia provincia;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     public Comuna comuna;
 
     @ManyToOne
@@ -63,9 +63,13 @@ public class Persona extends EntidadIdAutoLongAltKey {
     @ManyToOne
     public TipoUsuario tipoUsuario;
 
+    @OneToMany(mappedBy = "persona")
+    public List<Horario> horarios;
+
 
     /**
      * Setter y Getters de atributos
+     *
      * @return
      */
 
@@ -201,28 +205,73 @@ public class Persona extends EntidadIdAutoLongAltKey {
     /**
      * Funciones JPA
      */
-    public static Persona checkUsuario(String Usuario){
-          Persona usuario = JPA.em().createQuery("Select p from Persona p where p.usuario.usuario=?1",Persona.class).setParameter(1,Usuario).getSingleResult();
+    public static Persona checkUsuario(String Usuario) {
+        Persona usuario = JPA.em().createQuery("Select p from Persona p where p.usuario.usuario=?1", Persona.class).setParameter(1, Usuario).getSingleResult();
         return usuario;
     }
 
-    public static Persona findPersonabyAltKey(String altKey){
-        return find("altKey",altKey).first();
+    public static Persona findPersonabyAltKey(String altKey) {
+        Persona persona = find("altKey", altKey).first();
+        return persona;
     }
 
-    public static Persona findPersonaByRut(String rut){
-        return find("rut",rut).first();
+
+    public static PersonaDTO findPersonaDTObyAltKey(String altKey) {
+        Persona persona = find("altKey", altKey).first();
+        return persona.toPersonaDTO();
     }
 
-    public static List<Persona> getAllPersonas(){
-        return findAll();
+
+    public static Persona findPersonaByRut(String rut) {
+        return find("rut", rut).first();
     }
 
-    public static List<Persona> getAllClientes(){
-        return JPA.em().createQuery("Select p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdUsuario).getResultList();
+    public static List<PersonaDTO> getAllPersonas() {
+        List<Persona> persona = JPA.em().createQuery("Select p from Persona p").getResultList();
+        List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
+        for (Persona usr : persona) {
+            resultado.add(usr.toPersonaDTO());
+        }
+        return resultado;
     }
 
-    public static List<Persona> getAllProfesores() {
-        return JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id =?1").setParameter(1,TipoUsuariosDTO.IdProfesor).getResultList();
+    public static List<PersonaDTO> getAllClientes() {
+        List<Persona> persona = JPA.em().createQuery("Select p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdUsuario).getResultList();
+        List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
+        for (Persona usr : persona) {
+            resultado.add(usr.toPersonaDTO());
+        }
+        return resultado;
+    }
+
+    public static List<PersonaDTO> getAllProfesores() {
+        List<Persona> persona = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdProfesor).getResultList();
+        List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
+        for (Persona usr : persona) {
+            resultado.add(usr.toPersonaDTO());
+        }
+        return resultado;
+    }
+
+    public PersonaDTO toPersonaDTO() {
+        PersonaDTO dto = new PersonaDTO();
+        dto.altKey = altKey;
+        dto.setNombres(this.nombres);
+        dto.setApellidoMaterno(this.apellidoMaterno);
+        dto.setApellidoPaterno(this.apellidoPaterno);
+        dto.setCelular(this.celular);
+        dto.setTelefono(this.telefono);
+        if (region != null){
+            dto.setRegion(this.region.getId().intValue());
+        }
+        if (provincia != null){
+            dto.setProvincia(this.provincia.getId().intValue());
+        }
+        dto.setComuna(this.comuna.getId().intValue());
+        dto.setEmail(this.usuario.email);
+        dto.setDireccion(this.direccion);
+        dto.setGenero(this.genero);
+        dto.setRut(this.rut);
+        return dto;
     }
 }

@@ -5,6 +5,7 @@ package models;
 import play.db.jpa.JPA;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -84,5 +85,22 @@ public class Mensualidad extends EntidadIdAutoLongAltKey{
             return null;
         }
 
+    }
+
+    public static List<models.ClasesDTO.Mensualidad> mensualidadesListDTO(List<Mensualidad> list){
+        List<models.ClasesDTO.Mensualidad> dto = new ArrayList<models.ClasesDTO.Mensualidad>();
+        for (Mensualidad mensualidad : list) {
+            dto.add(mensualidad.toMensualidadDTO());
+        }
+        return dto;
+    }
+
+    private models.ClasesDTO.Mensualidad toMensualidadDTO() {
+        models.ClasesDTO.Mensualidad dto = new models.ClasesDTO.Mensualidad();
+        dto.fechaPago = fechaPago;
+        dto.numeroBoleta = numeroBoleta;
+        dto.montoCancelado = montoCancelado;
+        dto.fechaVencimiento = fechaVencimiento;
+        return dto;
     }
 }

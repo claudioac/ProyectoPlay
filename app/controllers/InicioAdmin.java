@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.cruds.TipoUsuarios;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
+import models.ClasesDTO.PersonaDTO;
 import models.Comuna;
 import models.Persona;
 import models.Provincia;
@@ -39,17 +40,17 @@ public class InicioAdmin extends Controller {
     }
 
     public static void getPersonas() {
-        List<Persona> personas = Persona.getAllPersonas();
+        List<PersonaDTO> personas = Persona.getAllPersonas();
         renderJSON(personas);
     }
 
     public static void getClientes() {
-        List<Persona> clientes = Persona.getAllClientes();
+        List<PersonaDTO> clientes = Persona.getAllClientes();
         renderJSON(clientes);
     }
 
     public static void getProfesores() {
-        List<Persona> profesores = Persona.getAllProfesores();
+        List<PersonaDTO> profesores = Persona.getAllProfesores();
         renderJSON(profesores);
     }
 

@@ -12,7 +12,7 @@ GET     /administrador/{altKey}/getPersonas                  InicioAdmin.getPers
 GET     /admin/clientes                                      InicioAdmin.clientes
 GET     /admin/provincias/{idRegion}                         InicioAdmin.getProvincias
 GET     /admin/comunas/{idProvincia}                         InicioAdmin.getComunas
-POST     /buscar/getClientes                                 InicioAdmin.getClientes
+POST    /buscar/getClientes                                 InicioAdmin.getClientes
 GET     /buscar/getProfesores                                InicioAdmin.getProfesores
 GET     /administrador/{altKey}/getPersona/{rut}             InicioAdmin.getPersona
 POST    /admin/registroCliente                               ClientesController.nuevoCliente

@@ -1,6 +1,6 @@
 <div ng-controller="fichaCliente">
     <div class="page-header">
-        <h2 class="text-center"><i>Ficha de Cliente</i></h2>
+        <h2><i>Antecedentes Personales</i>&nbsp;&nbsp;&nbsp;<small>antecedentes personales y contratos asumidos por el cliente</small></h2>
     </div>
     <div class="row">
         <div>
@@ -142,7 +142,7 @@
         <p><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;&nbsp;&nbsp;&{'mensualidades.nulas'}</p>
     </div>
 #{if contrato !=null}
-    <div class="row">
+    <div class="row" id="botonPagar" style="display: none;" ng-show="subTotal() != 0">
         <div class="col-xs-2 col-lg-2">
             <button type="button" class="btn btn-primary" id="cancelarMensualidad" data-toggle="modal"
                     data-target="#pagoMensualidad">Ingresar Pago de Mensualidad <i class="fa fa-money"></i></button>
@@ -211,6 +211,7 @@
                     });
                 } else {
                     $("#mensualidades").show();
+                    $('#botonPagar').show();
                 }
             });
         }
@@ -270,6 +271,5 @@
             }
         });
     });
-
 
 </script>

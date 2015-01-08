@@ -8,7 +8,7 @@ import javax.persistence.*;
  * @author Claudo Acuña
  */
 @MappedSuperclass
-public class EntidadIdAutoLongTipos extends GenericModel {
+public abstract class EntidadIdAutoLongTipos extends GenericModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "idAutonGen")
     @Column(unique = true)
