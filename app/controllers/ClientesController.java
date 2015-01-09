@@ -174,6 +174,8 @@ public class ClientesController extends Controller {
         persona.setCelular(cliente.celular);
         persona.setDireccion(cliente.direccion);
         persona.setGenero(cliente.genero);
+        persona.setRegion(Region.getId(cliente.region));
+        persona.setProvincia(Provincia.getId(cliente.provincia));
         persona.setComuna(Comuna.getId(cliente.comuna));
         persona.setTipoUsuario(TipoUsuario.getById(TipoUsuariosDTO.IdUsuario));
         persona.setNacionalidad(Pais.findNacionalidadById(NacionalidadDTO.CHILENA));

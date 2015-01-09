@@ -1,16 +1,16 @@
 package controllers;
 
-import controllers.cruds.Regiones;
 import controllers.variblesEstaticas.NacionalidadDTO;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.error.ErrorJSON;
 import play.data.binding.As;
 import play.data.validation.Validation;
-import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.Http;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +101,30 @@ public class Personal extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/Personal/actualizarPersonalAdmin.html",personal,regiones);
         }
+    }
+
+    public static void ingresarHorarioProfesional(String altKeyPersona, String horaEntrada, String horaSalida){
+        Validation.required("horaEntrada",horaEntrada);
+        Validation.required("horaSalida",horaSalida);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
+        SimpleDateFormat entrada = new SimpleDateFormat("HH:mm");
+        try {
+            Date horaInicio = entrada.parse(horaEntrada);
+            Date horaTermino = entrada.parse(horaSalida);
+            Persona persona = Persona.findPersonabyAltKey(altKeyPersona);
+            Horario horario = new Horario();
+            horario.setHoraInicio(horaInicio);
+            horario.setHoraTermino(horaTermino);
+            horario.setPersona(persona);
+            horario.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

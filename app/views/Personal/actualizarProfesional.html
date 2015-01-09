@@ -59,7 +59,14 @@
                                                                       title="Red Fija"></i><br><br>${personal.celular}
                                     &nbsp;&nbsp;<i class="fa fa-mobile-phone help" title="Celular"></i>
                                 </td>
-
+                                </tr>
+                                <tr>
+                                    <td>Horario</td>
+                                    <td>
+                                      <input id="horaInicio" name="horaEntrada" type="text" placeholder="Entrada" class="form-control"style="width: 40%;"><br/>
+                                      <input id="horaSalida" name="horaSalida" type="text" size="1" placeholder="Salida" class="form-control" style="width: 40%;"><br/>
+                                      <button type="button" id="ingresarHorarioProfesional" class="btn btn-success">Ingresar Horario&nbsp;<i class="fa fa-clock-o"></i></button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -119,6 +126,51 @@
                     console.log(resp.responseJSON);
                 }
             }
+        });
+    });
+    $("#horaInicio, #horaSalida").clockpicker({
+     donetext: 'Hecho',
+     autoclose: true
+    });
+
+    $("#ingresarHorarioProfesional").click(function(){
+        $.post("/ingresarHorarioProfesional",{horaEntrada: $("#horaInicio").val(), horaSalida:$("#horaSalida").val(), altKeyPersona: '${personal.altKey}'},function(){
+            bootbox.alert("Guardado Con Exito");
+        }).fail(function(resp){
+            if (resp.status == 400) {
+                $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                    var $input = $(":input[name='" + name + "']");
+                    $input.closest("div.form-group").addClass("has-error");
+                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                    $.each(errors, function (i, elem) {
+                        var $li = $("<li class='text-danger'/>");
+                        $li.text(elem);
+                        $ul.append($li);
+                    });
+                    $input.after($ul);
+                    console.log(errors);
+                });
+                console.log(resp.responseJSON);
+            }
+            $.growl({
+                icon: "glyphicon glyphicon-warning-sign",
+                title: "&nbsp;<strong>Error Interno</strong><br>"
+            }, {
+                element: 'body',
+                type: "danger",
+                placement: {
+                    form: "top",
+                    align: "center"
+                },
+                spacing: 10,
+                offset: 20,
+                z_index: 1031,
+                delay: 6000,
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutLeft'
+                }
+            });
         });
     });
 </script>

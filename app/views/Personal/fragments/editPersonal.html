@@ -46,7 +46,7 @@
                             <label class="col-md-4 control-label" for="fechaNacimiento">Fecha de Nacimiento:</label>
 
                             <div class="col-md-8">
-                                <input id="fechaNacimiento1" name="fechaNacimiento" type="text" value="${personal.fechaNacimiento.format('dd/MM/yyyy','es')}"
+                                <input id="fechaNacimiento1" name="fechaNacimiento" type="text"  value="${personal.fechaNacimiento.format('dd/MM/yyyy','es')}"
                                        class="form-control input-md datepicker" >
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                 <select id="region" name="cliente.region" class="form-control" >
                                     <option value="">Seleccione..</option>
                                 #{list items:regiones, as:'region'}
-                                    <option value="${region.id}" selected="${personal.region.id}">${region.nombre}</option>
+                                    <option value="${region.id}" #{if personal.region != null}${personal.region.id.equals(region.id)? 'selected':''}#{/if}>${region.nombre}</option>
                                 #{/list}
                                 </select>
                             </div>
@@ -85,7 +85,9 @@
                             <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                             <div class="col-md-8">
                                 <select id="provincia" name="cliente.provincia"  class="form-control">
+                                #{if personal.provincia != null}
                                     <option value="${personal.provincia.id}" >${personal.provincia.nombre}</option>
+                                #{/if}#{else }<option value="" >Seleccione..</option>#{/else}
                                 </select>
                             </div>
                         </div>
@@ -154,7 +156,7 @@
         $('#fechaNacimiento1').datepicker({
             endDate: "0",
             language: 'es',
-            autoclose: true
+            pickTime: false
         });
 
 
