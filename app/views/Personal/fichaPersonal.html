@@ -1,5 +1,7 @@
 <div class="page-header">
-    <h2>Ficha de Trabajo&nbsp;&nbsp;&nbsp;<small>ficha personal interno del gimnasio</small></h2>
+    <h2>Ficha de Trabajo&nbsp;&nbsp;&nbsp;
+        <small>ficha personal interno del gimnasio</small>
+    </h2>
 </div>
 
 <div class="row">
@@ -39,7 +41,23 @@
                         <p><strong>Telefono Fijo: </strong> ${personal.telefono}</p>
 
                         <p><strong>Celular: </strong> ${personal.celular}</p>
-                        <p class="text-success"><Strong>Cargo:</Strong> ${personal.tipoUsuario.tipoUsuario.toUpperCase()}</p>
+
+                        <div class="alert alert-warning">
+                            <p class="text-success">
+                                <Strong>Cargo:</Strong> ${personal.tipoUsuario.tipoUsuario.toUpperCase()}</p>
+                            #{ifnot horario}
+                            <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;EL Profesional No Tiene un Horario Asignado</p>
+                            #{/ifnot}#{else }
+                            <p class="text-danger"><Strong>Horario Asignado&nbsp;</Strong>
+                            <ul>
+                            #{list items:horario, as:'h'}
+                                <li>Entrada: &nbsp; ${h.horaInicio}</li>
+                                <li>Salida: &nbsp; ${h.horaTermino}</li>
+                            #{/list}
+                            </ul>
+                            #{/else}
+                            </p>
+                        </div>
                     </div>
                     <!--/col-->
 

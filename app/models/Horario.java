@@ -1,7 +1,10 @@
 package models;
 
+import play.db.jpa.JPA;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -12,6 +15,10 @@ public class Horario extends EntidadIdAutoLong {
 
    @ManyToOne
    public Persona persona;
+
+   @ManyToOne
+   public Clase clase;
+
 
    @Temporal(TemporalType.TIMESTAMP)
    public Date fecha;
@@ -53,5 +60,21 @@ public class Horario extends EntidadIdAutoLong {
 
     public void setHoraTermino(Date horaTermino) {
         this.horaTermino = horaTermino;
+    }
+
+    public static List<Horario> findListHorarioByAltkeyPersona(String altKey) {
+        Persona persona = Persona.findPersonabyAltKey(altKey);
+        List<Horario> horario = JPA.em().createQuery("SELECT h from Horario h where h.persona=?1 order by h.id desc").setParameter(1,persona).setMaxResults(1).getResultList();
+        return horario;
+    }
+
+    public static Horario findHorarioPersonaByAltKey(String altKey) {
+        Persona persona = Persona.findPersonabyAltKey(altKey);
+        try{
+            Horario horario = JPA.em().createQuery("SELECT h from Horario h where h.persona=?1 order by h.id desc",Horario.class).setParameter(1,persona).setMaxResults(1).getSingleResult();
+            return horario;
+        }catch (NoResultException e){
+            return null;
+        }
     }
 }

@@ -63,8 +63,8 @@
                                 <tr>
                                     <td>Horario</td>
                                     <td>
-                                      <input id="horaInicio" name="horaEntrada" type="text" placeholder="Entrada" class="form-control"style="width: 40%;"><br/>
-                                      <input id="horaSalida" name="horaSalida" type="text" size="1" placeholder="Salida" class="form-control" style="width: 40%;"><br/>
+                                      <input id="horaInicio" name="horaEntrada" type="text" value="${horario != null? horario.horaInicio.format("HH:mm"): ''}" placeholder="Entrada" class="form-control"style="width: 40%;"><br/>
+                                      <input id="horaSalida" name="horaSalida" type="text" value="${horario != null? horario.horaTermino.format("HH:mm"): ''}" size="1" placeholder="Salida" class="form-control" style="width: 40%;"><br/>
                                       <button type="button" id="ingresarHorarioProfesional" class="btn btn-success">Ingresar Horario&nbsp;<i class="fa fa-clock-o"></i></button>
                                     </td>
                                 </tr>
@@ -129,11 +129,11 @@
         });
     });
     $("#horaInicio, #horaSalida").clockpicker({
-     donetext: 'Hecho',
      autoclose: true
     });
 
     $("#ingresarHorarioProfesional").click(function(){
+        $("ul.errors-fields").remove();
         $.post("/ingresarHorarioProfesional",{horaEntrada: $("#horaInicio").val(), horaSalida:$("#horaSalida").val(), altKeyPersona: '${personal.altKey}'},function(){
             bootbox.alert("Guardado Con Exito");
         }).fail(function(resp){

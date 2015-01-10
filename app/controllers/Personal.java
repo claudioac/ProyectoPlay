@@ -90,40 +90,34 @@ public class Personal extends Controller {
 
     public static void fichaPersonalInterno(String altKey){
         Persona personal = Persona.findPersonabyAltKey(altKey);
+        List<Horario> horario = Horario.findListHorarioByAltkeyPersona(altKey);
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/Personal/fichaDePersonal.html",personal);
+            renderTemplate("InicioAdmin/Personal/fichaDePersonal.html",personal,horario);
         }
     }
 
     public static void actualizarPersonalInterno(String altKey){
         Persona personal = Persona.findPersonabyAltKey(altKey);
         List<Region> regiones = Region.getAllRegiones();
+        Horario horario = Horario.findHorarioPersonaByAltKey(altKey);
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/Personal/actualizarPersonalAdmin.html",personal,regiones);
+            renderTemplate("InicioAdmin/Personal/actualizarPersonalAdmin.html",personal,regiones,horario);
         }
     }
 
-    public static void ingresarHorarioProfesional(String altKeyPersona, String horaEntrada, String horaSalida){
+    public static void ingresarHorarioProfesional(String altKeyPersona, @As("HH:mm") Date  horaEntrada, @As("HH:mm") Date horaSalida){
         Validation.required("horaEntrada",horaEntrada);
         Validation.required("horaSalida",horaSalida);
         if (Validation.hasErrors()) {
             response.status = Http.StatusCode.BAD_REQUEST;
             renderJSON(ErrorJSON.fromValidation());
         }
-        SimpleDateFormat entrada = new SimpleDateFormat("HH:mm");
-        try {
-            Date horaInicio = entrada.parse(horaEntrada);
-            Date horaTermino = entrada.parse(horaSalida);
             Persona persona = Persona.findPersonabyAltKey(altKeyPersona);
             Horario horario = new Horario();
-            horario.setHoraInicio(horaInicio);
-            horario.setHoraTermino(horaTermino);
+            horario.setHoraInicio(horaEntrada);
+            horario.setHoraTermino(horaSalida);
             horario.setPersona(persona);
             horario.save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
 
     }
 
