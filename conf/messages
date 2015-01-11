@@ -23,3 +23,5 @@ mensualidades.nulas = El cliente en especifico no registra mensualidades pagadas
 primera.mensualidad = Se ah concretado exitosamente el cambio de Contrato.
 
 fichaCliente.notFound= La Ficha de Salud no se encuentra disponible.
+
+limite.reporte= La tabla esta limitado a 20 Registro Para un mejor resultado utilize los filtros.

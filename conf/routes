@@ -8,7 +8,7 @@ GET     /                                                    Inicio.index
 GET     /usuario/{altKey}                                    InicioUsuario.indexUsuario
 
 GET     /administrador/{altKey}                              InicioAdmin.index
-GET     /administrador/{altKey}/getPersonas                  InicioAdmin.getPersonas
+POST     /buscar/getPersonas                                  InicioAdmin.getPersonas
 GET     /admin/clientes                                      InicioAdmin.clientes
 GET     /admin/provincias/{idRegion}                         InicioAdmin.getProvincias
 GET     /admin/comunas/{idProvincia}                         InicioAdmin.getComunas

@@ -1,20 +1,17 @@
 package controllers;
 
-import controllers.cruds.TipoUsuarios;
-import controllers.variblesEstaticas.TipoUsuariosDTO;
+
 import models.ClasesDTO.PersonaDTO;
 import models.ClasesDTO.SearchPersonalQuery;
+import models.ClasesDTO.SearchPersonasQuery;
 import models.Comuna;
 import models.Persona;
 import models.Provincia;
 import models.Region;
-import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.With;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Claudio Acuña
@@ -40,9 +37,9 @@ public class InicioAdmin extends Controller {
         render();
     }
 
-    public static void getPersonas() {
-        List<PersonaDTO> personas = Persona.getAllPersonas();
-        renderJSON(personas);
+    public static void getPersonas(SearchPersonasQuery personas) {
+        List<PersonaDTO> persona = Persona.getAllPersonas(personas);
+        renderJSON(persona);
     }
 
     public static void getClientes() {

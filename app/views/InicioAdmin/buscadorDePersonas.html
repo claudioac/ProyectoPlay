@@ -1,36 +1,64 @@
 <div class="row" ng-controller="PostsCtrl">
     <form class="form-horizontal well">
         <fieldset>
-            <!-- Form Name -->
             <legend>Buscador de Personas</legend>
-            <!-- Multiple Radios -->
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="col-md-4 control-label" for="radios">Sexo</label>
-
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label for="radios-0">
-                                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                                Masculino
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label for="radios-1">
-                                <input type="radio" name="radios" id="radios-1" value="2">
-                                Feminino
-                            </label>
-                        </div>
+                    <label class="col-md-4 control-label" for="contiene">Rut o Nombre:</label>
+                    <div class="col-md-8">
+                        <input id="contiene" name="contiene" ng-model="PersonasData.personas.contiene" type="text" placeholder="" class="form-control input-md">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="sexo">Sexo</label>
+                    <div class="col-md-8">
+                        <select id="sexo" name="sexo" ng-model="PersonasData.personas.sexo" class="form-control">
+                            <option value="">Seleccione..</option>
+                            <option value="0">Masculino</option>
+                            <option value="1">Femenino</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- Select Basic -->
-                <div class="form-group col-md-6 col-md-pull-1">
-                    <label class="col-md-4 control-label" for="selectbasic">Comuna</label>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="region">Region</label>
                     <div class="col-md-8">
-                        <select id="selectbasic" name="selectbasic" class="form-control">
-                            <option value="1">Option one</option>
-                            <option value="2">Option two</option>
+                        <select id="region1" name="region" ng-model="PersonasData.personas.region" class="form-control">
+                            <option value="">Seleccione..</option>
+                        #{list items:regiones, as:'region'}
+                            <option value="${region.id}" >${region.nombre}</option>
+                        #{/list}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="provincia">Provincia</label>
+                    <div class="col-md-8">
+                        <select id="provincia1" name="provincia" ng-model="PersonasData.personas.provincia" class="form-control">
+                            <option value="">Selecione..</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="comuna">Comuna</label>
+                    <div class="col-md-8">
+                        <select id="comuna1" name="comuna" ng-model="PersonasData.personas.comuna" class="form-control">
+                            <option value="">Seleccione..</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="tipoUsuario">Tipo de Persona</label>
+                    <div class="col-md-8">
+                        <select id="tipoUsuario" name="tipoUsuario" ng-model="PersonasData.personas.tipoUsuario"  class="form-control">
+                            <option value="">Selecione..</option>
+                            <option value="1">Administrador</option>
+                            <option value="3">Administrativo</option>
+                            <option value="4">Profesor</option>
                         </select>
                     </div>
                 </div>
@@ -51,14 +79,14 @@
         <div class="row">
             <div class="col-md-9"></div>
             <div class="input-group col-md-3">
-                <input type="text" class="form-control" placeholder="Search" ng-model="buscador" name="q">
+                <input type="text" class="form-control" placeholder="Filtrar" ng-model="buscador" name="q">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
         </div>
         <br/>
-        <table  class="table table-hover table-bordered">
+        <table  class="table table-hover table-bordered table-responsive">
             <thead>
                 <tr class="warning">
                     <th class="text-center">Nombres</th>
@@ -79,12 +107,80 @@
 <script type="text/javascript">
 
     app.controller("PostsCtrl", function ($scope, $http, $filter) {
+        $scope.PersonasData = {};
         $scope.buscar = function () {
-            $http.get('/administrador/{altKey}/getPersonas').success(function (persona) {
+            var transform = function(data){
+                return $.param(data);
+            }
+            $http.post('/buscar/getPersonas',this.PersonasData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function (persona) {
                 $scope.personas = persona;
                 $("#personas").show();
+                $.growl({
+                    icon: "glyphicon glyphicon-info-sign",
+                    title: "&nbsp;<strong>La tabla esta limitado a 20 Registro Para un mejor resultado utilize los filtros.</strong><br>"
+                }, {
+                    element: 'body',
+                    type: "info",
+                    placement: {
+                        form: "top",
+                        align: "center"
+                    },
+                    spacing: 10,
+                    offset: 20,
+                    z_index: 1031,
+                    delay: 6000,
+                    animate: {
+                        enter: 'animated fadeInRight',
+                        exit: 'animated fadeOutLeft'
+                    }
+                });
+
             });
         }
+    });
+
+    $("#region1").change(function(){
+        var idRegion = $("#region1").val();
+        var selectProvincia = $("#provincia1");
+        var selectComuna = $("#comuna1");
+        if(idRegion == ''){
+            selectProvincia.empty();
+            selectComuna.empty();
+            selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "/admin/provincias/"+idRegion,
+            method: "GET",
+            success: function(provincias){
+                selectProvincia.empty();
+                selectProvincia.append($('<option>').text("Seleccione..").attr('value', ''));
+                $.each(provincias,function(k,value){
+                    selectProvincia.append($('<option>').text(value.nombre).attr('value', value.id));
+                });
+            }
+        });
+    });
+
+    $("#provincia1").change(function(){
+        var idProvincia = $("#provincia1").val();
+        var selectComuna = $("#comuna1");
+        if(idProvincia == ''){
+            selectComuna.empty();
+            selectComuna.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "/admin/comunas/"+idProvincia,
+            method: "GET",
+            success: function(comunas){
+                selectComuna.empty();
+                $.each(comunas,function(k,value){
+                    selectComuna.append($('<option>').text(value.nombre).attr('value',value.id));
+                });
+            }
+        });
     });
 
 </script>

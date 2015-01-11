@@ -3,6 +3,7 @@ package models;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.ClasesDTO.PersonaDTO;
 import models.ClasesDTO.SearchPersonalQuery;
+import models.ClasesDTO.SearchPersonasQuery;
 import org.apache.commons.lang.StringUtils;
 import play.db.jpa.JPA;
 
@@ -226,8 +227,49 @@ public class Persona extends EntidadIdAutoLongAltKey {
         return find("rut", rut).first();
     }
 
-    public static List<PersonaDTO> getAllPersonas() {
-        List<Persona> persona = JPA.em().createQuery("Select p from Persona p").getResultList();
+    public static List<PersonaDTO> getAllPersonas(SearchPersonasQuery personas) {
+        String oql = "SELECT p " +
+                "FROM Persona p " +
+                "WHERE 1=1 ";
+        if (personas != null && personas.getSexo() !=null){
+            oql += "AND p.genero =?1 ";
+        }
+        if (personas != null && personas.getTipoUsuario() != null){
+            oql += "AND p.tipoUsuario.id =?2 ";
+        }
+        if (personas != null && personas.getComuna() !=null){
+            oql += "AND p.comuna.id =?3 ";
+        }
+        if (personas != null && personas.getRegion() != null){
+            oql += "AND p.region.id =?4 ";
+        }
+        if (personas != null  && personas.getProvincia() != null){
+            oql += "AND p.provincia.id =?5 ";
+        }
+        if (personas != null && personas.getContiene() != null){
+            oql += "AND CONCAT(p.rut, ' ',p.nombres, ' ',p.apellidoPaterno, ' ',p.apellidoMaterno ) like :contiene ";
+        }
+        TypedQuery<Persona> query = JPA.em().createQuery(oql.toString(),Persona.class);
+        if (personas != null && personas.getSexo() !=null){
+            query.setParameter(1,personas.getSexo());
+        }
+        if (personas != null && personas.getTipoUsuario() != null){
+            query.setParameter(2,personas.getTipoUsuario());
+        }
+        if (personas != null && personas.getComuna() !=null){
+            query.setParameter(3,personas.getComuna());
+        }
+        if (personas != null && personas.getRegion() != null){
+            query.setParameter(4,personas.getRegion());
+        }
+        if (personas != null  && personas.getProvincia() != null){
+            query.setParameter(5,personas.getProvincia());
+        }
+        if (personas != null && personas.getContiene() != null){
+            query.setParameter("contiene",personas.getContiene()+"%");
+        }
+        //List<Persona> persona = JPA.em().createQuery("Select p from Persona p").getResultList();
+        List<Persona> persona = query.getResultList();
         List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
         for (Persona usr : persona) {
             resultado.add(usr.toPersonaDTO());

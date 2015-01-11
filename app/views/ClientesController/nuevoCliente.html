@@ -77,7 +77,7 @@
                     <select id="region" name="cliente.region" class="form-control" >
                         <option value="">Seleccione..</option>
                         #{list items:regiones, as:'region'}
-                            <option value="${region.id}" ${flash['region']}>${region.nombre}</option>
+                            <option value="${region.id}" >${region.nombre}</option>
                         #{/list}
                     </select>
                 </div>
@@ -86,7 +86,7 @@
                 <label class="col-md-4 control-label" for="provincia">Provincia:</label>
                 <div class="col-md-8">
                     <select id="provincia" name="cliente.provincia"  class="form-control">
-                        <option value="" ${flash['provincia']}>Seleccione..</option>
+                        <option value="" >Seleccione..</option>
                     </select>
                 </div>
             </div>
@@ -97,7 +97,7 @@
 
                 <div class="col-md-8">
                     <select id="comuna" name="cliente.comuna" class="form-control">
-                        <option value="" ${flash['cliente.comuna']}>Seleccione..</option>
+                        <option value="">Seleccione..</option>
                     </select>
                     <strong><span class="text-danger">#{error 'cliente.comuna'/}</span></strong>
                 </div>
