@@ -2,12 +2,12 @@ package models;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.ClasesDTO.PersonaDTO;
+import models.ClasesDTO.SearchPersonalQuery;
+import org.apache.commons.lang.StringUtils;
 import play.db.jpa.JPA;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Claudio Acuña
@@ -244,8 +244,34 @@ public class Persona extends EntidadIdAutoLongAltKey {
         return resultado;
     }
 
-    public static List<PersonaDTO> getAllProfesores() {
-        List<Persona> persona = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdProfesor).getResultList();
+    public static List<PersonaDTO> getAllProfesores(SearchPersonalQuery personal) {
+
+        String oql= "Select p " +
+                "From Persona p " +
+                "Where p.tipoUsuario.id !=?3 ";
+            if (personal != null && personal.getSexo() != null){
+                oql += "AND p.genero =?1 ";
+            }
+            if (personal != null && personal.getTipoUsuario() != null){
+                oql += "AND p.tipoUsuario.id =?2 ";
+            }
+            if (personal != null && StringUtils.isNotBlank(personal.getRut())){
+                oql += "AND p.rut like :rut";
+            }
+        TypedQuery<Persona>  query = JPA.em().createQuery(oql.toString(),Persona.class);
+        if (personal != null && personal.getSexo() != null){
+            query.setParameter(1,personal.getSexo());
+        }
+        if (personal != null && personal.getTipoUsuario() != null){
+            query.setParameter(2,personal.getTipoUsuario());
+        }
+        if (personal != null && StringUtils.isNotBlank(personal.getRut())){
+            query.setParameter("rut",personal.getRut()+"%");
+        }
+        query.setParameter(3,TipoUsuariosDTO.IdUsuario);
+        List<Persona> persona = query.getResultList();
+
+        //List<Persona> persona = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id in (?1,?2) ").setParameter(1, TipoUsuariosDTO.IdProfesor).setParameter(2,TipoUsuariosDTO.IdVendedor).getResultList();
         List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
         for (Persona usr : persona) {
             resultado.add(usr.toPersonaDTO());

@@ -58,53 +58,31 @@
             </div>
         </div>
         <br/>
-        <table ng-table="tablaClientes" class="table table-hover table-bordered">
-            <tr ng-repeat="per in $data">
-                <td data-title="'Nombres'" class="text-center" sortable="'nombres'">{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
-                <td data-title="'Rut'" class="text-center" sortable="'rut'">{{per.rut}}</td>
-                <td data-title="'Acción'" class="text-center"><a href="/fichaCliente/{{per.altKey}}"><i class="fa fa-search help" title="Ver Cliente"></i></a></td>
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Nombre Completo</th>
+                <th class="text-center">Rut</th>
+                <th class="text-center">Acción</th>
             </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="per in clientes | filter:buscadorClientes">
+                    <td  class="text-center" >{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
+                    <td  class="text-center" >{{per.rut}}</td>
+                    <td  class="text-center"><a href="/fichaCliente/{{per.altKey}}"><i class="fa fa-search help" title="Ver Cliente"></i></a></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
 <script type="text/javascript">
-    app.controller("clientes", function($scope, $http, ngTableParams,$filter) {
+    app.controller("clientes", function($scope, $http,$filter) {
         $scope.buscar = function(){
             $http.post('/buscar/getClientes').success(function(clientes){
                 $scope.clientes = clientes;
                 $("#clientes").show();
                 //console.log(profesores);
-                var data = $scope.clientes;
-                $scope.tablaClientes = new ngTableParams({
-                    page: 1,            // show first page
-                    count: 6,           // count per page
-                    sorting: {
-                        name: 'asc'     // initial sorting
-                    }
-                }, {
-                    total: data.length, // length of data
-                    counts: [],
-                    getData: function($defer, params) {
-                        var buscadorClientes = buscandoClientes();
-                        var orderedData = params.sorting() ?
-                                $filter('orderBy')(buscadorClientes, params.orderBy()) :
-                                data;
-                        params.total(buscadorClientes.length); // set total for recalc pagination
-                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                    },
-                    $scope: { $data: {} }
-                });
-
-                $scope.$watch("buscadorClientes", function () {
-                    $scope.tablaClientes.reload();
-                });
-
-                var buscandoClientes = function() {
-                    if($scope.buscadorClientes){
-                        return $filter('filter')(data,$scope.buscadorClientes);
-                    }
-                    return data;
-                }
             });
         }
     });

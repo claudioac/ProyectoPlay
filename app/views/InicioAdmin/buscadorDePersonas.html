@@ -58,11 +58,19 @@
             </div>
         </div>
         <br/>
-        <table ng-table="tablaPersonas" class="table table-hover table-bordered">
-            <tr ng-repeat="per in $data">
-                <td data-title="'Nombres'" class="text-center" sortable="'nombres'">{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
-                <td data-title="'Rut'" class="text-center" sortable="'rut'"><a href="#" class="help" title="Información Persona">{{per.rut}}&nbsp;<span class="glyphicon glyphicon-info-sign" title="Información Persona"></span></a></td>
-            </tr>
+        <table  class="table table-hover table-bordered">
+            <thead>
+                <tr class="warning">
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Rut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="per in personas | filter:buscador">
+                    <td  class="text-center" >{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
+                    <td  class="text-center" ><a href="#" class="help" title="Información Persona">{{per.rut}}&nbsp;<span class="glyphicon glyphicon-info-sign" title="Información Persona"></span></a></td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
@@ -70,42 +78,11 @@
 
 <script type="text/javascript">
 
-    app.controller("PostsCtrl", function ($scope, $http, ngTableParams, $filter) {
+    app.controller("PostsCtrl", function ($scope, $http, $filter) {
         $scope.buscar = function () {
             $http.get('/administrador/{altKey}/getPersonas').success(function (persona) {
                 $scope.personas = persona;
                 $("#personas").show();
-                var data = $scope.personas
-                $scope.tablaPersonas = new ngTableParams({
-                    page: 1,            // show first page
-                    count: 6,           // count per page
-                    sorting: {
-                        name: 'asc'     // initial sorting
-                    }
-                }, {
-                    total: data.length, // length of data
-                    counts: [],
-                    getData: function ($defer, params) {
-                        var buscadorPersonas = buscandoPersonas();
-                        var orderedData = params.sorting() ?
-                                $filter('orderBy')(buscadorPersonas, params.orderBy()) :
-                                data;
-                        params.total(buscadorPersonas.length); // set total for recalc pagination
-                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                    },
-                    $scope: { $data: {} }
-                });
-
-                $scope.$watch("buscador", function () {
-                    $scope.tablaPersonas.reload();
-                });
-
-                var buscandoPersonas = function () {
-                    if ($scope.buscador) {
-                        return $filter('filter')(data, $scope.buscador);
-                    }
-                    return data;
-                }
             });
         }
     });

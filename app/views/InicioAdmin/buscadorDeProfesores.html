@@ -1,36 +1,40 @@
 <div class="row" ng-controller="buscadorDeProfesores">
-    <form class="form-horizontal well">
+    <form class="form-horizontal well" id="buscadorProfesoresForm">
         <fieldset>
             <!-- Form Name -->
-            <legend>Buscador de Profesores</legend>
-            <!-- Multiple Radios -->
+            <legend>Buscador de Personal Interno</legend>
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label class="col-md-4 control-label" for="radios">Sexo</label>
-
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label for="radios-0">
-                                <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
-                                Masculino
-                            </label>
-                        </div>
-                        <div class="radio">
-                            <label for="radios-1">
-                                <input type="radio" name="radios" id="radios-1" value="2">
-                                Feminino
-                            </label>
-                        </div>
+                    <label class="col-md-4 control-label" for="rut">Rut</label>
+                    <div class="col-md-8">
+                        <input id="rut" name="rut" ng-model="formData.personal.rut" type="text" placeholder="" class="form-control input-md">
                     </div>
+                </div>
+                <div class="col-md-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="sexo">Sexo</label>
+                        <div class="col-md-8">
+                            <select id="sexo" name="sexo" ng-model="formData.personal.sexo" class="form-control">
+                                <option value="">Seleccione..</option>
+                                <option value="0">Masculino</option>
+                                <option value="1">Femenino</option>
+                            </select>
+                        </div>
                 </div>
 
                 <!-- Select Basic -->
-                <div class="form-group col-md-6 col-md-pull-1">
-                    <label class="col-md-4 control-label" for="selectbasic">Comuna</label>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="tipoUsuario">Tipo de Persona</label>
                     <div class="col-md-8">
-                        <select id="selectbasic" name="selectbasic" class="form-control">
-                            <option value="1">Option one</option>
-                            <option value="2">Option two</option>
+                        <select id="tipoUsuario" name="tipoUsuario" ng-model="formData.personal.tipoUsuario"  class="form-control">
+                            <option value="">Selecione..</option>
+                            <option value="1">Administrador</option>
+                            <option value="3">Administrativo</option>
+                            <option value="4">Profesor</option>
                         </select>
                     </div>
                 </div>
@@ -59,54 +63,61 @@
             </div>
         </div>
         <br/>
-        <table ng-table="tablaProfesores" class="table table-hover table-bordered" >
-            <tr ng-repeat="per in $data">
-                <td data-title="'Nombres'" class="text-center" sortable="'nombres'">{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
-                <td data-title="'Rut'" class="text-center" sortable="'rut'">{{per.rut}}</td>
-                <td data-title="'Acción'" class="text-center"><a href="/fichaPersonalInterno/{{per.altKey}}"><i class="fa fa-search"></i></a></td>
+        <table class="table table-hover table-bordered" >
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Nombre Completo</th>
+                <th class="text-center">Rut</th>
+                <th class="text-center">Acción</th>
             </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="per in profesores | filter:buscadorProfesores">
+                <td class="text-center" >{{per.nombres}}&nbsp;&nbsp;{{per.apellidoPaterno}}&nbsp;&nbsp;{{per.apellidoMaterno}}</td>
+                <td class="text-center" >{{per.rut}}</td>
+                <td class="text-center"><a href="/fichaPersonalInterno/{{per.altKey}}"><i class="fa fa-search"></i></a></td>
+            </tr>
+            </tbody>
         </table>
     </div>
 
 </div>
 <script type="text/javascript">
-    app.controller("buscadorDeProfesores", function($scope, $http, ngTableParams,$filter) {
+    var $buscadorProfesoresForm = $('#buscadorProfesoresForm');
+    app.controller("buscadorDeProfesores", function($scope, $http,$filter) {
+        $scope.formData = {};
         $scope.buscar = function(){
-            $http.get('/buscar/getProfesores').success(function(profesores){
+            console.log(this.formData);
+            $.growl({
+                icon: "glyphicon glyphicon-info-sign",
+                title: "&nbsp;<strong>La tabla esta limitado a 20 Registro Para un mejor resultado utilize los filtros.</strong><br>"
+            }, {
+                element: 'body',
+                type: "info",
+                placement: {
+                    form: "top",
+                    align: "center"
+                },
+                spacing: 10,
+                offset: 20,
+                z_index: 1031,
+                delay: 6000,
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutLeft'
+                }
+            });
+
+            var transform = function(data){
+                return $.param(data);
+            }
+
+            $http.post('/buscar/getProfesores',this.formData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function(profesores){
                 $scope.profesores = profesores;
                 $("#profesores").show();
                 //console.log(profesores);
-                var data = $scope.profesores;
-                $scope.tablaProfesores = new ngTableParams({
-                    page: 1,            // show first page
-                    count: 6,           // count per page
-                    sorting: {
-                        name: 'asc'     // initial sorting
-                    }
-                }, {
-                    total: data.length, // length of data
-                    counts: [],
-                    getData: function($defer, params) {
-                        var buscadorProfesores = buscandoProfesores();
-                        var orderedData = params.sorting() ?
-                                $filter('orderBy')(buscadorProfesores, params.orderBy()) :
-                                data;
-                        params.total(buscadorProfesores.length); // set total for recalc pagination
-                        $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                    },
-                    $scope: { $data: {} }
-                });
-
-                $scope.$watch("buscadorProfesores", function () {
-                    $scope.tablaProfesores.reload();
-                });
-
-                var buscandoProfesores = function() {
-                    if($scope.buscadorProfesores){
-                        return $filter('filter')(data,$scope.buscadorProfesores);
-                    }
-                    return data;
-                }
             });
         }
     });
