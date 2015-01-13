@@ -113,11 +113,19 @@ public class Personal extends Controller {
             renderJSON(ErrorJSON.fromValidation());
         }
             Persona persona = Persona.findPersonabyAltKey(altKeyPersona);
-            Horario horario = new Horario();
-            horario.setHoraInicio(horaEntrada);
-            horario.setHoraTermino(horaSalida);
-            horario.setPersona(persona);
-            horario.save();
+            Horario horario = Horario.findHorarioPersonaByAltKey(altKeyPersona);
+            if (horario != null){
+                horario.setHoraInicio(horaEntrada);
+                horario.setHoraTermino(horaSalida);
+                horario.setPersona(persona);
+                horario.save();
+            }else {
+                horario = new Horario();
+                horario.setHoraInicio(horaEntrada);
+                horario.setHoraTermino(horaSalida);
+                horario.setPersona(persona);
+                horario.save();
+            }
 
     }
 

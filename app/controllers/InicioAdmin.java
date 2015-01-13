@@ -37,6 +37,10 @@ public class InicioAdmin extends Controller {
         render();
     }
 
+    public static void clases(){
+      render();
+    }
+
     public static void getPersonas(SearchPersonasQuery personas) {
         List<PersonaDTO> persona = Persona.getAllPersonas(personas);
         renderJSON(persona);

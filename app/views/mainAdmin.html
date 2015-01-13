@@ -21,14 +21,14 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="@{InicioAdmin.index()}"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
                 <li><a href="@{InicioAdmin.clientes()}"><i class="fa fa-group"></i>&nbsp;Clientes</a></li>
-                <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
+                <li><a href="@{InicioAdmin.clases()}"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
                 <li><a href="#contact"><i class="fa fa-money"></i>&nbsp;Mensualidad</a></li>
                 <li><a href="@{InicioAdmin.profesores()}"><i class="fa fa-mortar-board"></i>&nbsp;Personal Interno</a></li>
                 <li><a href="#contact"><i class="fa fa-paper-plane"></i>&nbsp;Contactos</a></li>
             </ul>
             <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
-            *{<p class="navbar-text navbar-right" ><i class="fa fa-user"></i>&nbsp;${persona.nombres}</p>}*
+            <p class="navbar-text navbar-right" ><i class="fa fa-user"></i>&nbsp;Admin</p>
         </div>
     </div>
 </div>
