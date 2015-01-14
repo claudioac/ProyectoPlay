@@ -1,13 +1,10 @@
 package controllers;
 
 
+import models.*;
 import models.ClasesDTO.PersonaDTO;
 import models.ClasesDTO.SearchPersonalQuery;
 import models.ClasesDTO.SearchPersonasQuery;
-import models.Comuna;
-import models.Persona;
-import models.Provincia;
-import models.Region;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -38,7 +35,8 @@ public class InicioAdmin extends Controller {
     }
 
     public static void clases(){
-      render();
+      List<TipoDeClase> tipoDeClases = TipoDeClase.findAll();
+      render(tipoDeClases);
     }
 
     public static void getPersonas(SearchPersonasQuery personas) {

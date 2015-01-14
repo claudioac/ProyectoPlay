@@ -2,6 +2,7 @@ package controllers;
 
 import models.Persona;
 import models.Region;
+import models.TipoDeClase;
 import play.mvc.Controller;
 import play.mvc.With;
 
@@ -32,6 +33,7 @@ public class InicioAdministrativo extends Controller {
     }
 
     public static void clases(){
-        render();
+        List<TipoDeClase> tipoDeClases = TipoDeClase.findAll();
+        render(tipoDeClases);
     }
 }

@@ -1,1 +1,39 @@
-<h1>Buscador de Clases</h1>
+<div class="well">
+    <form class="form-horizontal">
+        <fieldset>
+            <legend>Buscador de Clases</legend>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="tipoDeClases">Tipo de Clase</label>
+                    <div class="col-md-8">
+                        <select id="tipoDeClases" name="tipoDeClases" class="form-control">
+                            <option value="">Seleccione..</option>
+                           #{list items:tipoDeClases,as:'clase'}
+                               <option value="${clase.id}">${clase.tipo}</option>
+                           #{/list}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="dia">Dia</label>
+                    <div class="col-md-8">
+                        <select id="dia" name="dia" class="form-control">
+                            <option value="1">Option one</option>
+                            <option value="2">Option two</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-4 control-label" for="buscarClase"></label>
+                    <div class="col-md-4">
+                        <button id="buscarClase" name="buscarClase" class="btn btn-success">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

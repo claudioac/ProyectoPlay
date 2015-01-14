@@ -2,12 +2,16 @@
 <div class="row">
     <div class="col-sm-2">
         <ul class="nav nav-pills nav-stacked" role="tablist">
-            <li><a  href="#buscadorDeClases" role="tab" data-toggle="pill"><i class="fa fa-user "></i> Buscar Cliente</a></li>
+            <li class="active"><a  href="#buscadorDeClases" role="tab" data-toggle="pill"><i class="fa fa-arrow-circle-right"></i> Clases</a></li>
+            <li><a  href="#administracionClases" role="tab" data-toggle="pill"><i class="fa fa-sitemap"></i>&nbsp;Ingreso de Clases</a></li>
         </ul>
     </div>
     <div class="col-sm-10 tab-content">
         <div class="tab-pane active" id="buscadorDeClases">
         #{include 'ClaseController/buscadorDeClases.html'/}
+        </div>
+        <div class="tab-pane" id="administracionClases">
+          #{include 'ClaseController/administradorDeClases.html'/}
         </div>
     </div>
 </div>

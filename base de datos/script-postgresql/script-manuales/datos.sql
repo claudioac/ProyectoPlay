@@ -683,3 +683,10 @@ INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES
 INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (2, true, 'Plan Anual', 240000, 20000);
 INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (3, true, 'Plan Semestral', 300000, 25000);
 INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES (4, true, 'Plan Trimestral', 360000, 30000);
+
+
+--Tipo de Clases
+
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (1, true, 'zumba');
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (2, true, 'spinning');
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (3, true, 'aerobox');

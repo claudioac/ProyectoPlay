@@ -11,4 +11,9 @@ import javax.persistence.SequenceGenerator;
 public class TipoDeClase extends EntidadIdAutoLongTipos {
 
     public String tipo;
+
+    @Override
+    public String toString() {
+        return tipo;
+    }
 }
