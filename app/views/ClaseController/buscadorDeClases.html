@@ -36,7 +36,7 @@
             </div>
         </fieldset>
     </form>
-    <div id="tablaDeClases">
+    <div id="tablaDeClases" style="display: none;">
         <table class="table table-responsive table-bordered">
             <thead>
             <tr class="warning">
@@ -62,6 +62,7 @@
         $scope.buscar = function(){
             $http.post("/getClasesDisponibles").success(function(clases){
                 $scope.clases = clases;
+                $('#tablaDeClases').show();
             });
         }
     });
