@@ -36,7 +36,8 @@ public class InicioAdmin extends Controller {
 
     public static void clases(){
       List<TipoDeClase> tipoDeClases = TipoDeClase.findAll();
-      render(tipoDeClases);
+      List<Persona> profesores = Persona.findAllProfesores();
+      render(tipoDeClases,profesores);
     }
 
     public static void getPersonas(SearchPersonasQuery personas) {

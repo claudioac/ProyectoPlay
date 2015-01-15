@@ -1,10 +1,10 @@
 <h3>Ingreso de Clases <strong><small>(ingreso de clases a impartir durante la semana)</small></strong></h3>
 <hr/>
-<form class="form-horizontal">
+<form id="nuevaClaseForm" class="form-horizontal">
     <div class="form-group">
         <label class="col-md-4 control-label" for="tipoDeClases">Tipo de Clase</label>
         <div class="col-md-5">
-            <select id="tipoDeClases" name="tipoDeClases" class="form-control">
+            <select id="tipoDeClases" name="clase.tipoDeClase" class="form-control">
                 <option value="">Seleccione..</option>
             #{list items:tipoDeClases,as:'clase'}
                 <option value="${clase.id}">${clase.tipo}</option>
@@ -12,4 +12,122 @@
             </select>
         </div>
     </div>
+    <br/>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label class="col-md-4 control-label" for="dias">Dias</label>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="dias-0">
+                        <input type="checkbox" name="clase.dias" id="dias-0" value="1">
+                        Lunes
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="dias-1">
+                        <input type="checkbox" name="clase.dias" id="dias-1" value="2">
+                        Martes
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="dias-2">
+                        <input type="checkbox" name="clase.dias" id="dias-2" value="3">
+                        Miercoles
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="dias-3">
+                        <input type="checkbox" name="clase.dias" id="dias-3" value="4">
+                        Jueves
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="dias-4">
+                        <input type="checkbox" name="clase.dias" id="dias-4" value="5">
+                        Viernes
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="dias-5">
+                        <input type="checkbox" name="clase.dias" id="dias-5" value="6">
+                        Sábado
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 row">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="horaDeInicio">Hora de Inicio</label>
+                <div class="col-md-5">
+                    <input id="horaDeInicio" name="horaDeInicio" type="text" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="horaDeTermino">Hora de Termino</label>
+                <div class="col-md-5">
+                    <input id="horaDeTermino" name="horaDeTermino" type="text" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="profesor">Profesor a Cargo:</label>
+                <div class="col-md-5">
+                    <select id="profesor" name="clase.profesor" class="form-control">
+                        <option value="">Seleccione..</option>
+                    #{list items:profesores,as:'prof'}
+                        <option value="${prof.altKey}">${prof.nombres}&nbsp;${prof.apellidoPaterno}&nbsp;${prof.apellidoMaterno}</option>
+                    #{/list}
+                    </select>
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="cupos">Cupos Disponibles:</label>
+                <div class="col-md-5">
+                    <input id="cupos" name="clase.cuposDisponibles" type="number" max="40" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9"></div>
+        <div class="col-md-3">
+            <button id="registrarClase" name="singlebutton" class="btn btn-success">Guardar</button>
+        </div>
+    </div>
 </form>
+<script type="text/javascript">
+    var $nuevaClaseForm = $('#nuevaClaseForm');
+    $("#horaDeInicio, #horaDeTermino").clockpicker({
+        autoclose: true
+    });
+    $('#registrarClase').click(function(){
+        $("ul.errors-fields").remove();
+        $.post("/nuevaClase", $nuevaClaseForm.serialize(),function(){
+            bootbox.alert("Registro Completo",function(){
+
+            });
+        }).fail(function(resp){
+            if (resp.status == 400) {
+                $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                    var $input = $(":input[name='" + name + "']", $nuevaClaseForm);
+                    $input.closest("div.form-group").addClass("has-error");
+                    var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                    $.each(errors,function(i,elem){
+                        var $li = $("<li class='text-danger'/>");
+                        $li.text(elem);
+                        $ul.append($li);
+                    });
+                    $input.after($ul);
+                    console.log(errors);
+                });
+                console.log(resp.responseJSON);
+            }
+        });
+    });
+
+</script>

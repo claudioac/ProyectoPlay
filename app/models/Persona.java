@@ -342,4 +342,9 @@ public class Persona extends EntidadIdAutoLongAltKey {
         dto.setRut(this.rut);
         return dto;
     }
+
+    public static List<Persona> findAllProfesores() {
+        List<Persona> profesores = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id=?1",Persona.class).setParameter(1,TipoUsuariosDTO.IdProfesor).getResultList();
+        return profesores;
+    }
 }

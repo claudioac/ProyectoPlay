@@ -62,6 +62,14 @@ public class Horario extends EntidadIdAutoLong {
         this.horaTermino = horaTermino;
     }
 
+    public Clase getClase() {
+        return clase;
+    }
+
+    public void setClase(Clase clase) {
+        this.clase = clase;
+    }
+
     public static List<Horario> findListHorarioByAltkeyPersona(String altKey) {
         Persona persona = Persona.findPersonabyAltKey(altKey);
         List<Horario> horario = JPA.em().createQuery("SELECT h from Horario h where h.persona=?1 order by h.id desc").setParameter(1,persona).setMaxResults(1).getResultList();
