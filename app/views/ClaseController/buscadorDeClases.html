@@ -1,5 +1,5 @@
-<div class="well">
-    <form class="form-horizontal">
+<div ng-controller="clases">
+    <form class="form-horizontal well">
         <fieldset>
             <legend>Buscador de Clases</legend>
             <div class="row">
@@ -30,10 +30,39 @@
                 <div class="form-group col-md-3">
                     <label class="col-md-4 control-label" for="buscarClase"></label>
                     <div class="col-md-4">
-                        <button id="buscarClase" name="buscarClase" class="btn btn-success">Buscar</button>
+                        <button id="buscarClase" name="buscarClase" class="btn btn-success" ng-click="buscar()">Buscar</button>
                     </div>
                 </div>
             </div>
         </fieldset>
     </form>
+    <div id="tablaDeClases">
+        <table class="table table-responsive table-bordered">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Clase</th>
+                <th class="text-center">Profesor</th>
+                <th class="text-center" style="width: 5%;">Cupos Disponibles</th>
+                <th class="text-center" style="width: 5%;">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="clase in clases">
+                <td class="text-center">{{clase.nombreDeClase}}</td>
+                <td class="text-center">{{clase.nombreProfesor}}&nbsp;{{clase.apellidoPaternoProfesor}}&nbsp;{{clase.apellidoMaternoProfesor}}</td>
+                <td class="text-center">{{clase.cuposDisponibles}}</td>
+                <td class="text-center"><a href="#"><i class="fa fa-search"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<script type="text/javascript">
+    app.controller("clases",function($scope,$http){
+        $scope.buscar = function(){
+            $http.post("/getClasesDisponibles").success(function(clases){
+                $scope.clases = clases;
+            });
+        }
+    });
+</script>

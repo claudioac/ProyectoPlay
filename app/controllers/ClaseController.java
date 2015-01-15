@@ -57,4 +57,8 @@ public class ClaseController extends Controller {
         claseARegistrar.save();
     }
 
+    public static void getClasesDisponibles(){
+        List<ClaseDTO> clase = Clase.findAllClasesActivas();
+        renderJSON(clase);
+    }
 }

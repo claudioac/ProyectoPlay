@@ -1,6 +1,9 @@
 package models;
 
+import models.ClasesDTO.ClaseDTO;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,5 +65,25 @@ public class Clase extends EntidadIdAutoLongAltKey {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public static List<ClaseDTO> findAllClasesActivas() {
+        List<Clase> clases = Clase.findAll();
+        List<ClaseDTO> resultado = new ArrayList<ClaseDTO>();
+        for (Clase clase : clases) {
+            resultado.add(clase.toClaseDTO());
+        }
+        return resultado;
+    }
+
+    private ClaseDTO toClaseDTO() {
+        ClaseDTO dto = new ClaseDTO();
+        dto.altKeyClase = altKey;
+        dto.cuposDisponibles = cupos;
+        dto.nombreProfesor = profesor.nombres;
+        dto.nombreDeClase = tipoDeClase.tipo;
+        dto.apellidoMaternoProfesor = profesor.apellidoMaterno;
+        dto.apellidoPaternoProfesor = profesor.apellidoPaterno;
+        return dto;
     }
 }
