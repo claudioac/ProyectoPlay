@@ -2,37 +2,54 @@
     <h1>Antecedentes Generales
         <small>(datos específicos de determina clase.)</small>
     </h1>
-    <div class="bs-callout bs-callout-danger">
-        <h4 class="text-center">${clase.tipoDeClase.tipo.toUpperCase()}</h4>
-        <br/>
+</div>
+<div class="bs-callout bs-callout-danger">
+    <h4 class="text-center">${clase.tipoDeClase.tipo.toUpperCase()}</h4>
+    <br/>
 
-        <div class="row">
-            <div class="col-md-offset-2 col-md-4">
-                <label for="profesorACargo"><Strong>Profesor a Cargo:</Strong></label>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-4">
+            <label for="profesorACargo"><Strong>Profesor a Cargo:</Strong></label>
 
-                <p id="profesorACargo">&nbsp;${clase.profesor.nombres}&nbsp;${clase.profesor.apellidoPaterno}
-                    &nbsp;${clase.profesor.apellidoMaterno}</p>
-            </div>
-            <div class="col-md-offset-1 col-md-5">
-                <label for="cupos"><strong>Cantidad de Cupos Disponibles:</strong></label>
-
-                <p id="cupos" class="control-label">${clase.cupos}</p>
-            </div>
+            <p id="profesorACargo">&nbsp;${clase.profesor.nombres}&nbsp;${clase.profesor.apellidoPaterno}
+                &nbsp;${clase.profesor.apellidoMaterno}</p>
         </div>
-        <br/>
-        <br/>
-        <h4 class="text-center">HORARIO:</h4>
-        <br/>
-        <div class="row">
-                <ul class="list-inline text-center">
-                #{list items:horario,as:'h'}
-                    <li>
-                    ${h.dia}<br/>
-                        <strong>Inicio</strong>:&nbsp;${h.horaDeInicio.format("HH:mm")}
-                        <br/><strong>Termino</strong>:&nbsp;${h.horaDeTermino.format("HH:mm")}
-                    </li>
-                #{/list}
-                </ul>
+        <div class="col-md-offset-1 col-md-5">
+            <label for="cupos"><strong>Cantidad de Cupos Disponibles:</strong></label>
+
+            <p id="cupos" class="control-label">${clase.cupos}</p>
+        </div>
+    </div>
+    <br/>
+    <br/>
+    <h4 class="text-center">HORARIO:</h4>
+    <br/>
+
+    <div class="row">
+        <ul class="list-inline text-center">
+        #{list items:horario,as:'h'}
+            <li>
+            ${h.dia}<br/>
+                <strong>Inicio</strong>:&nbsp;${h.horaDeInicio.format("HH:mm")}
+                <br/><strong>Termino</strong>:&nbsp;${h.horaDeTermino.format("HH:mm")}
+            </li>
+        #{/list}
+        </ul>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+        <div class="col-md-4">
+          <button type="button" class="btn btn-success btn-block help" title="&{'informacion.habilitarInscripcion'}"><i class="fa fa-users"></i>&nbsp;Habilitar Inscripción a Clase</button>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#buscadorClases"><span
+                    class="fa fa-history"></span>&nbsp;Historial de Clases
+            </button>
         </div>
     </div>
 </div>
+#{include 'ClaseController/fragments/formBuscadorClases.html'/}
