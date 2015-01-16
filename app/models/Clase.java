@@ -24,8 +24,8 @@ public class Clase extends EntidadIdAutoLongAltKey {
     @ManyToOne
     public TipoDeClase tipoDeClase;
 
-    @ManyToOne
-    public Curso curso;
+    @OneToMany(mappedBy = "clase",cascade = CascadeType.REMOVE)
+    public List<Curso> curso;
 
     public List<Horario> getHorarios() {
         return horarios;
@@ -59,11 +59,11 @@ public class Clase extends EntidadIdAutoLongAltKey {
         this.tipoDeClase = tipoDeClase;
     }
 
-    public Curso getCurso() {
+    public List<Curso> getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public void setCurso(List<Curso> curso) {
         this.curso = curso;
     }
 

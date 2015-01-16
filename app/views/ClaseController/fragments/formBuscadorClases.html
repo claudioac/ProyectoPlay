@@ -6,23 +6,20 @@
                 <h4 class="modal-title" id="myModalLabel"><i class="fa fa-university"></i>&nbsp;Buscador</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="buscadorCursosForm">
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="fechaDeCurso">Fecha de Clase</label>
                             <div class="col-md-4">
-                                <input id="fechaDeCurso" name="fechaDeCurso" type="text"  class="form-control input-md datepicker">
-
+                                <input id="fechaDeCurso" name="fechaDeCurso" ng-model="formData.fechaDeCurso" type="text"  class="form-control input-md datepicker">
                             </div>
                         </div>
+                    <input type="hidden" name="altKeyClase" ng-model="formData.altKeyClase" ng-init="formData.altKeyClase='${clase.altKey}'"/>
                </form>
             </div>
             <div class="modal-footer">
                 *{<button type="button" class="btn btn-warning" data-dismiss="modal">Buscar Todos</button>}*
-                <button type="button" class="btn btn-success">Buscar</button>
+                <button type="button"  ng-click="buscarClase()" class="btn btn-success">Buscar</button>
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-</script>

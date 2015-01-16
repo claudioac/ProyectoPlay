@@ -40,7 +40,7 @@
     <br/>
     <div class="row">
         <div class="col-md-4">
-          <button type="button" class="btn btn-success btn-block help" title="&{'informacion.habilitarInscripcion'}"><i class="fa fa-users"></i>&nbsp;Habilitar Inscripción a Clase</button>
+          <button type="button" data-toggle="modal" data-target="#habilitarCupos" class="btn btn-success btn-block help" title="&{'informacion.habilitarInscripcion'}"><i class="fa fa-users"></i>&nbsp;Habilitar Inscripción a Clase</button>
         </div>
         <div class="col-md-4">
 
@@ -52,4 +52,49 @@
         </div>
     </div>
 </div>
+<div ng-controller="buscadorDeClases">
 #{include 'ClaseController/fragments/formBuscadorClases.html'/}
+    
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">Fecha de Clase</th>
+                <th class="text-center">Clase</th>
+                <th class="text-center">Cupos Disponibles</th>
+                <th class="text-center">Profesor</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+                 <tr ng-repeat="curso in cursos">
+                     <td class="text-center">{{curso.fecha}}</td>
+                     <td class="text-center">{{curso.clase | uppercase}}</td>
+                     <td class="text-center">{{curso.cupos}}</td>
+                     <td class="text-center">{{curso.profesor}}</td>
+                     <td class="text-center"></td>
+                 </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+#{include 'ClaseController/fragments/habilitarCupos.html'/}
+<script type="text/javascript">
+    app.controller("buscadorDeClases",function($scope,$http){
+        $scope.formData = {};
+        $scope.buscarClase = function (){
+            console.log(this.formData);
+            var transform = function(data){
+                return $.param(data);
+            }
+
+            $http.post('/buscarCursosPorClaseYFecha',this.formData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function(cursos){
+                $scope.cursos = cursos;
+                $('#buscadorClases').modal('toggle');
+            });
+        }
+    });
+</script>

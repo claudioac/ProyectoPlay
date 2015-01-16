@@ -1,12 +1,10 @@
 package controllers;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
-import models.Clase;
+import models.*;
 import models.ClasesDTO.ClaseDTO;
+import models.ClasesDTO.CursosDTO;
 import models.ClasesDTO.HorarioClaseDTO;
-import models.Horario;
-import models.Persona;
-import models.TipoDeClase;
 import models.error.ErrorJSON;
 import play.data.binding.As;
 import play.data.validation.Validation;
@@ -102,5 +100,23 @@ public class ClaseController extends Controller {
 
         }
 
+    }
+
+    public static void habilitarCuposParaClase(Date fechaDeCurso,String altKeyClase){
+        Validation.required("fechaDeCurso",fechaDeCurso);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
+        Clase clase = Clase.find("altKey",altKeyClase).first();
+        Curso curso = new Curso();
+        curso.fechaDeCurso = fechaDeCurso;
+        curso.clase = clase;
+        curso.save();
+    }
+
+    public static void buscarCursos(Date fechaDeCurso,String altKeyClase){
+        List<CursosDTO> cursos = Curso.findAllCursosByAltKeyYFecha(fechaDeCurso,altKeyClase);
+        renderJSON(cursos);
     }
 }
