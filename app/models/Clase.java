@@ -67,6 +67,11 @@ public class Clase extends EntidadIdAutoLongAltKey {
         this.curso = curso;
     }
 
+    @Override
+    public String toString() {
+        return  tipoDeClase.tipo;
+    }
+
     public static List<ClaseDTO> findAllClasesActivas() {
         List<Clase> clases = Clase.findAll();
         List<ClaseDTO> resultado = new ArrayList<ClaseDTO>();
