@@ -31,6 +31,7 @@ GET    /fichaPersonalInterno/{altKey}                        Personal.fichaPerso
 POST   /ingresarHorarioProfesional                           Personal.ingresarHorarioProfesional
 POST   /nuevaClase                                           ClaseController.nuevaClase
 POST   /getClasesDisponibles                                 ClaseController.getClasesDisponibles
+GET    /fichaClaseDirigida/{altKey}                          ClaseController.fichaClaseDirigida
 
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index

@@ -15,13 +15,13 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="col-md-4 control-label" for="dia">Dia</label>
-                    <div class="col-md-8">
-                        <select id="dia" name="dia" class="form-control">
-                            <option value="1">Option one</option>
-                            <option value="2">Option two</option>
-                        </select>
-                    </div>
+                    *{<label class="col-md-4 control-label" for="dia">Dia</label>}*
+                    *{<div class="col-md-8">}*
+                        *{<select id="dia" name="dia" class="form-control">}*
+                            *{<option value="1">Option one</option>}*
+                            *{<option value="2">Option two</option>}*
+                        *{</select>}*
+                    *{</div>}*
                 </div>
             </div>
             <div class="row">
@@ -48,10 +48,10 @@
             </thead>
             <tbody>
             <tr ng-repeat="clase in clases">
-                <td class="text-center">{{clase.nombreDeClase}}</td>
+                <td class="text-center">{{clase.nombreDeClase | uppercase}}</td>
                 <td class="text-center">{{clase.nombreProfesor}}&nbsp;{{clase.apellidoPaternoProfesor}}&nbsp;{{clase.apellidoMaternoProfesor}}</td>
                 <td class="text-center">{{clase.cuposDisponibles}}</td>
-                <td class="text-center"><a href="#"><i class="fa fa-search"></i></a></td>
+                <td class="text-center"><a href="/fichaClaseDirigida/{{clase.altKeyClase}}"><i class="fa fa-search"></i></a></td>
             </tr>
             </tbody>
         </table>

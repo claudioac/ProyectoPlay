@@ -85,4 +85,9 @@ public class Horario extends EntidadIdAutoLong {
             return null;
         }
     }
+
+    public static List<Horario> findListHorariosByAltKeyClase(String altKey) {
+        List<Horario> horarios = JPA.em().createQuery("SELECT h from Horario h where h.clase.altKey=?1",Horario.class).setParameter(1,altKey).getResultList();
+        return horarios;
+    }
 }

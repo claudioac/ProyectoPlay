@@ -155,6 +155,9 @@ public class ClientesController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
             renderTemplate("InicioAdmin/clientes.html");
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
+            renderTemplate("InicioAdministrativo/clientes.html");
+        }
     }
 
 
