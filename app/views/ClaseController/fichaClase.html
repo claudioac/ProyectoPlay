@@ -55,10 +55,10 @@
 <div ng-controller="buscadorDeClases">
 #{include 'ClaseController/fragments/formBuscadorClases.html'/}
     
-    <div>
-        <table class="table">
+    <div id="tablaDeCursosDisponibles" style="display: none;">
+        <table class="table table-responsive table-bordered">
             <thead>
-            <tr>
+            <tr class="warning">
                 <th class="text-center">Fecha de Clase</th>
                 <th class="text-center">Clase</th>
                 <th class="text-center">Cupos Disponibles</th>
@@ -68,11 +68,11 @@
             </thead>
             <tbody>
                  <tr ng-repeat="curso in cursos">
-                     <td class="text-center">{{curso.fecha}}</td>
+                     <td class="text-center">{{toJsDate(curso.fecha)| date:'dd/MM/yyyy'}}</td>
                      <td class="text-center">{{curso.clase | uppercase}}</td>
                      <td class="text-center">{{curso.cupos}}</td>
                      <td class="text-center">{{curso.profesor}}</td>
-                     <td class="text-center"></td>
+                     <td class="text-center"><a href="/verFichaDeCurso/{{curso.altKey}}" class="help" title="Ver Curso"><span class="glyphicon glyphicon-search"></span></a></td>
                  </tr>
             </tbody>
         </table>
@@ -94,7 +94,13 @@
                 transformRequest: transform}).success(function(cursos){
                 $scope.cursos = cursos;
                 $('#buscadorClases').modal('toggle');
+                $('#tablaDeCursosDisponibles').show();
             });
+        }
+
+        $scope.toJsDate = function (str) {
+            if (!str)return null;
+            return new Date(str);
         }
     });
 </script>

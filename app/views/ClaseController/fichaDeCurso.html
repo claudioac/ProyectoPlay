@@ -1,0 +1,34 @@
+<div class="page-header">
+    <h1>Ficha de Curso
+        <small>(Lista de Control y Asistencia a determinada clase)</small>
+    </h1>
+</div>
+<div class="bs-callout bs-callout-primary">
+    <h4 class="text-center">Antecedentes Clase</h4>
+    <ul>
+        <li>
+            <h5>Nombre: &nbsp;${curso.clase.tipoDeClase.tipo.toUpperCase()}</h5>
+        </li>
+        <li>
+            <h5>Fecha de Dictamen:&nbsp;${curso.fechaDeCurso.format('dd/MM/yyyy')}</h5>
+        </li>
+        <li>
+            <h5>Profesor Encargado: &nbsp;${curso.clase.profesor.nombres}&nbsp;${curso.clase.profesor.apellidoPaterno}
+                &nbsp;${curso.clase.profesor.apellidoMaterno}</h5>
+        </li>
+        <li>
+            <h5>Máximo de Cupos: &nbsp;${curso.clase.cupos}&nbsp;Pers.</h5>
+        </li>
+    </ul>
+</div>
+#{ifnot curso.clientes}
+    <div class="alert alert-danger">
+        <p>
+            <span class="glyphicon glyphicon-warning-sign"></span> No se han registrado clientes a esta clase.
+        </p>
+    </div>
+#{/ifnot}
+#{include 'ClaseController/fragments/registrarClienteACurso.html'/}
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscripcionCliente">
+    <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.
+</button>

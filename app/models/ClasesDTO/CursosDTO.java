@@ -11,5 +11,6 @@ public class CursosDTO {
     public String clase;
     public String profesor;
     public Integer cupos;
+    public String altKey;
 
 }

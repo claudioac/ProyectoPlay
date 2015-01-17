@@ -51,6 +51,7 @@ public class Curso extends EntidadIdAutoLongAltKey{
         dto.profesor = clase.profesor.nombres + ' ' + clase.profesor.apellidoPaterno + ' ' + clase.profesor.apellidoMaterno;
         dto.cupos = clase.cupos;
         dto.fecha = fechaDeCurso;
+        dto.altKey = altKey;
         return dto;
     }
 }

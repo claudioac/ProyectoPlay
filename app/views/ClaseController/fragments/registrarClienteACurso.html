@@ -1,0 +1,60 @@
+<div class="modal fade" id="inscripcionCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-university"></i>&nbsp;Inscripción</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="inscribirClienteForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="rutCliente">R.U.T</label>
+                            <div class="col-md-4">
+                                <input id="rutCliente" name="rutCliente" type="text"  class="form-control input-md">
+                            </div>
+                        </div>
+                        <input type="hidden" name="altKeyCurso" value="${curso.altKey}"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="inscribir" class="btn btn-success">Inscribir</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $inscribirClienteForm = $('#inscribirClienteForm');
+    $('#rutCliente').Rut({
+        on_error: function(){
+            $('#rutCliente').closest("div.form-group").addClass('has-error');
+        },
+        on_success: function(){
+            $("ul.errors-fields").remove();
+            $.ajax({
+               url: "@{ClaseController.verificarCliente()}",
+               method:"post",
+               data: $inscribirClienteForm.serialize(),
+               success: function(){
+                   $('#rutCliente').closest("div.form-group").addClass('has-success');
+               },
+               error: function(resp){
+                   if (resp.status == 400) {
+                       $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                           var $input = $(":input[name='" + name + "']");
+                           $input.closest("div.form-group").addClass("has-error");
+                           var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                           $.each(errors, function (i, elem) {
+                               var $li = $("<li class='text-danger'/>");
+                               $li.text(elem);
+                               $ul.append($li);
+                           });
+                           $input.after($ul);
+                       });
+                   }
+               }
+            });
+        }
+    });
+</script>

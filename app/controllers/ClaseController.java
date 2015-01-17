@@ -119,4 +119,28 @@ public class ClaseController extends Controller {
         List<CursosDTO> cursos = Curso.findAllCursosByAltKeyYFecha(fechaDeCurso,altKeyClase);
         renderJSON(cursos);
     }
+
+    public static void verFichaDeCurso(String altKey){
+        Curso curso = Curso.find("altKey",altKey).first();
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/fichaDeCursoAdmin.html",curso);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/fichaDeCursoAdministrativo.html",curso);
+
+        }
+    }
+
+    public static void verificarCliente(String rutCliente){
+       Persona cliente = Persona.findPersonaByRut(rutCliente);
+       if (cliente.tipoUsuario.id.equals(TipoUsuariosDTO.IdUsuario)){
+           ok();
+       }else {
+           Validation.addError("rutCliente","El Rut no Pertenece a un Cliente.");
+           if (Validation.hasErrors()) {
+               response.status = Http.StatusCode.BAD_REQUEST;
+               renderJSON(ErrorJSON.fromValidation());
+           }
+       }
+    }
 }

@@ -32,8 +32,8 @@ POST   /ingresarHorarioProfesional                           Personal.ingresarHo
 POST   /nuevaClase                                           ClaseController.nuevaClase
 POST   /getClasesDisponibles                                 ClaseController.getClasesDisponibles
 GET    /fichaClaseDirigida/{altKey}                          ClaseController.fichaClaseDirigida
-POST   //buscarCursosPorClaseYFecha                          ClaseController.buscarCursos
-
+POST   /buscarCursosPorClaseYFecha                           ClaseController.buscarCursos
+GET    /verFichaDeCurso/{altKey}                             ClaseController.verFichaDeCurso
 
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 
