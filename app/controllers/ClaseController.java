@@ -133,8 +133,16 @@ public class ClaseController extends Controller {
 
     public static void verificarCliente(String rutCliente){
        Persona cliente = Persona.findPersonaByRut(rutCliente);
-       if (cliente.tipoUsuario.id.equals(TipoUsuariosDTO.IdUsuario)){
-           ok();
+       if (cliente != null){
+           if (cliente.tipoUsuario.id.equals(TipoUsuariosDTO.IdUsuario)){
+               ok();
+           }else {
+               Validation.addError("rutCliente","El Rut no Pertenece a un Cliente.");
+               if (Validation.hasErrors()) {
+                   response.status = Http.StatusCode.BAD_REQUEST;
+                   renderJSON(ErrorJSON.fromValidation());
+               }
+           }
        }else {
            Validation.addError("rutCliente","El Rut no Pertenece a un Cliente.");
            if (Validation.hasErrors()) {
@@ -142,5 +150,6 @@ public class ClaseController extends Controller {
                renderJSON(ErrorJSON.fromValidation());
            }
        }
+
     }
 }
