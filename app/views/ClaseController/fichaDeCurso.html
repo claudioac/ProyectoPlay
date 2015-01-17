@@ -27,7 +27,27 @@
             <span class="glyphicon glyphicon-warning-sign"></span> No se han registrado clientes a esta clase.
         </p>
     </div>
-#{/ifnot}
+#{/ifnot}#{else }
+
+<div>
+    <table class="table table-bordered table-responsive" style="width: 70%;">
+        <thead>
+            <tr class="warning">
+                <th class="text-center">Rut</th>
+                <th class="text-center">Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+        #{list items:curso.clientes,as:'cliente'}#{/list}
+             <tr>
+                 <td class="text-center">${cliente.rut}</td>
+                 <td class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}&nbsp;${cliente.apellidoMaterno}</td>
+             </tr>
+        </tbody>
+    </table>
+</div>
+
+#{/else}
 #{include 'ClaseController/fragments/registrarClienteACurso.html'/}
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscripcionCliente">
     <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.

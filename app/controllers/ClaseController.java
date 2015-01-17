@@ -144,12 +144,19 @@ public class ClaseController extends Controller {
                }
            }
        }else {
-           Validation.addError("rutCliente","El Rut no Pertenece a un Cliente.");
+           Validation.addError("rutCliente","El Rut del cliente no registra en el sistema.");
            if (Validation.hasErrors()) {
                response.status = Http.StatusCode.BAD_REQUEST;
                renderJSON(ErrorJSON.fromValidation());
            }
        }
 
+    }
+
+    public static void inscribirClienteACurso(String rutCliente, String altKeyCurso){
+        Persona cliente = Persona.findPersonaByRut(rutCliente);
+        Curso curso = Curso.find("altKey",altKeyCurso).first();
+        curso.clientes.add(cliente);
+        curso.save();
     }
 }

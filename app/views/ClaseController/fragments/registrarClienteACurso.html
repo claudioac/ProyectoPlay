@@ -57,4 +57,19 @@
             });
         }
     });
+
+    $('#inscribir').click(function(){
+        $.ajax({
+           url:"@{ClaseController.inscribirClienteACurso()}",
+           method:"post",
+           data: $inscribirClienteForm.serialize(),
+           success: function(){
+               $("#inscripcionCliente").modal('toggle');
+               location.reload();
+           },
+           error: function(){
+
+           }
+        });
+    });
 </script>
