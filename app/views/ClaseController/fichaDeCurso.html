@@ -35,14 +35,17 @@
             <tr class="warning">
                 <th class="text-center">Rut</th>
                 <th class="text-center">Nombre</th>
+                <th class="text-center">Acción</th>
             </tr>
         </thead>
         <tbody>
-        #{list items:curso.clientes,as:'cliente'}#{/list}
-             <tr>
-                 <td class="text-center">${cliente.rut}</td>
-                 <td class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}&nbsp;${cliente.apellidoMaterno}</td>
-             </tr>
+        #{list items:curso.clientes,as:'cliente'}
+        <tr>
+            <td class="text-center">${cliente.rut}</td>
+            <td class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}&nbsp;${cliente.apellidoMaterno}</td>
+            <td class="text-center"><a href="#" data-altKeyCliente="${cliente.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+        #{/list}
         </tbody>
     </table>
 </div>
