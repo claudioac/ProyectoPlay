@@ -8,6 +8,7 @@ import models.ClasesDTO.HorarioClaseDTO;
 import models.error.ErrorJSON;
 import play.data.binding.As;
 import play.data.validation.Validation;
+import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.Http;
 
@@ -157,6 +158,13 @@ public class ClaseController extends Controller {
         Persona cliente = Persona.findPersonaByRut(rutCliente);
         Curso curso = Curso.find("altKey",altKeyCurso).first();
         curso.clientes.add(cliente);
+        curso.save();
+    }
+
+    public static void eliminarClienteInscritoEnCurso(String altKeyPersona, String altKeyCurso){
+        Persona cliente = Persona.findPersonabyAltKey(altKeyPersona);
+        Curso curso = Curso.find("altKey",altKeyCurso).first();
+        curso.clientes.remove(cliente);
         curso.save();
     }
 }

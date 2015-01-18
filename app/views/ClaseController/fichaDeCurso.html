@@ -30,7 +30,7 @@
 #{/ifnot}#{else }
 
 <div>
-    <table class="table table-bordered table-responsive" style="width: 70%;">
+    <table id="clientesInscritos" class="table table-bordered table-responsive" style="width: 70%;">
         <thead>
             <tr class="warning">
                 <th class="text-center">Rut</th>
@@ -43,7 +43,7 @@
         <tr>
             <td class="text-center">${cliente.rut}</td>
             <td class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}&nbsp;${cliente.apellidoMaterno}</td>
-            <td class="text-center"><a href="#" data-altKeyCliente="${cliente.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
+            <td class="text-center"><a  class="eliminarClienteInscrito" href="#" data-alt-key-cliente="${cliente.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
         #{/list}
         </tbody>
@@ -55,3 +55,43 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscripcionCliente">
     <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.
 </button>
+<script type="text/javascript">
+    var $altKeyCurso = "${curso.altKey}";
+    $('#clientesInscritos').on("click","a.eliminarClienteInscrito",function(){
+       var $altKeyCliente = $(this).data('altKeyCliente');
+       console.log($altKeyCliente);
+       bootbox.confirm("¿Está seguro de eliminar esta persona del curso?",function(result){
+           if(result){
+               $.ajax({
+                   url:"@{ClaseController.eliminarClienteInscritoEnCurso()}",
+                   method:"post",
+                   data: {altKeyPersona: $altKeyCliente, altKeyCurso: $altKeyCurso},
+                   success: function (){
+                    location.reload();
+                   },
+                   error: function (){
+                       $.growl({
+                           icon: "glyphicon glyphicon-warning-sign",
+                           title: "&nbsp;<strong>Error Interno</strong><br>"
+                       }, {
+                           element: 'body',
+                           type: "danger",
+                           placement: {
+                               form: "top",
+                               align: "center"
+                           },
+                           spacing: 10,
+                           offset: 20,
+                           z_index: 1031,
+                           delay: 6000,
+                           animate: {
+                               enter: 'animated fadeInRight',
+                               exit: 'animated fadeOutLeft'
+                           }
+                       });
+                   }
+               });
+           }
+       });
+    });
+</script>
