@@ -46,21 +46,21 @@ public class Inicio extends Controller {
                 InicioAdmin.index();
             }
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.USUARIO)){
-                session.put("user",usuario);
+                session.put("user",login.getNombreCompleto());
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioUsuario.indexUsuario(login.altKey);
+                InicioUsuario.indexUsuario();
             }
 
             if(login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.PROFESOR)){
-                session.put("user",usuario);
+                session.put("user",login.getNombreCompleto());
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioProfesor.index(login.altKey);
+                InicioProfesor.index();
             }
 
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-                session.put("user",usuario);
+                session.put("user",login.getNombreCompleto());
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioAdministrativo.index(login.altKey);
+                InicioAdministrativo.index();
             }
 
         }else {

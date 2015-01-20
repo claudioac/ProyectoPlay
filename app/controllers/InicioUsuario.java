@@ -1,8 +1,11 @@
 package controllers;
 
+import models.ClasesDTO.PersonaDTO;
 import models.Persona;
 import play.mvc.Controller;
 import play.mvc.With;
+
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -12,10 +15,13 @@ public class InicioUsuario extends Controller{
 
     /**
      * Funcion que renderisa la página principal del usuario.
-     * @param altKey
      */
-    public static void indexUsuario(String altKey){
-        Persona persona = Persona.findPersonabyAltKey(altKey);
-        render(persona);
+    public static void indexUsuario(){
+        render();
+    }
+
+    public static void solicitarAsesoramiento(){
+        List<PersonaDTO> profesores = Persona.findAllProfesoresParaCitas();
+        render(profesores);
     }
 }

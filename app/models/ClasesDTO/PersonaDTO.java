@@ -1,6 +1,9 @@
 package models.ClasesDTO;
 
 
+import java.util.Date;
+import java.util.HashMap;
+
 /**
  * @author Claudio Acuña
  */
@@ -9,6 +12,7 @@ public class PersonaDTO {
     public String nombres;
     public String apellidoPaterno;
     public String apellidoMaterno;
+    public String nombreCompleto;
     public String rut;
     public String altKey;
     public int genero;
@@ -19,7 +23,7 @@ public class PersonaDTO {
     public String telefono;
     public String celular;
     public String email;
-
+    public HashMap<String,Date> horario;
     public String getNombres() {
         return nombres;
     }
@@ -122,5 +126,13 @@ public class PersonaDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public HashMap<String, Date> getHorario() {
+        return horario;
+    }
+
+    public void setHorario(HashMap<String, Date> horario) {
+        this.horario = horario;
     }
 }

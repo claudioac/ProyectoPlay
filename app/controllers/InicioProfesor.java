@@ -13,10 +13,8 @@ public class InicioProfesor extends Controller {
 
     /**
      * Funcion que renderisa la pagina principal del profesor
-     * @param altKey
      */
-    public static void index(String altKey) {
-        Persona persona = Persona.findPersonabyAltKey(altKey);
-        render(persona);
+    public static void index() {
+        render();
     }
 }

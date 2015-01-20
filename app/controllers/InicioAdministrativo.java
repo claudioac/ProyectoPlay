@@ -16,11 +16,9 @@ public class InicioAdministrativo extends Controller {
 
     /**
      * Función que renderisa el escritorio del administrativo.
-     * @param altKey
      */
-    public static void index(String altKey) {
-        Persona persona = Persona.findPersonabyAltKey(altKey);
-        render(persona);
+    public static void index() {
+        render();
     }
 
     public static void clientes(){

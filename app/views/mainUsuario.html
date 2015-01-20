@@ -4,8 +4,6 @@
 <head>
 #{Librerias /}
 </head>
-
-
 <body>
 <!-- Fixed navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -21,24 +19,34 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
-                <li><a href="#about"><i class="fa fa-trophy"></i>&nbsp;Rutinas</a></li>
-                <li><a href="#contact"><i class="fa fa-check"></i>&nbsp;Controles</a></li>
+                <li><a href="#"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
+                <li class="dropdown">
+                    <a href="#about" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-trophy"></i>&nbsp;Asesoramiento
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="@{InicioUsuario.solicitarAsesoramiento()}"><i class="fa fa-clock-o"></i>&nbsp;Solicitar Cita de Asesoramiento</a></li>
+                        <li><a href="#"><i class="fa fa-plus-square"></i>&nbsp;Mis Citas</a></li>
+                        <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;Historial de Rutinas</a></li>
+                        <li><a href="#"><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud</a></li>
+                    </ul>
+                </li>
                 <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
                 <li><a href="#contact"><i class="fa fa-money"></i>&nbsp;Mensualidad</a></li>
             </ul>
-            <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
+            <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar"
+                    id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
-            <p class="navbar-text navbar-right"><i class="fa fa-user"></i>&nbsp; ${persona.nombres}</p>
+
+            <p class="navbar-text navbar-right"><i class="fa fa-user"></i>&nbsp; ${session.get("user")}</p>
         </div>
     </div>
 </div>
-<div class="container" style="margin-top: 70px;">
+<div class="container" id="main-body" style="margin-top: 70px;">
 
-    #{doLayout /}
+#{doLayout /}
 
 #{if flash.error}
-        <strong>${flash.error}</strong>
+    <strong>${flash.error}</strong>
 #{/if}
 
 </div>
@@ -52,8 +60,8 @@
 <script type="text/javascript">
     $(function () {
 
-        $("#cerrarSession").click(function(){
-           location.href ="@{Inicio.index()}";
+        $("#cerrarSession").click(function () {
+            location.href = "@{Inicio.index()}";
         });
 
         $(".help").tooltip({

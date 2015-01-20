@@ -204,17 +204,22 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.fechaDeIncorporacion = fechaDeIncorporacion;
     }
 
-    public String getNombreCompleto(){
+    public String getNombreCompleto() {
         String nombreCompleto;
-        nombreCompleto = nombres+ ' '+ apellidoPaterno + ' '+apellidoMaterno;
+        nombreCompleto = nombres + ' ' + apellidoPaterno + ' ' + apellidoMaterno;
         return nombreCompleto;
     }
+
     /**
      * Funciones JPA
      */
     public static Persona checkUsuario(String Usuario) {
-        Persona usuario = JPA.em().createQuery("Select p from Persona p where p.usuario.usuario=?1", Persona.class).setParameter(1, Usuario).getSingleResult();
-        return usuario;
+        try {
+            Persona usuario = JPA.em().createQuery("Select p from Persona p where p.usuario.usuario=?1", Persona.class).setParameter(1, Usuario).getSingleResult();
+            return usuario;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public static Persona findPersonabyAltKey(String altKey) {
@@ -237,42 +242,42 @@ public class Persona extends EntidadIdAutoLongAltKey {
         String oql = "SELECT p " +
                 "FROM Persona p " +
                 "WHERE 1=1 ";
-        if (personas != null && personas.getSexo() !=null){
+        if (personas != null && personas.getSexo() != null) {
             oql += "AND p.genero =?1 ";
         }
-        if (personas != null && personas.getTipoUsuario() != null){
+        if (personas != null && personas.getTipoUsuario() != null) {
             oql += "AND p.tipoUsuario.id =?2 ";
         }
-        if (personas != null && personas.getComuna() !=null){
+        if (personas != null && personas.getComuna() != null) {
             oql += "AND p.comuna.id =?3 ";
         }
-        if (personas != null && personas.getRegion() != null){
+        if (personas != null && personas.getRegion() != null) {
             oql += "AND p.region.id =?4 ";
         }
-        if (personas != null  && personas.getProvincia() != null){
+        if (personas != null && personas.getProvincia() != null) {
             oql += "AND p.provincia.id =?5 ";
         }
-        if (personas != null && personas.getContiene() != null){
+        if (personas != null && personas.getContiene() != null) {
             oql += "AND CONCAT(p.rut, ' ',p.nombres, ' ',p.apellidoPaterno, ' ',p.apellidoMaterno ) like :contiene ";
         }
-        TypedQuery<Persona> query = JPA.em().createQuery(oql.toString(),Persona.class);
-        if (personas != null && personas.getSexo() !=null){
-            query.setParameter(1,personas.getSexo());
+        TypedQuery<Persona> query = JPA.em().createQuery(oql.toString(), Persona.class);
+        if (personas != null && personas.getSexo() != null) {
+            query.setParameter(1, personas.getSexo());
         }
-        if (personas != null && personas.getTipoUsuario() != null){
-            query.setParameter(2,personas.getTipoUsuario());
+        if (personas != null && personas.getTipoUsuario() != null) {
+            query.setParameter(2, personas.getTipoUsuario());
         }
-        if (personas != null && personas.getComuna() !=null){
-            query.setParameter(3,personas.getComuna());
+        if (personas != null && personas.getComuna() != null) {
+            query.setParameter(3, personas.getComuna());
         }
-        if (personas != null && personas.getRegion() != null){
-            query.setParameter(4,personas.getRegion());
+        if (personas != null && personas.getRegion() != null) {
+            query.setParameter(4, personas.getRegion());
         }
-        if (personas != null  && personas.getProvincia() != null){
-            query.setParameter(5,personas.getProvincia());
+        if (personas != null && personas.getProvincia() != null) {
+            query.setParameter(5, personas.getProvincia());
         }
-        if (personas != null && personas.getContiene() != null){
-            query.setParameter("contiene",personas.getContiene()+"%");
+        if (personas != null && personas.getContiene() != null) {
+            query.setParameter("contiene", personas.getContiene() + "%");
         }
         //List<Persona> persona = JPA.em().createQuery("Select p from Persona p").getResultList();
         List<Persona> persona = query.getResultList();
@@ -294,29 +299,29 @@ public class Persona extends EntidadIdAutoLongAltKey {
 
     public static List<PersonaDTO> getAllProfesores(SearchPersonalQuery personal) {
 
-        String oql= "Select p " +
+        String oql = "Select p " +
                 "From Persona p " +
                 "Where p.tipoUsuario.id !=?3 ";
-            if (personal != null && personal.getSexo() != null){
-                oql += "AND p.genero =?1 ";
-            }
-            if (personal != null && personal.getTipoUsuario() != null){
-                oql += "AND p.tipoUsuario.id =?2 ";
-            }
-            if (personal != null && StringUtils.isNotBlank(personal.getRut())){
-                oql += "AND p.rut like :rut";
-            }
-        TypedQuery<Persona>  query = JPA.em().createQuery(oql.toString(),Persona.class);
-        if (personal != null && personal.getSexo() != null){
-            query.setParameter(1,personal.getSexo());
+        if (personal != null && personal.getSexo() != null) {
+            oql += "AND p.genero =?1 ";
         }
-        if (personal != null && personal.getTipoUsuario() != null){
-            query.setParameter(2,personal.getTipoUsuario());
+        if (personal != null && personal.getTipoUsuario() != null) {
+            oql += "AND p.tipoUsuario.id =?2 ";
         }
-        if (personal != null && StringUtils.isNotBlank(personal.getRut())){
-            query.setParameter("rut",personal.getRut()+"%");
+        if (personal != null && StringUtils.isNotBlank(personal.getRut())) {
+            oql += "AND p.rut like :rut";
         }
-        query.setParameter(3,TipoUsuariosDTO.IdUsuario);
+        TypedQuery<Persona> query = JPA.em().createQuery(oql.toString(), Persona.class);
+        if (personal != null && personal.getSexo() != null) {
+            query.setParameter(1, personal.getSexo());
+        }
+        if (personal != null && personal.getTipoUsuario() != null) {
+            query.setParameter(2, personal.getTipoUsuario());
+        }
+        if (personal != null && StringUtils.isNotBlank(personal.getRut())) {
+            query.setParameter("rut", personal.getRut() + "%");
+        }
+        query.setParameter(3, TipoUsuariosDTO.IdUsuario);
         List<Persona> persona = query.getResultList();
 
         //List<Persona> persona = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id in (?1,?2) ").setParameter(1, TipoUsuariosDTO.IdProfesor).setParameter(2,TipoUsuariosDTO.IdVendedor).getResultList();
@@ -335,10 +340,10 @@ public class Persona extends EntidadIdAutoLongAltKey {
         dto.setApellidoPaterno(this.apellidoPaterno);
         dto.setCelular(this.celular);
         dto.setTelefono(this.telefono);
-        if (region != null){
+        if (region != null) {
             dto.setRegion(this.region.getId().intValue());
         }
-        if (provincia != null){
+        if (provincia != null) {
             dto.setProvincia(this.provincia.getId().intValue());
         }
         dto.setComuna(this.comuna.getId().intValue());
@@ -346,11 +351,21 @@ public class Persona extends EntidadIdAutoLongAltKey {
         dto.setDireccion(this.direccion);
         dto.setGenero(this.genero);
         dto.setRut(this.rut);
+        dto.nombreCompleto = getNombreCompleto();
+        if (horarios.size() != 0) {
+            Horario horario = Horario.findHorarioPersonaByAltKey(altKey);
+            if (horario != null) {
+                HashMap<String,Date> h = new HashMap<String, Date>();
+                h.put("entrada",horario.horaInicio);
+                h.put("salida",horario.horaTermino);
+                dto.setHorario(h);
+            }
+        }
         return dto;
     }
 
     public static List<Persona> findAllProfesores() {
-        List<Persona> profesores = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id=?1",Persona.class).setParameter(1,TipoUsuariosDTO.IdProfesor).getResultList();
+        List<Persona> profesores = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id=?1", Persona.class).setParameter(1, TipoUsuariosDTO.IdProfesor).getResultList();
         return profesores;
     }
 
@@ -361,5 +376,14 @@ public class Persona extends EntidadIdAutoLongAltKey {
         usuario.nombreCompleto = login.nombres + ' ' + login.apellidoPaterno + ' ' + login.apellidoMaterno;
         usuario.tipoUsuario = login.tipoUsuario.tipoUsuario;
         return usuario;
+    }
+
+    public static List<PersonaDTO> findAllProfesoresParaCitas() {
+        List<Persona> profesores = findAllProfesores();
+        List<PersonaDTO> result = new ArrayList<PersonaDTO>();
+        for (Persona profesor : profesores) {
+            result.add(profesor.toPersonaDTO());
+        }
+        return result;
     }
 }

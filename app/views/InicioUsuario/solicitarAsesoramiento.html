@@ -1,0 +1,30 @@
+#{extends 'mainUsuario.html'/}
+<div class="page-header">
+    <h1><i class="fa fa-user-md"></i>&nbsp;Solicitud para asesoria con profesional.</h1>
+</div>
+<div class="col-xs-12 bs-callout bs-callout-danger">
+    <table class="table table-responsive table-bordered">
+        <thead>
+        <tr class="warning">
+            <th class="text-center">Profesor</th>
+            <th class="text-center">Horario</th>
+            <th class="text-center">Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{list items:profesores,as:'profesor'}
+        #{if profesor.horario != null}
+        <tr>
+            <td class="text-center">${profesor.nombreCompleto}</td>
+            <td class="text-center">
+                <li><strong>Entrada: &nbsp;</strong>${profesor.horario.get('entrada')}</li>
+                <li><strong>Salida: &nbsp;</strong>${profesor.horario.get('salida')}</li>
+            </td>
+            <td class="text-center"><a href="#" class="help" title="Agendar Hora"><span
+                    class="glyphicon glyphicon-calendar"></span></a></td>
+        </tr>
+        #{/if}
+        #{/list}
+        </tbody>
+    </table>
+</div>
