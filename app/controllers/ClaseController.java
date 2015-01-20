@@ -159,8 +159,12 @@ public class ClaseController extends Controller {
     public static void inscribirClienteACurso(String rutCliente, String altKeyCurso){
         Persona cliente = Persona.findPersonaByRut(rutCliente);
         Curso curso = Curso.find("altKey",altKeyCurso).first();
-        curso.clientes.add(cliente);
-        curso.save();
+        if (curso.clientes.size() <= curso.clase.cupos){
+            curso.clientes.add(cliente);
+            curso.save();
+        }else {
+            response.status = Http.StatusCode.BAD_REQUEST;
+        }
     }
 
     public static void eliminarClienteInscritoEnCurso(String altKeyPersona, String altKeyCurso){
@@ -171,6 +175,7 @@ public class ClaseController extends Controller {
     }
 
     public static void listadoDeCurso(String altKeyCurso)throws Exception{
+        //TODO - SE DEBE MEJORAR LA IMPLEMENTACIÓN DE EXPORTACIÓN.
         Curso curso = Curso.find("altKey",altKeyCurso).first();
         String template = "/Users/claudio/Desktop/Proyecto Final/Gym/app/views/ClaseController/listadoDeCurso.xls";
         String destino = "/Users/claudio/Desktop/curso.xls";

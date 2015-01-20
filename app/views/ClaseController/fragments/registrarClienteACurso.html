@@ -68,7 +68,26 @@
                location.reload();
            },
            error: function(){
-
+               $("#inscripcionCliente").modal('toggle');
+               $.growl({
+                   icon: "glyphicon glyphicon-warning-sign",
+                   title: "&nbsp;<strong>Ya no existen cupos disponibles</strong><br>"
+               }, {
+                   element: 'body',
+                   type: "danger",
+                   placement: {
+                       form: "top",
+                       align: "center"
+                   },
+                   spacing: 10,
+                   offset: 20,
+                   z_index: 1031,
+                   delay: 6000,
+                   animate: {
+                       enter: 'animated fadeInRight',
+                       exit: 'animated fadeOutLeft'
+                   }
+               });
            }
         });
     });
