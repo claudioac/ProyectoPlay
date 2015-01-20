@@ -5,3 +5,5 @@ require:
     - play -> secure
     - play -> pdf 0.9
     - play
+    - xerces -> xercesImpl 2.11.0
+    - net.sf.jxls -> jxls-core 1.0.6

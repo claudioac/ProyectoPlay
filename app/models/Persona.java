@@ -4,6 +4,7 @@ import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.ClasesDTO.PersonaDTO;
 import models.ClasesDTO.SearchPersonalQuery;
 import models.ClasesDTO.SearchPersonasQuery;
+import models.ClasesDTO.UsuarioConectado;
 import org.apache.commons.lang.StringUtils;
 import play.db.jpa.JPA;
 
@@ -203,6 +204,11 @@ public class Persona extends EntidadIdAutoLongAltKey {
         this.fechaDeIncorporacion = fechaDeIncorporacion;
     }
 
+    public String getNombreCompleto(){
+        String nombreCompleto;
+        nombreCompleto = nombres+ ' '+ apellidoPaterno + ' '+apellidoMaterno;
+        return nombreCompleto;
+    }
     /**
      * Funciones JPA
      */
@@ -346,5 +352,14 @@ public class Persona extends EntidadIdAutoLongAltKey {
     public static List<Persona> findAllProfesores() {
         List<Persona> profesores = JPA.em().createQuery("SELECT p from Persona p where p.tipoUsuario.id=?1",Persona.class).setParameter(1,TipoUsuariosDTO.IdProfesor).getResultList();
         return profesores;
+    }
+
+    public static UsuarioConectado setUsuarioConectado(Persona login) {
+        UsuarioConectado usuario = new UsuarioConectado();
+        usuario.email = login.usuario.email;
+        usuario.idTipoUsuario = login.tipoUsuario.id;
+        usuario.nombreCompleto = login.nombres + ' ' + login.apellidoPaterno + ' ' + login.apellidoMaterno;
+        usuario.tipoUsuario = login.tipoUsuario.tipoUsuario;
+        return usuario;
     }
 }

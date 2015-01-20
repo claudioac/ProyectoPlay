@@ -5,7 +5,9 @@ import models.*;
 import models.ClasesDTO.PersonaDTO;
 import models.ClasesDTO.SearchPersonalQuery;
 import models.ClasesDTO.SearchPersonasQuery;
+import models.ClasesDTO.UsuarioConectado;
 import play.mvc.Controller;
+import play.mvc.Scope;
 import play.mvc.With;
 
 import java.util.List;
@@ -19,10 +21,9 @@ public class InicioAdmin extends Controller {
     /**
      * Funcion que renderisa el escritorio del cliente
      */
-    public static void index(String altKey) {
+    public static void index() {
         List<Region> regiones = Region.getAllRegiones();
-        Persona persona = Persona.findPersonabyAltKey(altKey);
-        render(persona,regiones);
+        render(regiones);
     }
 
     public static void clientes() {

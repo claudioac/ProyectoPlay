@@ -6,12 +6,14 @@ import models.ClasesDTO.ClaseDTO;
 import models.ClasesDTO.CursosDTO;
 import models.ClasesDTO.HorarioClaseDTO;
 import models.error.ErrorJSON;
+import net.sf.jxls.transformer.XLSTransformer;
 import play.data.binding.As;
 import play.data.validation.Validation;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.Http;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -167,4 +169,21 @@ public class ClaseController extends Controller {
         curso.clientes.remove(cliente);
         curso.save();
     }
+
+    public static void listadoDeCurso(String altKeyCurso)throws Exception{
+        Curso curso = Curso.find("altKey",altKeyCurso).first();
+        String template = "/Users/claudio/Desktop/Proyecto Final/Gym/app/views/ClaseController/listadoDeCurso.xls";
+        String destino = "/Users/claudio/Desktop/curso.xls";
+        try {
+            InputStream in = new FileInputStream(template);
+            Map bean = new HashMap();
+            bean.put("curso",curso);
+            XLSTransformer transformer = new XLSTransformer();
+            transformer.transformXLS(template,bean, destino);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+       }
+
 }

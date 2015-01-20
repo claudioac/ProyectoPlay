@@ -1,8 +1,13 @@
 package controllers;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
+import models.ClasesDTO.UsuarioConectado;
 import models.Persona;
 import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Scope;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Claudio Acuña
@@ -35,9 +40,10 @@ public class Inicio extends Controller {
         Persona login = Persona.checkUsuario(usuario);
         if (login != null && login.usuario.getPassword().equals(password)) {
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.ADMIN)){
-                session.put("user",usuario);
+                UsuarioConectado usuarioConectado = Persona.setUsuarioConectado(login);
+                session.put("user",login.getNombreCompleto());
                 session.put("tipo",login.tipoUsuario.tipoUsuario);
-                InicioAdmin.index(login.altKey);
+                InicioAdmin.index();
             }
             if (login.tipoUsuario.tipoUsuario.equals(TipoUsuariosDTO.USUARIO)){
                 session.put("user",usuario);

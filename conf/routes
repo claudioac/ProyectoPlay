@@ -34,7 +34,6 @@ POST   /getClasesDisponibles                                 ClaseController.get
 GET    /fichaClaseDirigida/{altKey}                          ClaseController.fichaClaseDirigida
 POST   /buscarCursosPorClaseYFecha                           ClaseController.buscarCursos
 GET    /verFichaDeCurso/{altKey}                             ClaseController.verFichaDeCurso
-
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
