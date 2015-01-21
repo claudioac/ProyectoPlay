@@ -5,6 +5,7 @@ import models.*;
 import models.ClasesDTO.ClaseDTO;
 import models.ClasesDTO.CursosDTO;
 import models.ClasesDTO.HorarioClaseDTO;
+import models.ClasesDTO.SearchClasesQuery;
 import models.error.ErrorJSON;
 import net.sf.jxls.transformer.XLSTransformer;
 import play.data.binding.As;
@@ -57,9 +58,9 @@ public class ClaseController extends Controller {
         claseARegistrar.save();
     }
 
-    public static void getClasesDisponibles(){
-        List<ClaseDTO> clase = Clase.findAllClasesActivas();
-        renderJSON(clase);
+    public static void getClasesDisponibles(SearchClasesQuery clase){
+        List<ClaseDTO> clases = Clase.findAllClasesActivas(clase);
+        renderJSON(clases);
     }
 
     public static void fichaClaseDirigida(String altKey){

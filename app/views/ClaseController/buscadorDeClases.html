@@ -6,7 +6,7 @@
                 <div class="form-group col-md-6">
                     <label class="col-md-4 control-label" for="tipoDeClases">Tipo de Clase</label>
                     <div class="col-md-8">
-                        <select id="tipoDeClases" name="tipoDeClases" class="form-control">
+                        <select id="tipoDeClases" name="tipoDeClases" ng-model="ClaseData.clase.tipoDeClase" class="form-control">
                             <option value="">Seleccione..</option>
                            #{list items:tipoDeClases,as:'clase'}
                                <option value="${clase.id}">${clase.tipo}</option>
@@ -59,8 +59,14 @@
 </div>
 <script type="text/javascript">
     app.controller("clases",function($scope,$http){
+        $scope.ClaseData = {};
         $scope.buscar = function(){
-            $http.post("/getClasesDisponibles").success(function(clases){
+            var transform = function(data){
+                return $.param(data);
+            }
+            $http.post("/getClasesDisponibles",this.ClaseData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function(clases){
                 $scope.clases = clases;
                 $('#tablaDeClases').show();
             });

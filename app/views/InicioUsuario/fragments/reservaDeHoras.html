@@ -1,0 +1,36 @@
+<div class="modal fade" id="fechaDeAsesoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-calendar-o"></i>&nbsp;Fecha Para la Asesoria</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="fechaDeAsesoriaForm">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="fechaDeAsesoria">Fecha</label>
+                            <div class="col-md-4">
+                                <input id="fechaDeAsesoria" name="fechaDeAsesoria" type="text"  class="form-control input-md datepicker">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="agendarAsesoria" class="btn btn-success">Agendar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('#fechaDeAsesoriaForm input').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        language: 'es',
+        startDate: '0',
+        weekStart: 1,
+        keyboardNavigation: false,
+        daysOfWeekDisabled: '0'
+    });
+</script>

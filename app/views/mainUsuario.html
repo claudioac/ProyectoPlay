@@ -19,13 +19,13 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
+                <li><a href="@{InicioUsuario.indexUsuario()}"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
                 <li class="dropdown">
                     <a href="#about" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-trophy"></i>&nbsp;Asesoramiento
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="@{InicioUsuario.solicitarAsesoramiento()}"><i class="fa fa-clock-o"></i>&nbsp;Solicitar Cita de Asesoramiento</a></li>
-                        <li><a href="#"><i class="fa fa-plus-square"></i>&nbsp;Mis Citas</a></li>
+                        <li><a href="@{InicioUsuario.misCitasParaAsesoria()}"><i class="fa fa-plus-square"></i>&nbsp;Mis Citas</a></li>
                         <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;Historial de Rutinas</a></li>
                         <li><a href="#"><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud</a></li>
                     </ul>
@@ -59,6 +59,15 @@
 
 <script type="text/javascript">
     $(function () {
+
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            clearBtn: true,
+            language: 'es',
+            weekStart: 1,
+            keyboardNavigation: false
+        });
 
         $("#cerrarSession").click(function () {
             location.href = "@{Inicio.index()}";

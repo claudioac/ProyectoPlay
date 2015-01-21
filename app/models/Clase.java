@@ -1,6 +1,8 @@
 package models;
 
 import models.ClasesDTO.ClaseDTO;
+import models.ClasesDTO.SearchClasesQuery;
+import play.db.jpa.JPA;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -72,8 +74,17 @@ public class Clase extends EntidadIdAutoLongAltKey {
         return  tipoDeClase.tipo;
     }
 
-    public static List<ClaseDTO> findAllClasesActivas() {
-        List<Clase> clases = Clase.findAll();
+    public static List<ClaseDTO> findAllClasesActivas(SearchClasesQuery query) {
+        String oql = "SELECT c from Clase c " +
+                "WHERE 1=1 ";
+        if (query != null && query.tipoDeClase != null){
+            oql += "AND c.tipoDeClase.id=?1";
+        }
+        TypedQuery<Clase> query1 = JPA.em().createQuery(oql.toString(),Clase.class);
+        if(query != null && query.tipoDeClase != null){
+            query1.setParameter(1,query.tipoDeClase);
+        }
+        List<Clase> clases = query1.getResultList();
         List<ClaseDTO> resultado = new ArrayList<ClaseDTO>();
         for (Clase clase : clases) {
             resultado.add(clase.toClaseDTO());

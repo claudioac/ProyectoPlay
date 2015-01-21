@@ -1,0 +1,43 @@
+#{extends 'mainUsuario.html'/}
+<div class="page-header">
+    <h1><i class="fa fa-calendar"></i>&nbsp;Mis Citas Agendadas</h1>
+</div>
+<div class="alert alert-info">
+    <p><span class="glyphicon glyphicon-info-sign"></span>&nbsp;La atención para cada asesoria solicitada se realizaran de acuerdo a orden de llegada de cada cliente
+    lo que no significa que no debe ser realizada la solicitud de asesoria previamente por sistema.</p>
+</div>
+<div class="bs-callout bs-callout-warning">
+    <h4 class="text-center">Citas</h4>
+    <br/>
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr class="warning">
+            <th class="text-center">Fecha de Cita</th>
+            <th class="text-center">Profesor</th>
+            <th class="text-center">Horarios de Atención</th>
+            <th class="text-center">Cancelar Cita</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{list items:citas,as:'cita'}
+        <tr>
+            <td class="text-center">${cita.fechaDeCita.format("dd/MM/yyyy")}</td>
+            <td class="text-center">${cita.nombreProfesor}</td>
+            <td class="text-center">
+                <ul class="list-inline text-center">
+                    <li><strong>Entrada:</strong><br/>
+                    ${cita.horarioProfesor.get('entrada')}
+                    </li>
+                    <li><strong>Salida:</strong><br/>
+                    ${cita.horarioProfesor.get('salida')}</li>
+                </ul>
+            </td>
+            <td class="text-center"><a href="#" data-key-Cita="${cita.altKeyCita}" class="help" title="Cancelar Cita"><i class="fa fa-trash-o fa-2x"></i></a></td>
+        </tr>
+        #{/list}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+
+</script>
