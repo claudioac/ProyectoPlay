@@ -52,4 +52,11 @@ public class InicioUsuario extends Controller {
         List<CitasDTO> citas = Cita.findAllCitasByPersona(usuarioConectado);
         render(citas);
     }
+
+    public static void cancelarCitaReservadaParaAsesoria(String altKeyCita){
+        String altKeyCliente = session.get("altKey");
+        Persona usuarioConectado = Persona.findPersonabyAltKey(altKeyCliente);
+        Cita cita = Cita.find("altKey",altKeyCita).first();
+        cita.delete();
+    }
 }

@@ -9,7 +9,7 @@
 <div class="bs-callout bs-callout-warning">
     <h4 class="text-center">Citas</h4>
     <br/>
-    <table class="table table-bordered table-responsive">
+    <table class="table table-bordered table-responsive" id="misCitas">
         <thead>
         <tr class="warning">
             <th class="text-center">Fecha de Cita</th>
@@ -32,12 +32,31 @@
                     ${cita.horarioProfesor.get('salida')}</li>
                 </ul>
             </td>
-            <td class="text-center"><a href="#" data-key-Cita="${cita.altKeyCita}" class="help" title="Cancelar Cita"><i class="fa fa-trash-o fa-2x"></i></a></td>
+            <td class="text-center"><a href="#" data-key-Cita="${cita.altKeyCita}" class="help Cita" title="Cancelar Cita"><i class="fa fa-trash-o fa-2x"></i></a></td>
         </tr>
         #{/list}
         </tbody>
     </table>
 </div>
 <script type="text/javascript">
-
+    $('#misCitas').on('click','a.Cita',function(){
+        var $altKeyCita = $(this).data('keyCita');
+        bootbox.confirm("¿Desea Anular la asesoria solicitada?",function(result){
+            if(result){
+                $.ajax({
+                    url: "@{InicioUsuario.cancelarCitaReservadaParaAsesoria()}",
+                    method: "post",
+                    data: {altKeyCita: $altKeyCita},
+                    success: function(){
+                        bootbox.alert("La cita fue anulada con exito",function(){
+                            location.reload();
+                        });
+                    },
+                    error: function(){
+                        alert("Error Interno");
+                    }
+                })
+            }
+        });
+    });
 </script>
