@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="usuario">
 <head>
 #{Librerias /}
 </head>
@@ -9,7 +9,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".nav-bar1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -17,30 +17,43 @@
             </button>
             <a class="navbar-brand" href="#">Planet Gym</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse nav-bar1">
             <ul class="nav navbar-nav">
                 <li><a href="@{InicioUsuario.indexUsuario()}"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
                 <li class="dropdown">
-                    <a href="#about" class="dropdown-toggle" data-toggle="dropdown" role="button"><i class="fa fa-trophy"></i>&nbsp;Asesoramiento
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><i
+                            class="fa fa-trophy"></i>&nbsp;Asesoramiento
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="@{InicioUsuario.solicitarAsesoramiento()}"><i class="fa fa-clock-o"></i>&nbsp;Solicitar Cita de Asesoramiento</a></li>
-                        <li><a href="@{InicioUsuario.misCitasParaAsesoria()}"><i class="fa fa-plus-square"></i>&nbsp;Mis Citas</a></li>
+                        <li><a href="@{InicioUsuario.solicitarAsesoramiento()}"><i class="fa fa-clock-o"></i>&nbsp;Solicitar
+                            Cita de Asesoramiento</a></li>
+                        <li><a href="@{InicioUsuario.misCitasParaAsesoria()}"><i class="fa fa-plus-square"></i>&nbsp;Mis
+                            Citas</a></li>
                         <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;Historial de Rutinas</a></li>
                         <li><a href="#"><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud</a></li>
                     </ul>
                 </li>
-                <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <i class="fa fa-university"></i>&nbsp;Clases<span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                        <li><a href="@{InicioUsuario.clasesDisponibles()}"><i class="fa fa-check-square"></i>&nbsp;Clases Disponibles</a></li>
+                    </ul>
+                </li>
                 <li><a href="#contact"><i class="fa fa-money"></i>&nbsp;Mensualidad</a></li>
             </ul>
             <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar"
                     id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
             <p class="navbar-text navbar-right"></p>
 
-            <p class="navbar-text navbar-right"><i class="fa fa-user"></i>&nbsp; ${session.get("user")}</p>
+            <p class="navbar-text navbar-right"><i class="fa fa-user help" title="${session.get("tipo").toUpperCase()}"></i>&nbsp; ${session.get("user")}</p>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var app = angular.module("usuario", []);
+</script>
 <div class="container" id="main-body" style="margin-top: 70px;">
 
 #{doLayout /}

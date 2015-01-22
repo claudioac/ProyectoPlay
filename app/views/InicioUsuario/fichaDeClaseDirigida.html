@@ -1,3 +1,4 @@
+#{extends 'mainUsuario.html'/}
 <div class="page-header">
     <h1>Antecedentes Generales
         <small>(datos específicos de determina clase.)</small>
@@ -40,21 +41,20 @@
     <br/>
     <div class="row">
         <div class="col-md-4">
-          <button type="button" data-toggle="modal" data-target="#habilitarCupos" class="btn btn-success btn-block help" title="&{'informacion.habilitarInscripcion'}"><i class="fa fa-users"></i>&nbsp;Habilitar Inscripción a Clase</button>
         </div>
         <div class="col-md-4">
 
         </div>
         <div class="col-md-4">
             <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#buscadorClases"><span
-                    class="fa fa-history"></span>&nbsp;Historial de Clases
+                    class="fa fa-history"></span>&nbsp;Clases Disponibles
             </button>
         </div>
     </div>
 </div>
 <div ng-controller="buscadorDeClases">
 #{include 'ClaseController/fragments/formBuscadorClases.html'/}
-    
+
     <div id="tablaDeCursosDisponibles" style="display: none;">
         <table class="table table-responsive table-bordered">
             <thead>
@@ -68,20 +68,22 @@
             </tr>
             </thead>
             <tbody>
-                 <tr ng-repeat="curso in cursos">
-                     <td class="text-center">{{toJsDate(curso.fecha)| date:'dd/MM/yyyy'}}</td>
-                     <td class="text-center">{{curso.clase | uppercase}}</td>
-                     <td class="text-center">{{curso.profesor}}</td>
-                     <td class="text-center">{{curso.cupos}}</td>
-                     <td class="text-center">{{curso.cuposDisponibles}}</td>
-                     <td class="text-center"><a href="/verFichaDeCurso/{{curso.altKey}}" class="help" title="Ver Curso"><span class="glyphicon glyphicon-search"></span></a></td>
-                 </tr>
+            <tr ng-repeat="curso in cursos">
+                <td class="text-center">{{toJsDate(curso.fecha)| date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{curso.clase | uppercase}}</td>
+                <td class="text-center">{{curso.profesor}}</td>
+                <td class="text-center">{{curso.cupos}}</td>
+                <td class="text-center">{{curso.cuposDisponibles}}</td>
+                <td class="text-center"><a href="/verFichaDeCurso/{{curso.altKey}}" class="help" title="Ver Curso"><span class="glyphicon glyphicon-search"></span></a></td>
+            </tr>
             </tbody>
         </table>
     </div>
-    
+
 </div>
-#{include 'ClaseController/fragments/habilitarCupos.html'/}
+<div class="alert alert-warning" id="advertenciaCursosNoDisponibles" style="display: none;">
+    <span class="glyphicon glyphicon-warning-sign"></span>&nbsp;<strong>La clase no registra cursos para la fecha en especifica. Consulte a la administración en caso de cualquier duda.</strong>
+</div>
 <script type="text/javascript">
     app.controller("buscadorDeClases",function($scope,$http){
         $scope.formData = {};
@@ -95,8 +97,17 @@
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
                 transformRequest: transform}).success(function(cursos){
                 $scope.cursos = cursos;
+
+
+
                 $('#buscadorClases').modal('toggle');
-                $('#tablaDeCursosDisponibles').show();
+                if(cursos.length != 0){
+                    $('#tablaDeCursosDisponibles').show();
+                    $('#advertenciaCursosNoDisponibles').hide();
+                }else{
+                    $('#tablaDeCursosDisponibles').hide();
+                    $('#advertenciaCursosNoDisponibles').show();
+                }
             });
         }
 
@@ -104,5 +115,15 @@
             if (!str)return null;
             return new Date(str);
         }
+    });
+
+    $('#fechaDeCurso').datepicker({
+        format: "dd/mm/yyyy",
+        autoclose: true,
+        language: 'es',
+        startDate: '0',
+        weekStart: 1,
+        keyboardNavigation: false,
+        daysOfWeekDisabled: '0'
     });
 </script>

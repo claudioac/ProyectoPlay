@@ -1,0 +1,108 @@
+#{extends 'mainUsuario.html'/}
+<div class="page-header">
+    <h1>Ficha de Curso
+        <small>(Lista de Control y Asistencia a determinada clase)</small>
+    </h1>
+</div>
+<div class="bs-callout bs-callout-primary">
+    <h4 class="text-center">Antecedentes Clase</h4>
+    <ul>
+        <li>
+            <h5>Nombre: &nbsp;${curso.clase.tipoDeClase.tipo.toUpperCase()}</h5>
+        </li>
+        <li>
+            <h5>Fecha de Dictamen:&nbsp;${curso.fechaDeCurso.format('dd/MM/yyyy')}</h5>
+        </li>
+        <li>
+            <h5>Profesor Encargado: &nbsp;${curso.clase.profesor.nombres}&nbsp;${curso.clase.profesor.apellidoPaterno}
+                &nbsp;${curso.clase.profesor.apellidoMaterno}</h5>
+        </li>
+        <li>
+            <h5>Máximo de Cupos: &nbsp;${curso.clase.cupos}&nbsp;Pers.</h5>
+        </li>
+        <li>
+            <h5>Cupos Disponibles: &nbsp;${cuposDisponibles}&nbsp;Pers.</h5>
+        </li>
+    </ul>
+</div>
+#{ifnot curso.clientes}
+<div class="alert alert-danger">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span> No se han registrado clientes a esta clase.
+    </p>
+</div>
+#{/ifnot}#{else }
+<div class="col-xs-offset-3 col-xs-10 col-md-offset-3 col-md-10">
+    <table id="clientesInscritos" class="table table-bordered table-responsive" style="width: 70%;">
+        <thead>
+        <tr class="warning">
+            <th class="text-center">Nº</th>
+            <th class="text-center">Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{list items:curso.clientes,as:'cliente'}
+        <tr>
+            <td class="text-center">${cliente_index}</td>
+            <td class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}&nbsp;${cliente.apellidoMaterno}</td>
+        </tr>
+        #{/list}
+        </tbody>
+    </table>
+</div>
+
+#{/else}
+#{include 'ClaseController/fragments/registrarClienteACurso.html'/}
+<div class="row">
+    <div class="col-xs-offset-6 col-xs-4  col-md-offset-10 col-md-2">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscripcionCliente">
+            <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.
+        </button>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+
+<script type="text/javascript">
+    var $altKeyCurso = "${curso.altKey}";
+    $('#clientesInscritos').on("click","a.eliminarClienteInscrito",function(){
+        var $altKeyCliente = $(this).data('altKeyCliente');
+        console.log($altKeyCliente);
+        bootbox.confirm("¿Está seguro de eliminar esta persona del curso?",function(result){
+            if(result){
+                $.ajax({
+                    url:"@{ClaseController.eliminarClienteInscritoEnCurso()}",
+                    method:"post",
+                    data: {altKeyPersona: $altKeyCliente, altKeyCurso: $altKeyCurso},
+                    success: function (){
+                        location.reload();
+                    },
+                    error: function (){
+                        $.growl({
+                            icon: "glyphicon glyphicon-warning-sign",
+                            title: "&nbsp;<strong>Error Interno</strong><br>"
+                        }, {
+                            element: 'body',
+                            type: "danger",
+                            placement: {
+                                form: "top",
+                                align: "center"
+                            },
+                            spacing: 10,
+                            offset: 20,
+                            z_index: 1031,
+                            delay: 6000,
+                            animate: {
+                                enter: 'animated fadeInRight',
+                                exit: 'animated fadeOutLeft'
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+</script>

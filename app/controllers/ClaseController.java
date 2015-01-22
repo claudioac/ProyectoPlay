@@ -103,6 +103,9 @@ public class ClaseController extends Controller {
             renderTemplate("InicioAdministrativo/fichaClaseDirigidaVendedor.html",clase,horario);
 
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.USUARIO)){
+            renderTemplate("InicioUsuario/fichaDeClaseDirigida.html",clase,horario);
+        }
 
     }
 
@@ -126,12 +129,19 @@ public class ClaseController extends Controller {
 
     public static void verFichaDeCurso(String altKey){
         Curso curso = Curso.find("altKey",altKey).first();
+        Long cuposDisponibles = Long.valueOf(0);
+        if (curso != null){
+            cuposDisponibles = Long.valueOf((curso.clase.cupos - curso.clientes.size()));
+        }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/fichaDeCursoAdmin.html",curso);
+            renderTemplate("InicioAdmin/fichaDeCursoAdmin.html",curso,cuposDisponibles);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/fichaDeCursoAdministrativo.html",curso);
+            renderTemplate("InicioAdministrativo/fichaDeCursoAdministrativo.html",curso,cuposDisponibles);
 
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.USUARIO)){
+            renderTemplate("InicioUsuario/fichaDeCursoUsuario.html",curso,cuposDisponibles);
         }
     }
 

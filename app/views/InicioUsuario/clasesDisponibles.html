@@ -1,0 +1,73 @@
+#{extends 'mainUsuario.html'/}
+<div>
+    <h1>Clases Disponibles</h1>
+</div>
+<div ng-controller="clases">
+    <form class="form-horizontal well">
+        <fieldset>
+            <legend>Buscador de Clases</legend>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="col-md-4 control-label" for="tipoDeClases">Tipo de Clase</label>
+                    <div class="col-md-8">
+                        <select id="tipoDeClases" name="tipoDeClases" ng-model="ClaseData.clase.tipoDeClase" class="form-control">
+                            <option value="">Seleccione..</option>
+                        #{list items:tipoDeClases,as:'clase'}
+                            <option value="${clase.id}">${clase.tipo}</option>
+                        #{/list}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="col-md-4 control-label" for="buscarClase"></label>
+                    <div class="col-md-4">
+                        <button id="buscarClase" name="buscarClase" class="btn btn-success" ng-click="buscar()">Buscar</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div id="tablaDeClases" style="display: none;">
+        <table class="table table-responsive table-bordered">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Clase</th>
+                <th class="text-center">Profesor</th>
+                <th class="text-center" style="width: 5%;">Cupos Disponibles</th>
+                <th class="text-center" style="width: 5%;">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="clase in clases">
+                <td class="text-center">{{clase.nombreDeClase | uppercase}}</td>
+                <td class="text-center">{{clase.nombreProfesor}}&nbsp;{{clase.apellidoPaternoProfesor}}&nbsp;{{clase.apellidoMaternoProfesor}}</td>
+                <td class="text-center">{{clase.cuposDisponibles}}</td>
+                <td class="text-center"><a href="/fichaClaseDirigida/{{clase.altKeyClase}}" class="help" title="Detalle de Clase"><i class="fa fa-search"></i></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    app.controller("clases",function($scope,$http){
+        $scope.ClaseData = {};
+        $scope.buscar = function(){
+            var transform = function(data){
+                return $.param(data);
+            }
+            $http.post("/getClasesDisponibles",this.ClaseData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function(clases){
+                $scope.clases = clases;
+                $('#tablaDeClases').show();
+            });
+        }
+    });
+</script>

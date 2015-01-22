@@ -1,9 +1,11 @@
 package controllers;
 
 import models.Cita;
+import models.Clase;
 import models.ClasesDTO.CitasDTO;
 import models.ClasesDTO.PersonaDTO;
 import models.Persona;
+import models.TipoDeClase;
 import models.error.ErrorJSON;
 import play.data.validation.Validation;
 import play.mvc.Controller;
@@ -29,6 +31,11 @@ public class InicioUsuario extends Controller {
     public static void solicitarAsesoramiento() {
         List<PersonaDTO> profesores = Persona.findAllProfesoresParaCitas();
         render(profesores);
+    }
+
+    public static void clasesDisponibles(){
+        List<TipoDeClase> tipoDeClases = TipoDeClase.findAll();
+        render(tipoDeClases);
     }
 
     public static void reservarHoraParaAsesoria(String altKeyProfesor, String altKeyCliente, Date fechaDeAsesoria) {

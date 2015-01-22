@@ -19,7 +19,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="inscribir" class="btn btn-success">Inscribir</button>
+                <button type="button" id="inscribir" class="btn btn-success disabled">Inscribir</button>
             </div>
         </div>
     </div>
@@ -28,7 +28,10 @@
     var $inscribirClienteForm = $('#inscribirClienteForm');
     $('#rutCliente').Rut({
         on_error: function(){
+            $('#inscribir').addClass('disabled');
             $('#rutCliente').closest("div.form-group").addClass('has-error');
+            bootbox.alert('Rut Incorrecto',function(){
+            });
         },
         on_success: function(){
             $("ul.errors-fields").remove();
@@ -37,9 +40,12 @@
                method:"post",
                data: $inscribirClienteForm.serialize(),
                success: function(){
+                   $('#inscribir').removeClass('disabled');
+                   $('#rutCliente').closest("div.form-group").removeClass('has-error');
                    $('#rutCliente').closest("div.form-group").addClass('has-success');
                },
                error: function(resp){
+                   $('#inscribir').addClass('disabled');
                    if (resp.status == 400) {
                        $.each(resp.responseJSON.fieldErrors, function (name, errors) {
                            var $input = $(":input[name='" + name + "']");
