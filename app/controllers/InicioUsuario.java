@@ -1,19 +1,19 @@
 package controllers;
 
-import models.Cita;
-import models.Clase;
+import models.*;
 import models.ClasesDTO.CitasDTO;
 import models.ClasesDTO.PersonaDTO;
-import models.Persona;
-import models.TipoDeClase;
 import models.error.ErrorJSON;
 import play.data.validation.Validation;
+import play.modules.pdf.PDF;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.With;
 
 import java.util.Date;
 import java.util.List;
+
+import static play.modules.pdf.PDF.renderPDF;
 
 /**
  * @author Claudio Acuña
@@ -36,6 +36,28 @@ public class InicioUsuario extends Controller {
     public static void clasesDisponibles(){
         List<TipoDeClase> tipoDeClases = TipoDeClase.findAll();
         render(tipoDeClases);
+    }
+
+    public static void historialDeRutinas(){
+      render();
+    }
+
+    public static void fichaDeSalud(){
+        render();
+    }
+
+    public static void historialDePagos(){
+        String altKeyCliente = session.get("altKey");
+        Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyCliente);
+        List<Mensualidad> mensualidades = Mensualidad.mensualidadesByAltkeyCliente(altKeyCliente);
+        int montoCancelado = 0;
+        int subTotal = 0;
+        for (Mensualidad mensualidad : mensualidades) {
+            montoCancelado += mensualidad.montoCancelado;
+        }
+        subTotal = (int) (contrato.tipoPlan.valorTotalPlan - montoCancelado);
+        render(cliente,contrato,mensualidades,subTotal,montoCancelado);
     }
 
     public static void reservarHoraParaAsesoria(String altKeyProfesor, String altKeyCliente, Date fechaDeAsesoria) {
@@ -65,5 +87,14 @@ public class InicioUsuario extends Controller {
         Persona usuarioConectado = Persona.findPersonabyAltKey(altKeyCliente);
         Cita cita = Cita.find("altKey",altKeyCita).first();
         cita.delete();
+    }
+
+    public static void generarContrato(String altKey) {
+        Persona persona = Persona.findPersonabyAltKey(altKey);
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKey);
+        Date fechaActual = new Date();
+        PDF.Options options = new PDF.Options();
+        options.filename = "Contrato" + ".pdf";
+        renderPDF(options, persona, contrato, fechaActual);
     }
 }

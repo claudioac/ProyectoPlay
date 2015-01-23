@@ -13,7 +13,7 @@
                         <select id="tipoDeClases" name="tipoDeClases" ng-model="ClaseData.clase.tipoDeClase" class="form-control">
                             <option value="">Seleccione..</option>
                         #{list items:tipoDeClases,as:'clase'}
-                            <option value="${clase.id}">${clase.tipo}</option>
+                            <option value="${clase.id}">${clase.tipo.toUpperCase()}</option>
                         #{/list}
                         </select>
                     </div>

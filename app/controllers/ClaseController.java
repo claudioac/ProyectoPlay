@@ -13,6 +13,7 @@ import play.data.validation.Validation;
 import play.db.jpa.JPA;
 import play.mvc.Controller;
 import play.mvc.Http;
+import play.mvc.With;
 
 import java.io.*;
 import java.util.*;
@@ -20,6 +21,7 @@ import java.util.*;
 /**
  * @author Claudio Acuña
  */
+@With(Autenticar.class)
 public class ClaseController extends Controller {
 
     public static void nuevaClase(ClaseDTO clase,@As ("HH:mm")Date horaDeInicio, @As("HH:mm") Date horaDeTermino){

@@ -1,7 +1,7 @@
 #{extends 'mainUsuario.html'/}
 <div class="page-header">
     <h1>Antecedentes Generales
-        <small>(datos específicos de determina clase.)</small>
+        <small class="hidden-xs">(datos específicos de determina clase.)</small>
     </h1>
 </div>
 <div class="bs-callout bs-callout-danger">
@@ -55,8 +55,8 @@
 <div ng-controller="buscadorDeClases">
 #{include 'ClaseController/fragments/formBuscadorClases.html'/}
 
-    <div id="tablaDeCursosDisponibles" style="display: none;">
-        <table class="table table-responsive table-bordered">
+    <div id="tablaDeCursosDisponibles"  style="display: none;">
+        <table class="table table-bordered table-responsive">
             <thead>
             <tr class="warning">
                 <th class="text-center">Fecha de Clase</th>

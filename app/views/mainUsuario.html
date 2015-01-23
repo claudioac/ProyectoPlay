@@ -29,8 +29,8 @@
                             Cita de Asesoramiento</a></li>
                         <li><a href="@{InicioUsuario.misCitasParaAsesoria()}"><i class="fa fa-plus-square"></i>&nbsp;Mis
                             Citas</a></li>
-                        <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;Historial de Rutinas</a></li>
-                        <li><a href="#"><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud</a></li>
+                        <li><a href="@{InicioUsuario.historialDeRutinas()}"><i class="fa fa-calendar"></i>&nbsp;Historial de Rutinas</a></li>
+                        <li><a href="@{InicioUsuario.fichaDeSalud()}"><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -41,7 +41,16 @@
                         <li><a href="@{InicioUsuario.clasesDisponibles()}"><i class="fa fa-check-square"></i>&nbsp;Clases Disponibles</a></li>
                     </ul>
                 </li>
-                <li><a href="#contact"><i class="fa fa-money"></i>&nbsp;Mensualidad</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <i class="fa fa-money"></i>&nbsp;Mensualidad<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="@{InicioUsuario.historialDePagos()}"><i class="fa fa-calendar"></i>&nbsp;Historial de Pagos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa fa-send"></i>&nbsp;Contactos</a></li>
             </ul>
             <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar"
                     id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
