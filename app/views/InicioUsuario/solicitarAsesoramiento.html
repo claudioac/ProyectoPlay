@@ -5,30 +5,33 @@
 <div class="col-xs-12 bs-callout bs-callout-danger">
     <h4 class="text-center">Profesor Disponibles</h4>
     <br/>
-    <table class="table table-responsive table-bordered" id="tablaDeProfesores">
-        <thead>
-        <tr class="warning">
-            <th class="text-center">Profesor</th>
-            <th class="text-center">Horario</th>
-            <th class="text-center">Acción</th>
-        </tr>
-        </thead>
-        <tbody>
-        #{list items:profesores,as:'profesor'}
-        #{if profesor.horario != null}
-        <tr>
-            <td class="text-center">${profesor.nombreCompleto}</td>
-            <td class="text-center">
-                <li><strong>Entrada: &nbsp;</strong>${profesor.horario.get('entrada')}</li>
-                <li><strong>Salida: &nbsp;</strong>${profesor.horario.get('salida')}</li>
-            </td>
-            <td class="text-center"><a href="#"  data-profesor="${profesor.altKey}" class="help reservarHora datepicker-dropdown" title="Agendar Hora"><span
-                    class="glyphicon glyphicon-calendar"></span></a></td>
-        </tr>
-        #{/if}
-        #{/list}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered" id="tablaDeProfesores">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Profesor</th>
+                <th class="text-center">Horario</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            #{list items:profesores,as:'profesor'}
+                #{if profesor.horario != null}
+                <tr>
+                    <td class="text-center">${profesor.nombreCompleto}</td>
+                    <td class="text-center">
+                        <li><strong>Entrada: &nbsp;</strong>${profesor.horario.get('entrada')}</li>
+                        <li><strong>Salida: &nbsp;</strong>${profesor.horario.get('salida')}</li>
+                    </td>
+                    <td class="text-center"><a href="#"  data-profesor="${profesor.altKey}" class="help reservarHora datepicker-dropdown" title="Agendar Hora"><span
+                            class="glyphicon glyphicon-calendar"></span></a></td>
+                </tr>
+                #{/if}
+            #{/list}
+            </tbody>
+        </table>
+    </div>
+
 </div>
 #{include 'InicioUsuario/fragments/reservaDeHoras.html'/}
 <script type="text/javascript">
