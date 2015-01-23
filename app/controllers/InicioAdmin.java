@@ -2,10 +2,7 @@ package controllers;
 
 
 import models.*;
-import models.ClasesDTO.PersonaDTO;
-import models.ClasesDTO.SearchPersonalQuery;
-import models.ClasesDTO.SearchPersonasQuery;
-import models.ClasesDTO.UsuarioConectado;
+import models.ClasesDTO.*;
 import play.mvc.Controller;
 import play.mvc.Scope;
 import play.mvc.With;
@@ -46,8 +43,8 @@ public class InicioAdmin extends Controller {
         renderJSON(persona);
     }
 
-    public static void getClientes() {
-        List<PersonaDTO> clientes = Persona.getAllClientes();
+    public static void getClientes(SearchClientesQuery cliente) {
+        List<PersonaDTO> clientes = Persona.getAllClientes(cliente);
         renderJSON(clientes);
     }
 

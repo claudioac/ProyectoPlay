@@ -1,10 +1,7 @@
 package models;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
-import models.ClasesDTO.PersonaDTO;
-import models.ClasesDTO.SearchPersonalQuery;
-import models.ClasesDTO.SearchPersonasQuery;
-import models.ClasesDTO.UsuarioConectado;
+import models.ClasesDTO.*;
 import org.apache.commons.lang.StringUtils;
 import play.db.jpa.JPA;
 
@@ -294,8 +291,27 @@ public class Persona extends EntidadIdAutoLongAltKey {
         return resultado;
     }
 
-    public static List<PersonaDTO> getAllClientes() {
-        List<Persona> persona = JPA.em().createQuery("Select p from Persona p where p.tipoUsuario.id =?1").setParameter(1, TipoUsuariosDTO.IdUsuario).getResultList();
+    public static List<PersonaDTO> getAllClientes(SearchClientesQuery clientes) {
+        String oql = "Select p " +
+                "From Persona p " +
+                "Where p.tipoUsuario.id =?3 ";
+        if (clientes != null && clientes.getSexo() != null) {
+            oql += "AND p.genero =?1 ";
+        }
+
+        if (clientes != null && StringUtils.isNotBlank(clientes.getRut())) {
+            oql += "AND p.rut like :rut";
+        }
+        TypedQuery<Persona> query = JPA.em().createQuery(oql.toString(), Persona.class);
+        if (clientes != null && clientes.getSexo() != null) {
+            query.setParameter(1, clientes.getSexo());
+        }
+
+        if (clientes != null && StringUtils.isNotBlank(clientes.getRut())) {
+            query.setParameter("rut", clientes.getRut() + "%");
+        }
+        query.setParameter(3, TipoUsuariosDTO.IdUsuario);
+        List<Persona> persona = query.getResultList();
         List<PersonaDTO> resultado = new ArrayList<PersonaDTO>();
         for (Persona usr : persona) {
             resultado.add(usr.toPersonaDTO());
