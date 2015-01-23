@@ -26,9 +26,23 @@
                 <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
                 <li><a href="#contact"><i class="fa fa-calendar-o"></i>&nbsp;Horarios</a></li>
             </ul>
-            <button type="button" class="btn btn-danger navbar-btn navbar-right help" title="Desconectar" id="cerrarSession"><i class="fa fa-sign-out">&nbsp;Log out</i></button>
-            <p class="navbar-text navbar-right"></p>
-            <p class="navbar-text navbar-right"><i class="fa fa-user"></i>&nbsp; ${session.get("user")}</p>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown navbar-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw help" title="${session.get('user')}"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="cerrarSession"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+            </ul>
         </div>
     </div>
 </div>
