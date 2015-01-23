@@ -1,0 +1,31 @@
+<div class="page-header">
+    <h1>Asesorias por Realizar</h1>
+</div>
+<div class="table-responsive">
+    #{ifnot citas}
+        <div class="alert alert-info">
+            <strong><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Usted no registra agendamientos de asesoria.</strong>
+        </div>
+    #{/ifnot}#{else }
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="danger">
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Rut Cliente</th>
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            #{list items:citas,as:'cita'}
+            <tr>
+                <td class="text-center">${cita.fecha.format("dd/MM/yyyy")}</td>
+                <td class="text-center">${cita.cliente.rut}</td>
+                <td class="text-center">${cita.cliente.nombreCompleto.toUpperCase()}</td>
+                <td class="text-center"><a href="#" class="help" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a></td>
+            </tr>
+            #{/list}
+            </tbody>
+        </table>
+    #{/else}
+</div>

@@ -51,4 +51,9 @@ public class Cita extends EntidadIdAutoLongAltKey {
         }
         return dto;
     }
+
+    public static List<Cita> findAllCitasByAltKeyProfesor(String altKey) {
+        List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.profesor.altKey=?1",Cita.class).setParameter(1,altKey).getResultList();
+        return citas;
+    }
 }

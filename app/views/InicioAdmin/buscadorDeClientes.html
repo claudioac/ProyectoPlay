@@ -108,12 +108,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    app.controller("clientes", function ($scope, $http, $filter) {
+    app.controller("clientes", function ($scope, $http) {
         $scope.buscar = function () {
             $http.post('/buscar/getClientes').success(function (clientes) {
                 $scope.clientes = clientes;
                 $("#clientes").show();
-                //console.log(profesores);
             });
         }
     });

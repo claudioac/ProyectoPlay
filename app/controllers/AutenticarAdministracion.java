@@ -20,7 +20,7 @@ public class AutenticarAdministracion extends Controller{
             flash.error("Please log in first");
             Inicio.index();
         }
-        if (!session.get("tipo").equals(TipoUsuariosDTO.ADMIN) && !session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+        if (!session.get("tipo").equals(TipoUsuariosDTO.ADMIN) && !session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO) && !session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
             Inicio.index();
         }
     }

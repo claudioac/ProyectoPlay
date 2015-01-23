@@ -3,13 +3,19 @@
 
 <div class="row">
     <div class="col-sm-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"><i class="fa fa-home "></i> Inicio</a></li>
-            <li><a href="#"><i class="fa fa-user "></i> Buscar Cliente</a></li>
-            <li><a href="#"><i class="fa fa-mortar-board "></i> Buscar Profesor</a></li>
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li><a href="#inicio" data-toggle="pill" role="tab"><i class="fa fa-home "></i> Inicio</a></li>
+            <li><a href="#asesoriasPendientes" data-toggle="pill" role="tab"><i class="fa fa-user "></i> Horas de Asesoria</a></li>
         </ul>
     </div>
-    <div class="col-sm-10">
-        Hola Profesor
+    <div class="col-sm-10 tab-content">
+        <div class="tab-pane active" id="inicio">
+            <div class="page-header">
+                <h1>Escritorio Profesor</h1>
+            </div>
+        </div>
+        <div class="tab-pane" id="asesoriasPendientes">
+        #{include 'InicioProfesor/asesoriaPorRealizar.html'/}
+        </div>
     </div>
 </div>

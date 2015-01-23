@@ -14,5 +14,4 @@ public abstract class EntidadIdAutoLong extends GenericModel {
     @Column(unique = true)
     public Long id;
 
-
 }

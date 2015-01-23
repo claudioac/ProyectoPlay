@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app="profesor">
 <head>
    #{Librerias /}
 </head>
-
-
 <body>
 <!-- Fixed navbar -->
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -21,15 +19,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
-                <li><a href="#about"><i class="fa fa-group"></i>&nbsp;Clientes</a></li>
-                <li><a href="#contact"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
-                <li><a href="#contact"><i class="fa fa-calendar-o"></i>&nbsp;Horarios</a></li>
+                <li class="active"><a href="@{InicioProfesor.index()}"><i class="fa fa-home"></i>&nbsp;Inicio</a></li>
+                <li><a href="@{InicioProfesor.clientes()}"><i class="fa fa-group"></i>&nbsp;Clientes</a></li>
+                <li><a href="@{InicioProfesor.clases()}"><i class="fa fa-university"></i>&nbsp;Clases</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown navbar-right">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw help" title="${session.get('user')}"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw help" title="${session.get('user')}"></i>${session.get('tipo').toUpperCase()}&nbsp;<i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
@@ -46,7 +43,10 @@
         </div>
     </div>
 </div>
-<div class="container" style="margin-top: 70px;">
+<script type="text/javascript">
+    var app = angular.module("profesor", []);
+</script>
+<div class="container" id="main-body" style="margin-top: 70px;">
     #{doLayout /}
 #{if flash.error}
         <strong>${flash.error}</strong>
@@ -70,6 +70,15 @@
         $(".help").tooltip({
             placement: "bottom",
             toggle: "tooltip"
+        });
+
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            clearBtn: true,
+            language: 'es',
+            weekStart: 1,
+            keyboardNavigation: false
         });
     });
 

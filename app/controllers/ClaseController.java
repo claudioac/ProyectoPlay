@@ -105,6 +105,10 @@ public class ClaseController extends Controller {
             renderTemplate("InicioAdministrativo/fichaClaseDirigidaVendedor.html",clase,horario);
 
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
+            renderTemplate("InicioProfesor/fichaClaseDirigidaProfesor.html",clase,horario);
+
+        }
         if (session.get("tipo").equals(TipoUsuariosDTO.USUARIO)){
             renderTemplate("InicioUsuario/fichaDeClaseDirigida.html",clase,horario);
         }
@@ -140,6 +144,10 @@ public class ClaseController extends Controller {
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
             renderTemplate("InicioAdministrativo/fichaDeCursoAdministrativo.html",curso,cuposDisponibles);
+
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
+            renderTemplate("InicioProfesor/fichaDeCursoProfesor.html",curso,cuposDisponibles);
 
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.USUARIO)){
