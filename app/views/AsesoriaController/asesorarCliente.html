@@ -1,5 +1,7 @@
 <div class="page-header">
-    <h1><i class="fa fa-plus-square"></i>&nbsp;Ficha de Salud <small class="hidden-xs">Antecedentes medicos y salud del cliente.</small></h1>
+    <h1><i class="fa fa-gears"></i>&nbsp;Asesoria
+        <small class="hidden-xs">Antecedentes salud y ejercicios físicos del cliente.</small>
+    </h1>
 </div>
 <div>
     <div class="row">
@@ -49,6 +51,30 @@
         </div>
     </div>
 </div>
-<div class="bs-callout bs-callout-success">
-    <h4 class="text-center">Fichas De Salud Registradas</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabbable-panel">
+            <div class="tabbable-line">
+                <ul class="nav nav-tabs ">
+                    <li class="active">
+                        <a href="#tab_default_1" data-toggle="tab">
+                          Fichas de Salud&nbsp;<i class="fa fa-heart-o"></i></a>
+                    </li>
+                    <li>
+                        <a href="#tab_default_2" data-toggle="tab">
+                           Rutinas de Ejercicio&nbsp;<i class="fa fa-trophy"></i></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_default_1">
+                       #{include 'AsesoriaController/fragments/fichasDeSalud.html'/}
+                    </div>
+                    <div class="tab-pane" id="tab_default_2">
+                        #{include 'AsesoriaController/fragments/rutinas.html'/}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
