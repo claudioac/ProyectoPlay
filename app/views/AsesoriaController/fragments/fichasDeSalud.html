@@ -7,7 +7,12 @@
     </table>
 </div>
 <div>
-    <button type="button" class="btn btn-success">
+    <button type="button" id="nuevaFicha" class="btn btn-success">
         Nueva Ficha de Salud
     </button>
 </div>
+<script type="text/javascript">
+    $('#nuevaFicha').click(function(){
+       location.href = '@{AsesoriaController.nuevaFichaDeSalud(cliente.altKey)}';
+    });
+</script>
