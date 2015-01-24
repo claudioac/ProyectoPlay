@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import models.ClasesDTO.CitaEstadoDTO;
 import models.ClasesDTO.CitasDTO;
 import models.ClasesDTO.PersonaDTO;
 import models.error.ErrorJSON;
@@ -72,6 +73,7 @@ public class InicioUsuario extends Controller {
         cita.fecha = fechaDeAsesoria;
         cita.profesor = profesor;
         cita.cliente = cliente;
+        cita.estado = EstadoCita.findById(CitaEstadoDTO.EN_ESPERA);
         cita.save();
     }
 

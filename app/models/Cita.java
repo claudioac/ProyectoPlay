@@ -25,6 +25,9 @@ public class Cita extends EntidadIdAutoLongAltKey {
     @Temporal(TemporalType.TIMESTAMP)
     public Date fecha;
 
+    @ManyToOne
+    public EstadoCita estado;
+
 
     public static List<CitasDTO> findAllCitasByPersona(Persona usuarioConectado) {
         List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.cliente=?1 and c.fecha>=?2", Cita.class).setParameter(1, usuarioConectado).setParameter(2,new Date()).setMaxResults(12).getResultList();

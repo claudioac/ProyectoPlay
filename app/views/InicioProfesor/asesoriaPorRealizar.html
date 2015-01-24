@@ -7,7 +7,7 @@
             <strong><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Usted no registra agendamientos de asesoria.</strong>
         </div>
     #{/ifnot}#{else }
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" id="asesoriasPendientes">
             <thead>
             <tr class="danger">
                 <th class="text-center">Fecha</th>
@@ -22,10 +22,46 @@
                 <td class="text-center">${cita.fecha.format("dd/MM/yyyy")}</td>
                 <td class="text-center">${cita.cliente.rut}</td>
                 <td class="text-center">${cita.cliente.nombreCompleto.toUpperCase()}</td>
-                <td class="text-center"><a href="#" class="help" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a></td>
+                <td class="text-center">
+                    <a href="#" class="help atenderCliente" data-key-Cliente="${cita.cliente.altKey}" data-key-Cita-Cliente="${cita.altKey}" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a>
+                    <a href="#" class="help cancelarHora" data-key-Cita="${cita.altKey}" title="Cancelar Hora"><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
             </tr>
             #{/list}
             </tbody>
         </table>
     #{/else}
 </div>
+
+<script type="text/javascript">
+
+    $('#asesoriasPendientes').on('click','a.atenderCliente',function(){
+        var $altKeyCliente = $(this).data('keyCliente');
+        var $altKeyCita = $(this).data('keyCitaCliente');
+        bootbox.confirm("¿Esta seguro de revisar a este Cliente?",function(result){
+            if(result){
+                location.href = "/asesoriaCliente/"+$altKeyCliente+'/'+$altKeyCita;
+            }
+        });
+    });
+
+    $('#asesoriasPendientes').on('click','a.cancelarHora',function(){
+        var $altKeyCita = $(this).data('keyCita');
+        bootbox.confirm("¿Esta seguro de cancelar la hora agendada por el Cliente?",function(result){
+            if(result){
+                $.ajax({
+                   url:"@{AsesoriaController.cancelarCitaReservadaParaAsesoria()}",
+                   method:"post",
+                   data: {altKeyCita: $altKeyCita},
+                   success: function(){
+                        location.reload();
+                   },
+                   error: function(){
+                        bootbox.alert("Error Interno",function(){
+                        });
+                   }
+                });
+            }
+        });
+    });
+</script>

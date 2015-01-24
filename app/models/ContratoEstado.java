@@ -7,7 +7,7 @@ import javax.persistence.SequenceGenerator;
  * @author Claudio Acuña
  */
 @Entity
-@SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_tipo_plan")
+@SequenceGenerator(initialValue = 1, name = "idAutonGen", sequenceName = "seq_estado_contrato")
 public class ContratoEstado extends EntidadIdAutoLongTipos {
 
     public String estado;

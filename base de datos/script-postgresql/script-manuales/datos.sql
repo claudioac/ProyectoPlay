@@ -687,6 +687,10 @@ INSERT INTO tipoplan(id, activo, nombre, valormensualidad, valortotalplan)VALUES
 
 --Tipo de Clases
 
-INSERT INTO tipodeclase(id, activo, tipo)VALUES (1, true, 'zumba');
-INSERT INTO tipodeclase(id, activo, tipo)VALUES (2, true, 'spinning');
-INSERT INTO tipodeclase(id, activo, tipo)VALUES (3, true, 'aerobox');
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (1, true, 'ZUMBA');
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (2, true, 'SPINING');
+INSERT INTO tipodeclase(id, activo, tipo)VALUES (3, true, 'AEROBOX');
+
+--Estado de Citas
+INSERT INTO estadocita(id, estado)VALUES (1, 'EN ESPERA');
+INSERT INTO estadocita(id, estado)VALUES (2, 'FINALIZADA');
