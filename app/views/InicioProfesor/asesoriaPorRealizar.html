@@ -13,6 +13,7 @@
                 <th class="text-center">Fecha</th>
                 <th class="text-center">Rut Cliente</th>
                 <th class="text-center">Cliente</th>
+                <th class="text-center">Estado</th>
                 <th class="text-center">Acción</th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
                 <td class="text-center">${cita.fecha.format("dd/MM/yyyy")}</td>
                 <td class="text-center">${cita.cliente.rut}</td>
                 <td class="text-center">${cita.cliente.nombreCompleto.toUpperCase()}</td>
+                <td class="text-center">${cita.estado.estado}</td>
                 <td class="text-center">
                     <a href="#" class="help atenderCliente" data-key-Cliente="${cita.cliente.altKey}" data-key-Cita-Cliente="${cita.altKey}" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a>
                     <a href="#" class="help cancelarHora" data-key-Cita="${cita.altKey}" title="Cancelar Hora"><span class="glyphicon glyphicon-trash"></span></a>
@@ -40,7 +42,7 @@
         var $altKeyCita = $(this).data('keyCitaCliente');
         bootbox.confirm("¿Esta seguro de revisar a este Cliente?",function(result){
             if(result){
-                location.href = "/asesoriaCliente/"+$altKeyCliente+'/'+$altKeyCita;
+                location.href = "/asesorarCliente/"+$altKeyCliente+'/'+$altKeyCita;
             }
         });
     });

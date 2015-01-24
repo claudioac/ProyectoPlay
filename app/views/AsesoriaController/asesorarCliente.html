@@ -1,0 +1,54 @@
+<div class="page-header">
+    <h1><i class="fa fa-plus-square"></i>&nbsp;Ficha de Salud <small class="hidden-xs">Antecedentes medicos y salud del cliente.</small></h1>
+</div>
+<div>
+    <div class="row">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 text-center">
+                            <img src="@{'/public/images/photo.png'}" alt=""
+                                 class="center-block img-circle img-responsive">
+                        </div>
+                        <!--/col-->
+                        <div class="col-xs-12 col-sm-8">
+                            <h3 class="text-center">${cliente.nombres}&nbsp;${cliente.apellidoPaterno}
+                                &nbsp;${cliente.apellidoMaterno}</h3>
+                            <hr/>
+                            <p><strong>Rut: </strong> ${cliente.rut} </p>
+
+                            <p><strong>Fecha
+                                Nacimiento: </strong> ${cliente.fechaNacimiento.format("dd MMMM yyyy","es")}
+                            </p>
+
+                            <p><strong>Sexo: </strong> #{if cliente.genero == 0}
+                                Masculino
+                            #{/if}
+                            #{else }
+                                Femenino
+                            #{/else} </p>
+
+                            <p><strong>Dirección: </strong> ${cliente.direccion}</p>
+
+                            <p><strong>Comuna: </strong> ${cliente.comuna.nombre}</p>
+
+                            <p><strong>E-mail: </strong> <a
+                                    href="mailto:${cliente.usuario.email}">${cliente.usuario.email}</a></p>
+
+                            <p><strong>Telefono Fijo: </strong> ${cliente.telefono}</p>
+
+                            <p><strong>Celular: </strong> ${cliente.celular}</p>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+</div>
+<div class="bs-callout bs-callout-success">
+    <h4 class="text-center">Fichas De Salud Registradas</h4>
+</div>

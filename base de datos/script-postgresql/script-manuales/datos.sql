@@ -694,3 +694,5 @@ INSERT INTO tipodeclase(id, activo, tipo)VALUES (3, true, 'AEROBOX');
 --Estado de Citas
 INSERT INTO estadocita(id, estado)VALUES (1, 'EN ESPERA');
 INSERT INTO estadocita(id, estado)VALUES (2, 'FINALIZADA');
+INSERT INTO estadocita(id, estado)VALUES (3, 'EN PROCESO');
+

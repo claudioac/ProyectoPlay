@@ -36,6 +36,7 @@ POST   /buscarCursosPorClaseYFecha                           ClaseController.bus
 GET    /verFichaDeCurso/{altKey}                             ClaseController.verFichaDeCurso
 GET     /administrativo/{altKey}                             InicioAdministrativo.index
 GET    /generarContratoCopiaUsuario/{altKey}                 InicioUsuario.generarContrato
+GET    /asesorarCliente/{altKeyCliente}/{altKeyCita}         AsesoriaController.asesorarCliente
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
 
