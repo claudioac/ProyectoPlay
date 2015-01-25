@@ -38,6 +38,7 @@ GET     /administrativo/{altKey}                             InicioAdministrativ
 GET    /generarContratoCopiaUsuario/{altKey}                 InicioUsuario.generarContrato
 GET    /asesorarCliente/{altKeyCliente}/{altKeyCita}         AsesoriaController.asesorarCliente
 GET    /editarFichaDeSalud/{numeroDeFicha}                   AsesoriaController.verFichaDeSaludEdit
+GET    /verDetalleFicha/{idFicha}                        ResumenController.resumenFichaDeSalud
 
 
 GET     /profesor/{altKey}                                   InicioProfesor.index

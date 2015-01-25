@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -16,17 +17,10 @@ public class Rutina extends EntidadIdAutoLongAltKey{
     @ManyToOne
     public Persona cliente;
 
-    @ManyToOne
-    public TipoDeEjercicio tipoDeEjercicio;
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date fechaDeRutina;
 
-    @ManyToOne
-    public ZonasDelCuerpo zonasDelCuerpo;
-
-    public int repeticiones;
-
-    public int series;
-
-    @Temporal(TemporalType.TIME)
-    public Date descanso;
+    @OneToMany(mappedBy = "rutina",cascade = {CascadeType.REMOVE})
+    public List<Ejercicio> ejercicios;
 
 }

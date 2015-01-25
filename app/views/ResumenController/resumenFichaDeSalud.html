@@ -1,0 +1,37 @@
+<h4 class="text-center">Ficha Nº${fichaDeSalud.id}</h4>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th class="warning">Profesor Encargado:</th>
+            <td>${fichaDeSalud.profesor.nombreCompleto}</td>
+        </tr>
+        <tr>
+            <th class="warning">Fecha De Control:</th>
+            <td>${fichaDeSalud.fechaDeControl.format('dd/MM/yyyy')}</td>
+        </tr>
+        <tr>
+            <th class="warning">Estatura Medida:</th>
+            <td>${fichaDeSalud.estatura}&nbsp;m</td>
+        </tr>
+        <tr>
+            <th class="warning">Peso:</th>
+            <td>${fichaDeSalud.peso}&nbsp;kg</td>
+        </tr>
+        <tr>
+            <th class="warning">IMC</th>
+            <td>${fichaDeSalud.imc}</td>
+        </tr>
+        <tr>
+            <th class="warning">IGC</th>
+            <td>${fichaDeSalud.img}</td>
+        </tr>
+        <tr>
+            <th class="warning">Antecedentes Médicos</th>
+            <td>${fichaDeSalud.antecedentesMedicos}</td>
+        </tr>
+        <tr>
+            <th class="warning">Condición Fisica</th>
+            <td>${fichaDeSalud.estadosIMC.clasificacion.toUpperCase()}</td>
+        </tr>
+    </table>
+</div>
