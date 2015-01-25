@@ -213,6 +213,12 @@ public class ClientesController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)) {
             renderTemplate("InicioAdmin/Cliente/fichaCliente.html",cliente,contrato,mensualidad);
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)) {
+            renderTemplate("InicioProfesor/Cliente/fichaClienteProfesor.html",cliente,contrato,mensualidad);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)) {
+            renderTemplate("InicioAdministrativo/Cliente/fichaClienteAdministrativo.html",cliente,contrato,mensualidad);
+        }
     }
 
     public static void buscarMensualidades(String altKey){
