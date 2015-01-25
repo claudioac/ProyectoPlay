@@ -1,5 +1,6 @@
 package models;
 
+import models.ClasesDTO.CitaEstadoDTO;
 import models.ClasesDTO.CitasDTO;
 import play.db.jpa.JPA;
 
@@ -30,7 +31,7 @@ public class Cita extends EntidadIdAutoLongAltKey {
 
 
     public static List<CitasDTO> findAllCitasByPersona(Persona usuarioConectado) {
-        List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.cliente=?1 and c.fecha>=?2", Cita.class).setParameter(1, usuarioConectado).setParameter(2,new Date()).setMaxResults(12).getResultList();
+        List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.cliente=?1 and c.fecha>=?2 and c.estado.id!=?3 ", Cita.class).setParameter(1, usuarioConectado).setParameter(2, new Date()).setParameter(3, CitaEstadoDTO.FINALIZADO).setMaxResults(12).getResultList();
         List<CitasDTO> result = new ArrayList<CitasDTO>();
         for (Cita cita : citas) {
             result.add(cita.toCitaDTO());
@@ -56,7 +57,7 @@ public class Cita extends EntidadIdAutoLongAltKey {
     }
 
     public static List<Cita> findAllCitasByAltKeyProfesor(String altKey) {
-        List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.profesor.altKey=?1",Cita.class).setParameter(1,altKey).getResultList();
+        List<Cita> citas = JPA.em().createQuery("SELECT c from Cita c where c.profesor.altKey=?1", Cita.class).setParameter(1, altKey).getResultList();
         return citas;
     }
 }

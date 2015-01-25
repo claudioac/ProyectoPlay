@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.cruds.EstadosCitas;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
 import models.ClasesDTO.CitaEstadoDTO;
@@ -31,13 +32,15 @@ public class AsesoriaController extends Controller {
     public static void asesorarCliente(String altKeyCita, String altKeyCliente){
         Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
         List<FichaDeSaludDTO> fichas = FichaDeSalud.findAllFichasDeSaludByAltKeyCliente(altKeyCliente);
+        boolean finalizarCita = false;
         Cita cita = Cita.find("altKey",altKeyCita).first();
-        if (cita != null){
+        if (cita != null && cita.estado.id != CitaEstadoDTO.FINALIZADO){
+            finalizarCita = true;
             cita.estado = EstadoCita.findById(CitaEstadoDTO.EN_PROCESO);
             cita.save();
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
-            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas);
+            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas,finalizarCita);
         }
     }
 
@@ -171,5 +174,11 @@ public class AsesoriaController extends Controller {
             fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_3);
         }
         fichaDeSalud.save();
+    }
+
+    public static void finalizarCita(String altKeyCita){
+        Cita cita = Cita.find("altKey",altKeyCita).first();
+        cita.estado = EstadoCita.findById(CitaEstadoDTO.FINALIZADO);
+        cita.save();
     }
 }

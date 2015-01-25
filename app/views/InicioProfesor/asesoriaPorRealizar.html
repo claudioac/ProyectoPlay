@@ -25,8 +25,13 @@
                 <td class="text-center">${cita.cliente.nombreCompleto.toUpperCase()}</td>
                 <td class="text-center">${cita.estado.estado}</td>
                 <td class="text-center">
-                    <a href="#" class="help atenderCliente" data-key-Cliente="${cita.cliente.altKey}" data-key-Cita-Cliente="${cita.altKey}" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a>
-                    <a href="#" class="help cancelarHora" data-key-Cita="${cita.altKey}" title="Cancelar Hora"><span class="glyphicon glyphicon-trash"></span></a>
+                    #{if cita.estado.id != models.ClasesDTO.CitaEstadoDTO.FINALIZADO}
+                        <a href="#" class="help atenderCliente" data-key-Cliente="${cita.cliente.altKey}" data-key-Cita-Cliente="${cita.altKey}" title="Atender Persona."><span class="glyphicon glyphicon-check"></span></a>
+                        <a href="#" class="help cancelarHora" data-key-Cita="${cita.altKey}" title="Cancelar Hora"><span class="glyphicon glyphicon-trash"></span></a>
+                        #{if cita.estado.id != models.ClasesDTO.CitaEstadoDTO.EN_ESPERA}
+                            <a href="#" class="help finalizarCita" data-key-Cita="${cita.altKey}" title="Finalizar Cita"><span class="fa fa-gavel"></span></a>
+                        #{/if}
+                    #{/if}
                 </td>
             </tr>
             #{/list}
@@ -43,6 +48,25 @@
         bootbox.confirm("¿Esta seguro de revisar a este Cliente?",function(result){
             if(result){
                 location.href = "/asesorarCliente/"+$altKeyCliente+'/'+$altKeyCita;
+            }
+        });
+    });
+
+    $('#asesoriasPendientes').on('click','a.finalizarCita',function(){
+        var $altKeyCita = $(this).data('keyCita');
+        bootbox.confirm("¿Esta seguro de Finalizar esta Cita Agendada?",function(result){
+            if(result){
+                $.ajax({
+                    url: '@{AsesoriaController.finalizarCita()}',
+                    method: 'post',
+                    data: {altKeyCita:$altKeyCita},
+                    success: function(){
+                        location.reload();
+                    },
+                    error: function(){
+
+                    }
+                })
             }
         });
     });
