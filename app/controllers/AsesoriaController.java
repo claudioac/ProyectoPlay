@@ -105,4 +105,72 @@ public class AsesoriaController extends Controller {
         fichaDeSalud.save();
 
     }
+
+    public static void eliminarFichaDeSalud(Long numeroDeFicha){
+        FichaDeSalud fichaDeSalud = FichaDeSalud.findById(numeroDeFicha);
+        fichaDeSalud.delete();
+    }
+
+    public static void verFichaDeSaludEdit(Long numeroDeFicha){
+        FichaDeSalud ficha = FichaDeSalud.findById(numeroDeFicha);
+        LocalDate fechaNacimiento = new LocalDate(ficha.cliente.fechaNacimiento);
+        LocalDate fechaActual = new LocalDate();
+        Period edad = new Period(fechaNacimiento,fechaActual, PeriodType.yearMonthDay());
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
+            renderTemplate("InicioProfesor/editFichaDeSalud.html",edad,ficha);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/editFichaDeSalud.html",edad,ficha);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/editFichaDeSalud.html",edad,ficha);
+        }
+    }
+
+    public static void editarFichaDeSalud(FichaDeSaludDTO ficha){
+        Validation.required("ficha.estatura",ficha.estatura);
+        Validation.required("ficha.imc",ficha.imc);
+        Validation.required("ficha.img",ficha.img);
+        Validation.required("ficha.problemasDeSalud",ficha.problemasDeSalud);
+        Validation.required("ficha.peso",ficha.peso);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
+        FichaDeSalud fichaDeSalud = FichaDeSalud.findById(ficha.numeroDeFicha);
+        fichaDeSalud.cliente = Persona.findPersonabyAltKey(ficha.altKeyCliente);
+        fichaDeSalud.antecedentesMedicos = ficha.problemasDeSalud;
+        fichaDeSalud.estatura = ficha.estatura;
+        fichaDeSalud.imc = ficha.imc;
+        fichaDeSalud.img = ficha.img;
+        fichaDeSalud.peso = ficha.peso;
+        fichaDeSalud.profesor = Persona.findPersonabyAltKey(session.get("altKey"));
+
+        if (ficha.imc < EstadoIMCDTO.MEDIDA_DELGADEZ_SEVERA){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.DELGADEZ_SEVERA);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_SEVERA && ficha.imc<EstadoIMCDTO.MEDIDA_DELGADEZ_MODERADA){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.DELGADEZ_MODERADA);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_MODERADA && ficha.imc<EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE && ficha.imc<EstadoIMCDTO.MEDIDA_PESO_NORMAL){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.PESO_NORMAL);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_PESO_NORMAL && ficha.imc<EstadoIMCDTO.MEDIDA_SOBREPRESO){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.SOBREPRESO);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_SOBREPRESO && ficha.imc<EstadoIMCDTO.MEDIDA_OBESO_TIPO_1){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_1);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_OBESO_TIPO_1 && ficha.imc<EstadoIMCDTO.MEDIDA_OBESO_TIPO_2){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_2);
+        }
+        if (ficha.imc > EstadoIMCDTO.MEDIDA_OBESO_TIPO_2){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_3);
+        }
+
+        fichaDeSalud.save();
+    }
 }

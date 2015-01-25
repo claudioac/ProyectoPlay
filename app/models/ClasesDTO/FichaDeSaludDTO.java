@@ -3,7 +3,7 @@ package models.ClasesDTO;
 import java.util.Date;
 
 /**
- * Created by claudio on 24-01-15.
+ * @author Claudio Acuña
  */
 public class FichaDeSaludDTO {
     public String altKeyCliente;

@@ -4,7 +4,7 @@
 </div>
 #{/ifnot}#{else }
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="tablaFichasDeSalud">
         <thead>
         <tr class="success">
             <th class="text-center">Nº de Ficha</th>
@@ -21,7 +21,10 @@
             <td class="text-center">${ficha.fechaDeControl.format('dd/MM/yyyy')}</td>
             <td class="text-center">${ficha.imc}</td>
             <td class="text-center">${ficha.estadoDeCliente}</td>
-            <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+            <td class="text-center">
+                <a href="#" class="editarFicha" data-alt-Key-Ficha="${ficha.numeroDeFicha}"><span class="glyphicon glyphicon-pencil help"  title="Editar Ficha"></span></a>&nbsp;&nbsp;
+                <a href="#" class="eliminarFicha" data-alt-Key-Ficha="${ficha.numeroDeFicha}"><span class="glyphicon glyphicon-remove help"  title="Eliminar Ficha."></span></a>
+            </td>
         </tr>
         #{/list}
         </tbody>
@@ -36,5 +39,32 @@
 <script type="text/javascript">
     $('#nuevaFicha').click(function(){
        location.href = '@{AsesoriaController.nuevaFichaDeSalud(cliente.altKey)}';
+    });
+    $('#tablaFichasDeSalud').on('click','a.editarFicha',function(){
+       var $numeroDeFicha = $(this).data('altKeyFicha');
+       location.href = "/editarFichaDeSalud/"+$numeroDeFicha;
+    });
+    $('#tablaFichasDeSalud').on('click','a.eliminarFicha',function(){
+        console.log("hola");
+        var $numeroDeFicha = $(this).data("altKeyFicha");
+        bootbox.confirm("¿Está seguro de eliminar la ficha seleccionada?",function(result){
+           if(result){
+               $.ajax({
+                    url:"@{AsesoriaController.eliminarFichaDeSalud()}",
+                    method:"post",
+                    data: {numeroDeFicha:$numeroDeFicha},
+                    success: function(){
+                     bootbox.alert('Ficha Eliminada Con Exito',function(){
+                        location.reload();
+                     });
+                    },
+                    error: function(){
+                        bootbox.alert('Error Interno',function(){
+                        });
+                   }
+               });
+           }
+        });
+
     });
 </script>

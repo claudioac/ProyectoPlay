@@ -1,0 +1,214 @@
+<div class="page-header">
+    <h1><i class="fa fa-medkit"></i>&nbsp;Ficha de Salud <br/><small>Cliente: ${ficha.cliente.nombreCompleto} &nbsp;RUT:${ficha.cliente.rut}</small></h1>
+</div>
+<form class="form-horizontal" id="fichaDeSaludForm">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Antecedentes de Salud</legend>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="edad">Edad:</label>
+            <div class="col-md-5">
+                <p id="edad" class="form-control" >${edad.getYears()} Años ${edad.getMonths()} Meses ${edad.getDays()} Días</p>
+            </div>
+        </div>
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="estatura">Estatura:</label>
+            <div class="col-md-5">
+                <input id="estatura" name="ficha.estatura" type="text" placeholder="m" value="${ficha.estatura}" class="form-control input-md">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="peso">Peso:</label>
+            <div class="col-md-5">
+                <input id="peso" name="ficha.peso" type="text" placeholder="Kg" value="${ficha.peso}" class="form-control input-md">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="imc">Indice de Masa Corporal:</label>
+            <div class="col-md-5">
+                <input id="imc" name="ficha.imc" type="text"  class="form-control input-md" value="${ficha.imc}" readonly="true">
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="img">Indice de Grasa Corporal:</label>
+            <div class="col-md-5">
+                <input id="img" name="ficha.img" type="text" placeholder="%" value="${ficha.img}" class="form-control input-md help" title="La información relacionada con el IGC se debe sacar usando la herramienta respectiva">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="problemasDeSalud">Problemas de Salud Actuales:</label>
+            <div class="col-md-5">
+                <textarea name="ficha.problemasDeSalud" id="problemasDeSalud" class="form-control" cols="63" rows="5">${ficha.antecedentesMedicos}</textarea>
+            </div>
+        </div>
+        <input type="hidden" name="ficha.altKeyCliente" value="${ficha.cliente.altKey}"/>
+        <input type="hidden" name="ficha.numeroDeFicha" value="${ficha.id}"/>
+        <!-- Button -->
+        <div class="form-group row">
+            <div class="col-md-9"></div>
+            <div class="col-xs-12 col-md-1">
+                <button id="volver" name="volver" class="btn btn-info" onclick="location.href = '@{AsesoriaController.asesorarCliente('altKeyCita',ficha.cliente.altKey)}'">Cancelar</button>
+            </div>
+            <div class="col-xs-12 col-md-2">
+                <button id="guardarFicha" name="guardarFicha" class="btn btn-warning">Actualizar</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<div class="bs-callout bs-callout-info">
+    <h4>Información de Valores Normales de IMC y IGC <strong><small>Datos extraidos de la Organización mundial de la salud</small></strong></h4>
+    <hr/>
+    <div class="row">
+        <div class="table-responsive col-xs-12 col-md-6">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="warning">
+                    <th class="text-center" colspan="2">Indice de Masa Corporal (IMC)</th>
+                </tr>
+                <tr>
+                    <th class="text-center">Indice de MASA Corporal</th>
+                    <th class="text-center">Clasificación</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="text-center"><16.00</td>
+                    <td class="text-center">Infrapeso: Delgadez Severa</td>
+                </tr>
+                <tr>
+                    <td class="text-center">16.00 - 16.99</td>
+                    <td class="text-center">Infrapeso: Delgadez Moderada</td>
+                </tr>
+                <tr>
+                    <td class="text-center">17.00 - 18.49</td>
+                    <td class="text-center">Infrapeso: Delgadez Aceptable</td>
+                </tr>
+                <tr>
+                    <td class="text-center">18.50 - 24.99</td>
+                    <td class="text-center">Peso Normal</td>
+                </tr>
+                <tr>
+                    <td class="text-center">25.00 -29.99</td>
+                    <td class="text-center">Sobrepeso</td>
+                </tr>
+                <tr>
+                    <td class="text-center">30.00 - 34.99</td>
+                    <td class="text-center">Obeso: Tipo I</td>
+                </tr>
+                <tr>
+                    <td class="text-center">35.00 - 40.00</td>
+                    <td class="text-center">Obeso: Tipo II</td>
+                </tr>
+                <tr>
+                    <td class="text-center">>40.00</td>
+                    <td class="text-center">Obeso: Tipo III</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive col-xs-12 col-md-6">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="warning">
+                    <th class="text-center" colspan="2">Indice de Grasa Corporal (IGC)</th>
+                </tr>
+                <tr>
+                    <th colspan="2">Mujeres</th>
+                </tr>
+                <tr>
+                    <th class="text-center">Indice de GRASA Corporal</th>
+                    <th class="text-center">Clasificación</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Menos de 25%</td>
+                    <td>Delgadez</td>
+                </tr>
+                <tr>
+                    <td>25 a 30%</td>
+                    <td>Normal</td>
+                </tr>
+                <tr>
+                    <td>Más de 30%</td>
+                    <td>Exceso de grasa corporal</td>
+                </tr>
+                </tbody>
+                <thead>
+                <tr>
+                    <th colspan="2">Hombres</th>
+                </tr>
+                <tr>
+                    <th class="text-center">Indice de GRASA Corporal</th>
+                    <th class="text-center">Clasificación</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Menos de 15%</td>
+                    <td>Delgadez</td>
+                </tr>
+                <tr>
+                    <td>15 a 20%</td>
+                    <td>Normal</td>
+                </tr>
+                <tr>
+                    <td>Más de 20%</td>
+                    <td>Exceso de grasa corporal</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var $fichaDeSaludForm = $('#fichaDeSaludForm');
+    $("#peso,#estatura").focusout(function(){
+        var $estatura = parseFloat($('#estatura').val());
+        var $peso = parseFloat($('#peso').val());
+        var $imc = $peso/($estatura*$estatura);
+        $('#imc').val($imc.toFixed(2));
+    });
+    $('#guardarFicha').click(function(){
+        $("ul.errors-fields").remove();
+        bootbox.confirm("¿Está seguro de guardar los antecedentes ingresados?",function(result){
+            if(result){
+                $.ajax({
+                    url: "@{AsesoriaController.editarFichaDeSalud()}",
+                    method:"post",
+                    data: $fichaDeSaludForm.serialize(),
+                    success: function(){
+                        location.href = "@{AsesoriaController.asesorarCliente('altKeyCita',ficha.cliente.altKey)}";
+                    },
+                    error: function(resp){
+                        if (resp.status == 400) {
+                            $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                                var $input = $(":input[name='" + name + "']");
+                                $input.closest("div.form-group").addClass("has-error");
+                                var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                                $.each(errors, function (i, elem) {
+                                    var $li = $("<li class='text-danger'/>");
+                                    $li.text(elem);
+                                    $ul.append($li);
+                                });
+                                $input.after($ul);
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
