@@ -3,6 +3,7 @@ package controllers;
 import models.*;
 import models.ClasesDTO.CitaEstadoDTO;
 import models.ClasesDTO.CitasDTO;
+import models.ClasesDTO.FichaDeSaludDTO;
 import models.ClasesDTO.PersonaDTO;
 import models.error.ErrorJSON;
 import play.data.validation.Validation;
@@ -44,7 +45,9 @@ public class InicioUsuario extends Controller {
     }
 
     public static void fichaDeSalud(){
-        render();
+        String altKeyCliente = session.get("altKey");
+        List<FichaDeSaludDTO> fichas = FichaDeSalud.findAllFichasDeSaludByAltKeyCliente(altKeyCliente);
+        render(fichas);
     }
 
     public static void historialDePagos(){

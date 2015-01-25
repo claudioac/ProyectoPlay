@@ -170,7 +170,6 @@ public class AsesoriaController extends Controller {
         if (ficha.imc > EstadoIMCDTO.MEDIDA_OBESO_TIPO_2){
             fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_3);
         }
-
         fichaDeSalud.save();
     }
 }

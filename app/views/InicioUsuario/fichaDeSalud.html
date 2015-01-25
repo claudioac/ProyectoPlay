@@ -1,4 +1,41 @@
 #{extends 'mainUsuario.html'/}
-<div class="alert alert-warning">
-    No registra ficha de Salud.
+<div class="page-header">
+    <h1><i class="fa fa-calendar hidden-xs">&nbsp;</i>Historial de Fichas de Salud <small class="hidden-xs">registradas por el cliente.</small></h1>
 </div>
+#{ifnot fichas}
+<div class="alert alert-danger">
+    <p><span class="glyphicon glyphicon-warning-sign"></span>No registra ficha de Salud.</p>
+</div>
+#{/ifnot}#{else }
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" id="tablaFichasDeSalud">
+        <thead>
+        <tr class="success">
+            <th class="text-center">Nº de Ficha</th>
+            <th class="text-center">Fecha de Control</th>
+            <th class="text-center">IMC</th>
+            <th class="text-center">Estado del Cliente</th>
+            <th class="text-center">Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{list items:fichas,as:'ficha'}
+        <tr>
+            <td class="text-center">${ficha.numeroDeFicha}</td>
+            <td class="text-center">${ficha.fechaDeControl.format('dd/MM/yyyy')}</td>
+            <td class="text-center">${ficha.imc}</td>
+            <td class="text-center">${ficha.estadoDeCliente}</td>
+            <td class="text-center">
+                <a href="#" class="verDetalleFicha" data-alt-Key-Ficha="${ficha.numeroDeFicha}"><span class="glyphicon glyphicon-search help"  title="Ver Ficha"></span></a>
+            </td>
+        </tr>
+        #{/list}
+        </tbody>
+    </table>
+</div>
+#{/else}
+<script type="text/javascript">
+    $('#tablaFichasDeSalud').on('click','a.verDetalleFicha',function(){
+
+    });
+</script>
