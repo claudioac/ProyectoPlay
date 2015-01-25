@@ -1,21 +1,26 @@
 package controllers;
 
 import controllers.variblesEstaticas.TipoUsuariosDTO;
-import models.Cita;
+import models.*;
 import models.ClasesDTO.CitaEstadoDTO;
-import models.EstadoCita;
-import models.Persona;
+import models.ClasesDTO.EstadoIMCDTO;
+import models.ClasesDTO.FichaDeSaludDTO;
+import models.error.ErrorJSON;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
-import org.joda.time.Years;
+import play.data.validation.Validation;
 import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.With;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * @author Claudio Acuña
  */
+@With(Autenticar.class)
 public class AsesoriaController extends Controller {
 
     public static void cancelarCitaReservadaParaAsesoria(String altKeyCita){
@@ -25,11 +30,14 @@ public class AsesoriaController extends Controller {
 
     public static void asesorarCliente(String altKeyCita, String altKeyCliente){
         Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
+        List<FichaDeSaludDTO> fichas = FichaDeSalud.findAllFichasDeSaludByAltKeyCliente(altKeyCliente);
         Cita cita = Cita.find("altKey",altKeyCita).first();
-        cita.estado = EstadoCita.findById(CitaEstadoDTO.EN_PROCESO);
-        cita.save();
+        if (cita != null){
+            cita.estado = EstadoCita.findById(CitaEstadoDTO.EN_PROCESO);
+            cita.save();
+        }
         if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
-            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente);
+            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas);
         }
     }
 
@@ -47,5 +55,54 @@ public class AsesoriaController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/nuevaFichaDeSalud.html",cliente,edad);
         }
+    }
+
+    public static void guardarFichaDeSalud(FichaDeSaludDTO ficha){
+        Validation.required("ficha.estatura",ficha.estatura);
+        Validation.required("ficha.imc",ficha.imc);
+        Validation.required("ficha.img",ficha.img);
+        Validation.required("ficha.problemasDeSalud",ficha.problemasDeSalud);
+        Validation.required("ficha.peso",ficha.peso);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
+        FichaDeSalud fichaDeSalud = new FichaDeSalud();
+        fichaDeSalud.cliente = Persona.findPersonabyAltKey(ficha.altKeyCliente);
+        fichaDeSalud.antecedentesMedicos = ficha.problemasDeSalud;
+        fichaDeSalud.estatura = ficha.estatura;
+        fichaDeSalud.imc = ficha.imc;
+        fichaDeSalud.img = ficha.img;
+        fichaDeSalud.peso = ficha.peso;
+        fichaDeSalud.fechaDeControl = new Date();
+        fichaDeSalud.profesor = Persona.findPersonabyAltKey(session.get("altKey"));
+
+        if (ficha.imc < EstadoIMCDTO.MEDIDA_DELGADEZ_SEVERA){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.DELGADEZ_SEVERA);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_SEVERA && ficha.imc<EstadoIMCDTO.MEDIDA_DELGADEZ_MODERADA){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.DELGADEZ_MODERADA);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_MODERADA && ficha.imc<EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_DELGADEZ_ACEPTABLE && ficha.imc<EstadoIMCDTO.MEDIDA_PESO_NORMAL){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.PESO_NORMAL);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_PESO_NORMAL && ficha.imc<EstadoIMCDTO.MEDIDA_SOBREPRESO){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.SOBREPRESO);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_SOBREPRESO && ficha.imc<EstadoIMCDTO.MEDIDA_OBESO_TIPO_1){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_1);
+        }
+        if (ficha.imc> EstadoIMCDTO.MEDIDA_OBESO_TIPO_1 && ficha.imc<EstadoIMCDTO.MEDIDA_OBESO_TIPO_2){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_2);
+        }
+        if (ficha.imc > EstadoIMCDTO.MEDIDA_OBESO_TIPO_2){
+            fichaDeSalud.estadosIMC = EstadosIMC.findById(EstadoIMCDTO.OBESO_TIPO_3);
+        }
+
+        fichaDeSalud.save();
+
     }
 }

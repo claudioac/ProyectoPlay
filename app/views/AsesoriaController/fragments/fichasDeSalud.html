@@ -1,11 +1,33 @@
+#{ifnot fichas}
 <div class="alert alert-warning">
     <p><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;El usuario no registra ninguna ficha de salud.</p>
 </div>
+#{/ifnot}#{else }
 <div class="table-responsive">
-    <table>
-
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="success">
+            <th class="text-center">Nº de Ficha</th>
+            <th class="text-center">Fecha de Control</th>
+            <th class="text-center">IMC</th>
+            <th class="text-center">Estado del Cliente</th>
+            <th class="text-center">Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        #{list items:fichas,as:'ficha'}
+        <tr>
+            <td class="text-center">${ficha.numeroDeFicha}</td>
+            <td class="text-center">${ficha.fechaDeControl.format('dd/MM/yyyy')}</td>
+            <td class="text-center">${ficha.imc}</td>
+            <td class="text-center">${ficha.estadoDeCliente}</td>
+            <td class="text-center"><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+        #{/list}
+        </tbody>
     </table>
 </div>
+#{/else}
 <div>
     <button type="button" id="nuevaFicha" class="btn btn-success">
         Nueva Ficha de Salud

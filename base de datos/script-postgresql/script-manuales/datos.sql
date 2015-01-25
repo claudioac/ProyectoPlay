@@ -696,3 +696,13 @@ INSERT INTO estadocita(id, estado)VALUES (1, 'EN ESPERA');
 INSERT INTO estadocita(id, estado)VALUES (2, 'FINALIZADA');
 INSERT INTO estadocita(id, estado)VALUES (3, 'EN PROCESO');
 
+
+--Estados IMC
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (1, 'Delgadez Severa', 16.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (2, 'Delgadez Moderada', 17.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (3, 'Delgadez Aceptable', 18.50);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (4, 'Peso Normal', 25.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (5, 'Sobrepeso', 30.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (6, 'Obeso Tipo I', 35.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (7, 'Obeso Tipo II', 40.00);
+INSERT INTO estadosimc(id, clasificacion, indice)VALUES (8, 'Obeso Tipo III', 41.00);
