@@ -706,3 +706,16 @@ INSERT INTO estadosimc(id, clasificacion, indice)VALUES (5, 'Sobrepeso', 30.00);
 INSERT INTO estadosimc(id, clasificacion, indice)VALUES (6, 'Obeso Tipo I', 35.00);
 INSERT INTO estadosimc(id, clasificacion, indice)VALUES (7, 'Obeso Tipo II', 40.00);
 INSERT INTO estadosimc(id, clasificacion, indice)VALUES (8, 'Obeso Tipo III', 41.00);
+
+
+--Zonas del Cuerpo
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (1, 'PECTORAL');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (2, 'HOMBROS');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (3, 'BICEPS');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (4, 'TRICEPS');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (5, 'ESPALDA');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (6, 'PIERNAS');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (7, 'ABDOMINAL');
+INSERT INTO zonasdelcuerpo(id, zona)VALUES (8, 'CARDIOVASCULAR');
+
+

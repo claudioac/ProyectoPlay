@@ -11,4 +11,9 @@ import javax.persistence.SequenceGenerator;
 public class ZonasDelCuerpo extends EntidadIdAutoLong {
 
     public String zona;
+
+    @Override
+    public String toString() {
+        return zona;
+    }
 }

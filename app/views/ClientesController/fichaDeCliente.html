@@ -88,7 +88,7 @@
                                         href="@{ClientesController.actualizarCliente(cliente.altKey)}"><i
                                         class="fa fa-recycle"></i>&nbsp;Actualizar Datos y/o
                                     Contrato</a></li>
-                                <li role="presentation"><a href="#" id="verFichaDeSalud"><i
+                                <li role="presentation"><a href="@{AsesoriaController.asesorarCliente('',cliente.fichaDeSalud)}" id="verFichaDeSalud"><i
                                         class="fa fa-plus-circle"></i>&nbsp;Ver Ficha de
                                     Salud</a></li>
                             </ul>
@@ -219,34 +219,6 @@
             if (!str)return null;
             return new Date(str);
         }
-    });
-
-
-    $("#verFichaDeSalud").click(function () {
-        $.get("/fichaDeSaludCliente/" + $personaAltKey, function () {
-
-        }).fail(function () {
-            $.growl({
-                icon: "glyphicon glyphicon-warning-sign",
-                title: "&nbsp;<strong>No registra una Ficha de Salud Asociada</strong><br>",
-                message: i18n('fichaCliente.notFound')
-            }, {
-                element: 'body',
-                type: "danger",
-                placement: {
-                    form: "top",
-                    align: "center"
-                },
-                spacing: 10,
-                offset: 20,
-                z_index: 1031,
-                delay: 6000,
-                animate: {
-                    enter: 'animated fadeInRight',
-                    exit: 'animated fadeOutLeft'
-                }
-            });
-        });
     });
 
     $("#pagar").click(function(){

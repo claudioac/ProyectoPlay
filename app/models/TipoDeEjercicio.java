@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -12,4 +13,11 @@ public class TipoDeEjercicio extends EntidadIdAutoLongTipos {
 
     public String nombre;
 
+    @ManyToOne
+    public ZonasDelCuerpo zonasDelCuerpo;
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

@@ -181,4 +181,17 @@ public class AsesoriaController extends Controller {
         cita.estado = EstadoCita.findById(CitaEstadoDTO.FINALIZADO);
         cita.save();
     }
+
+    public static void nuevaRutina(String altKey){
+        Persona cliente = Persona.findPersonabyAltKey(altKey);
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
+            renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente);
+        }
+    }
 }

@@ -1,0 +1,105 @@
+<div class="page-header">
+    <h1><i class="fa fa-trophy hidden-xs">&nbsp;</i>Nueva Rutina de Ejercicios. <br/>
+    <small>Cliente:&nbsp;${cliente.nombreCompleto} &nbsp;&nbsp;RUT:&nbsp;${cliente.rut}</small>
+    </h1>
+</div>
+<form class="form-horizontal well">
+    <fieldset>
+        <!-- Form Name -->
+        <legend>Ejercicios a Realizar</legend>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="col-md-4 control-label" for="zonaDelCuerpo">Zona Ejercitada:</label>
+                <div class="col-md-8">
+                    <select id="zonaDelCuerpo" name="zonaDelCuerpo" class="form-control">
+                        <option value="1">Option one</option>
+                        <option value="2">Option two</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group col-md-6">
+                <label class="col-md-4 control-label" for="ejercicio">Ejercicio:</label>
+                <div class="col-md-8">
+                    <select id="ejercicio" name="ejercicio" class="form-control">
+                        <option value="1">Option one</option>
+                        <option value="2">Option two</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="col-md-4 control-label" for="series">Series:</label>
+                <div class="col-md-8">
+                    <input id="series" name="series" type="number" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group col-md-4">
+                <label class="col-md-4 control-label" for="repeticiones">Repeticiones:</label>
+                <div class="col-md-8">
+                    <input id="repeticiones" name="repeticiones" type="number" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group col-md-4">
+                <label class="col-md-4 control-label" for="tiempo">Tiempo (Seg):</label>
+                <div class="col-md-8">
+                    <input id="tiempo" name="tiempo" type="number" placeholder="" class="form-control input-md">
+
+                </div>
+            </div>
+        </div>
+        <!-- Button (Double) -->
+        <div class="row">
+            <div class="col-md-9"></div>
+            <div class="form-group col-md-3">
+                <label class="col-md-4 control-label" for="cancelar"></label>
+                <div class="col-md-8">
+                    <button id="guardarEjercicio" name="guardarEjercicio" class="btn btn-success">Agregar</button>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Zona Ejercitada</th>
+                <th class="text-center">Ejercicio</th>
+                <th class="text-center">Series</th>
+                <th class="text-center">Repeticiones</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                </tr>
+            </tbody>
+
+    </table>
+</div>
+<div class="row">
+   <div class="col-md-9">
+   </div>
+    <div class="col-md-3">
+        <button type="button" id="cancelar" class="btn btn-primary" onclick="location.href='@{AsesoriaController.asesorarCliente('',cliente.altKey)}';">Cancelar</button>
+        <button type="button" id="guardarRutina" class="btn btn-success">Guardar</button>
+    </div>
+</div>
+<script type="text/javascript">
+
+</script>

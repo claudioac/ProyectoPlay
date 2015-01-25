@@ -7,7 +7,12 @@
     </table>
 </div>
 <div >
-    <button type="button" class="btn btn-warning">
+    <button type="button" id="nuevaRutina" class="btn btn-warning">
         Ingresar Rutina
     </button>
 </div>
+<script type="text/javascript">
+    $('#nuevaRutina').click(function(){
+        location.href = '@{AsesoriaController.nuevaRutina(cliente.altKey)}';
+    });
+</script>

@@ -19,9 +19,9 @@ public class Ejercicio extends EntidadIdAutoLongAltKey{
     @ManyToOne
     public ZonasDelCuerpo zonasDelCuerpo;
 
-    public int repeticiones;
+    public Integer repeticiones;
 
-    public int series;
+    public Integer series;
 
     @Temporal(TemporalType.TIME)
     public Date descanso;

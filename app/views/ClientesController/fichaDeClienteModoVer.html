@@ -207,31 +207,4 @@
         }
     });
 
-
-    $("#verFichaDeSalud").click(function () {
-        $.get("/fichaDeSaludCliente/" + $personaAltKey, function () {
-
-        }).fail(function () {
-            $.growl({
-                icon: "glyphicon glyphicon-warning-sign",
-                title: "&nbsp;<strong>No registra una Ficha de Salud Asociada</strong><br>",
-                message: i18n('fichaCliente.notFound')
-            }, {
-                element: 'body',
-                type: "danger",
-                placement: {
-                    form: "top",
-                    align: "center"
-                },
-                spacing: 10,
-                offset: 20,
-                z_index: 1031,
-                delay: 6000,
-                animate: {
-                    enter: 'animated fadeInRight',
-                    exit: 'animated fadeOutLeft'
-                }
-            });
-        });
-    });
 </script>

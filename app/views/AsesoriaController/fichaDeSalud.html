@@ -55,10 +55,13 @@
         </div>
         <input type="hidden" name="ficha.altKeyCliente" value="${cliente.altKey}"/>
         <!-- Button -->
-        <div class="form-group pull-right">
-            <label class="col-md-4 control-label" for="guardarFicha"></label>
-            <div class="col-md-4">
-                <button id="guardarFicha" name="guardarFicha" class="btn btn-success">Guardar</button>
+        <div class="form-group">
+            <div class="col-md-10"></div>
+            <div class="col-md-1">
+            <button  class="btn btn-primary" onclick="location.href ='@{AsesoriaController.asesorarCliente('',cliente.altKey)}'; ">Cancelar</button>
+            </div>
+            <div class="col-md-1">
+            <button id="guardarFicha" name="guardarFicha" class="btn btn-success">Guardar</button>
             </div>
         </div>
     </fieldset>
@@ -121,7 +124,7 @@
                     <th class="text-center" colspan="2">Indice de Grasa Corporal (IGC)</th>
                 </tr>
                 <tr>
-                    <th colspan="2">Mujeres</th>
+                    <th class="success" colspan="2">Mujeres</th>
                 </tr>
                 <tr>
                     <th class="text-center">Indice de GRASA Corporal</th>
@@ -144,7 +147,7 @@
                 </tbody>
                 <thead>
                 <tr>
-                    <th colspan="2">Hombres</th>
+                    <th  class="success" colspan="2">Hombres</th>
                 </tr>
                 <tr>
                     <th class="text-center">Indice de GRASA Corporal</th>
