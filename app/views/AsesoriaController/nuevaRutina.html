@@ -3,7 +3,7 @@
     <small>Cliente:&nbsp;${cliente.nombreCompleto} &nbsp;&nbsp;RUT:&nbsp;${cliente.rut}</small>
     </h1>
 </div>
-<form class="form-horizontal well">
+<form class="form-horizontal well" id="agregarEjercicioForm">
     <fieldset>
         <!-- Form Name -->
         <legend>Ejercicios a Realizar</legend>
@@ -11,7 +11,7 @@
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="zonaDelCuerpo">Zona Ejercitada:</label>
                 <div class="col-md-8">
-                    <select id="zonaDelCuerpo" name="zonaDelCuerpo" class="form-control">
+                    <select id="zonaDelCuerpo" name="ejercicio.zonaDelCuerpo" class="form-control">
                         <option value="">Seleccione..</option>
                     #{list items:zonasDelCuerpo,as:'zona'}
                         <option value="${zona.id}">${zona.zona}</option>
@@ -24,7 +24,7 @@
             <div class="form-group col-md-6">
                 <label class="col-md-4 control-label" for="ejercicio">Ejercicio:</label>
                 <div class="col-md-8">
-                    <select id="ejercicio" name="ejercicio" class="form-control">
+                    <select id="ejercicio" name="ejercicio.ejercicio" class="form-control">
                     </select>
                 </div>
             </div>
@@ -33,7 +33,7 @@
             <div class="form-group col-md-4">
                 <label class="col-md-4 control-label" for="series">Series:</label>
                 <div class="col-md-8">
-                    <input id="series" name="series" type="number" placeholder="" class="form-control input-md">
+                    <input id="series" name="ejercicio.series" type="number" placeholder="" class="form-control input-md">
 
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <div class="form-group col-md-4">
                 <label class="col-md-4 control-label" for="repeticiones">Repeticiones:</label>
                 <div class="col-md-8">
-                    <input id="repeticiones" name="repeticiones" type="number" placeholder="" class="form-control input-md">
+                    <input id="repeticiones" name="ejercicio.repeticiones" type="number" placeholder="" class="form-control input-md">
 
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 </div>
             </div>
         </div>
-
+        <input type="hidden" name="ejercicio.altKeyRutina" value="${rutina.altKey}"/>
     </fieldset>
 </form>
 <div class="table-responsive">
@@ -77,17 +77,19 @@
                 <th class="text-center">Ejercicio</th>
                 <th class="text-center">Series</th>
                 <th class="text-center">Repeticiones</th>
+                <th class="text-center">Descanso/Tiempo</th>
                 <th class="text-center">Acción</th>
             </tr>
             </thead>
             <tbody>
-            #{list items:rutina.ejercicios,as:'ejercicios'}
+            #{list items:rutina.ejercicios,as:'ejercicio'}
             <tr>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
-                <td class="text-center"></td>
+                <td class="text-center">${ejercicio.zonasDelCuerpo.zona}</td>
+                <td class="text-center">${ejercicio.tipoDeEjercicio.nombre}</td>
+                <td class="text-center">${ejercicio.series}</td>
+                <td class="text-center">${ejercicio.repeticiones}</td>
+                <td class="text-center">${ejercicio.descanso != null ? ejercicio.descanso.format('ss'):''}</td>
+                <td class="text-center"><a href="#" data-key-Ejercicio="${ejercicio.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
             </tr>
             #{/list}
             </tbody>
@@ -95,14 +97,14 @@
     </table>
 </div>
 <div class="row">
-   <div class="col-md-9">
+   <div class="col-md-10">
    </div>
-    <div class="col-md-3">
-        <button type="button" id="cancelar" class="btn btn-primary" onclick="location.href='@{AsesoriaController.asesorarCliente('',cliente.altKey)}';">Cancelar</button>
-        <button type="button" id="guardarRutina" class="btn btn-success">Guardar</button>
+    <div class="col-md-2">
+        <button type="button" id="volver" class="btn btn-primary" onclick="location.href='@{AsesoriaController.asesorarCliente('',cliente.altKey)}';">Volver</button>
     </div>
 </div>
 <script type="text/javascript">
+    var $agregarEjercicioForm = $('#agregarEjercicioForm');
     $('#zonaDelCuerpo').change(function(){
         var $idZona = $("#zonaDelCuerpo").val();
         var $selectEjercicios = $("#ejercicio");
@@ -120,6 +122,37 @@
                     $selectEjercicios.append($('<option>').text(value.nombre).attr('value', value.id));
                 });
             }
+        });
+    });
+    $('#guardarEjercicio').click(function(){
+        $.ajax({
+          url:"@{AsesoriaController.agregarEjercicioARutina()}",
+          method:"post",
+          data: $agregarEjercicioForm.serialize(),
+          success:function(){
+              location.href = '@{AsesoriaController.editRutina(rutina.altKey)}';
+          },
+          error: function(){
+              $.growl({
+                  icon: "glyphicon glyphicon-warning-sign",
+                  title: "&nbsp;<strong>Error Interno</strong><br>"
+              }, {
+                  element: 'body',
+                  type: "danger",
+                  placement: {
+                      form: "top",
+                      align: "center"
+                  },
+                  spacing: 10,
+                  offset: 20,
+                  z_index: 1031,
+                  delay: 6000,
+                  animate: {
+                      enter: 'animated fadeInRight',
+                      exit: 'animated fadeOutLeft'
+                  }
+              });
+          }
         });
     });
 </script>

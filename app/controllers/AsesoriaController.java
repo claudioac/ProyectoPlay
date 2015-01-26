@@ -3,14 +3,12 @@ package controllers;
 import controllers.cruds.EstadosCitas;
 import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.*;
-import models.ClasesDTO.CitaEstadoDTO;
-import models.ClasesDTO.EstadoIMCDTO;
-import models.ClasesDTO.FichaDeSaludDTO;
-import models.ClasesDTO.RutinaDTO;
+import models.ClasesDTO.*;
 import models.error.ErrorJSON;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
+import play.data.binding.As;
 import play.data.validation.Validation;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -219,5 +217,17 @@ public class AsesoriaController extends Controller {
     public static void getEjercicios(Long idZona){
         List<TipoDeEjercicio> tipoDeEjercicios = TipoDeEjercicio.findAllByIdZonaDelCuerpo(idZona);
         renderJSON(tipoDeEjercicios);
+    }
+
+    public static void agregarEjercicioARutina(EjercicioDTO ejercicio,@As("ss") Date tiempo){
+        Rutina rutina = Rutina.findRutinaByAltKey(ejercicio.altKeyRutina);
+        Ejercicio nuevoEjercicio = new Ejercicio();
+        nuevoEjercicio.tipoDeEjercicio = TipoDeEjercicio.findById(ejercicio.ejercicio);
+        nuevoEjercicio.zonasDelCuerpo = ZonasDelCuerpo.findById(ejercicio.zonaDelCuerpo);
+        nuevoEjercicio.rutina = rutina;
+        nuevoEjercicio.descanso = tiempo;
+        nuevoEjercicio.series = ejercicio.series;
+        nuevoEjercicio.repeticiones = ejercicio.repeticiones;
+        nuevoEjercicio.save();
     }
 }
