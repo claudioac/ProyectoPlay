@@ -6,6 +6,7 @@ import models.*;
 import models.ClasesDTO.CitaEstadoDTO;
 import models.ClasesDTO.EstadoIMCDTO;
 import models.ClasesDTO.FichaDeSaludDTO;
+import models.ClasesDTO.RutinaDTO;
 import models.error.ErrorJSON;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
@@ -32,15 +33,14 @@ public class AsesoriaController extends Controller {
     public static void asesorarCliente(String altKeyCita, String altKeyCliente){
         Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
         List<FichaDeSaludDTO> fichas = FichaDeSalud.findAllFichasDeSaludByAltKeyCliente(altKeyCliente);
-        boolean finalizarCita = false;
+        List<RutinaDTO> rutinas = Rutina.findAllRutinasByAltKeyCliente(altKeyCliente);
         Cita cita = Cita.find("altKey",altKeyCita).first();
         if (cita != null && cita.estado.id != CitaEstadoDTO.FINALIZADO){
-            finalizarCita = true;
             cita.estado = EstadoCita.findById(CitaEstadoDTO.EN_PROCESO);
             cita.save();
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
-            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas,finalizarCita);
+            renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas,rutinas);
         }
     }
 
@@ -184,14 +184,40 @@ public class AsesoriaController extends Controller {
 
     public static void nuevaRutina(String altKey){
         Persona cliente = Persona.findPersonabyAltKey(altKey);
+        List<ZonasDelCuerpo> zonasDelCuerpo = ZonasDelCuerpo.findAll();
+        Rutina rutina = new Rutina();
+            rutina.cliente = cliente;
+            rutina.profesor = Persona.findPersonabyAltKey(session.get("altKey"));
+            rutina.fechaDeRutina = new Date();
+            rutina.save();
         if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
-            renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente);
+            renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente);
+            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente);
+            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
         }
+    }
+
+    public static void editRutina(String altKey){
+        Rutina rutina = Rutina.findRutinaByAltKey(altKey);
+        Persona cliente = Persona.findPersonabyAltKey(rutina.cliente.altKey);
+        List<ZonasDelCuerpo> zonasDelCuerpo = ZonasDelCuerpo.findAll();
+        if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
+            renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente,rutina,zonasDelCuerpo);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
+        }
+    }
+
+    public static void getEjercicios(Long idZona){
+        List<TipoDeEjercicio> tipoDeEjercicios = TipoDeEjercicio.findAllByIdZonaDelCuerpo(idZona);
+        renderJSON(tipoDeEjercicios);
     }
 }

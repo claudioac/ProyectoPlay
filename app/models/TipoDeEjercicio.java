@@ -1,8 +1,11 @@
 package models;
 
+import play.db.jpa.JPA;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -19,5 +22,10 @@ public class TipoDeEjercicio extends EntidadIdAutoLongTipos {
     @Override
     public String toString() {
         return nombre;
+    }
+
+    public static List<TipoDeEjercicio> findAllByIdZonaDelCuerpo(Long idZona) {
+        List<TipoDeEjercicio> tipoDeEjercicios = JPA.em().createQuery("select t from TipoDeEjercicio t where t.zonasDelCuerpo.id=?1", TipoDeEjercicio.class).setParameter(1, idZona).getResultList();
+        return tipoDeEjercicios;
     }
 }

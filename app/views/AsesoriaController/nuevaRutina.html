@@ -12,8 +12,10 @@
                 <label class="col-md-4 control-label" for="zonaDelCuerpo">Zona Ejercitada:</label>
                 <div class="col-md-8">
                     <select id="zonaDelCuerpo" name="zonaDelCuerpo" class="form-control">
-                        <option value="1">Option one</option>
-                        <option value="2">Option two</option>
+                        <option value="">Seleccione..</option>
+                    #{list items:zonasDelCuerpo,as:'zona'}
+                        <option value="${zona.id}">${zona.zona}</option>
+                    #{/list}
                     </select>
                 </div>
             </div>
@@ -23,8 +25,6 @@
                 <label class="col-md-4 control-label" for="ejercicio">Ejercicio:</label>
                 <div class="col-md-8">
                     <select id="ejercicio" name="ejercicio" class="form-control">
-                        <option value="1">Option one</option>
-                        <option value="2">Option two</option>
                     </select>
                 </div>
             </div>
@@ -81,13 +81,15 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                </tr>
+            #{list items:rutina.ejercicios,as:'ejercicios'}
+            <tr>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+            </tr>
+            #{/list}
             </tbody>
 
     </table>
@@ -101,5 +103,23 @@
     </div>
 </div>
 <script type="text/javascript">
-
+    $('#zonaDelCuerpo').change(function(){
+        var $idZona = $("#zonaDelCuerpo").val();
+        var $selectEjercicios = $("#ejercicio");
+        if($idZona == ''){
+            $selectEjercicios.empty();
+            $selectEjercicios.append($('<option>').text("Seleccione..").attr('value', ''));
+        }
+        $.ajax({
+            url: "/getEjercicios/"+$idZona,
+            method: "GET",
+            success: function(ejercicio){
+                $selectEjercicios.empty();
+                $selectEjercicios.append($('<option>').text("Seleccione..").attr('value', ''));
+                $.each(ejercicio,function(k,value){
+                    $selectEjercicios.append($('<option>').text(value.nombre).attr('value', value.id));
+                });
+            }
+        });
+    });
 </script>
