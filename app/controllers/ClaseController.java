@@ -8,6 +8,8 @@ import models.ClasesDTO.HorarioClaseDTO;
 import models.ClasesDTO.SearchClasesQuery;
 import models.error.ErrorJSON;
 import net.sf.jxls.transformer.XLSTransformer;
+import org.apache.poi.ss.usermodel.Workbook;
+import play.Play;
 import play.data.binding.As;
 import play.data.validation.Validation;
 import play.db.jpa.JPA;
@@ -195,21 +197,21 @@ public class ClaseController extends Controller {
         curso.save();
     }
 
-    public static void listadoDeCurso(String altKeyCurso)throws Exception{
+    public static void listadoDeCurso(String altKeyCurso) throws Exception{
         //TODO - SE DEBE MEJORAR LA IMPLEMENTACIÓN DE EXPORTACIÓN.
         Curso curso = Curso.find("altKey",altKeyCurso).first();
-        String template = "/Users/claudio/Desktop/Proyecto Final/Gym/app/views/ClaseController/listadoDeCurso.xls";
-        String destino = "/Users/claudio/Desktop/curso.xls";
-        try {
-            InputStream in = new FileInputStream(template);
-            Map bean = new HashMap();
-            bean.put("curso",curso);
-            XLSTransformer transformer = new XLSTransformer();
-            transformer.transformXLS(template,bean, destino);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
+        String template = Play.applicationPath + "/app/views/ClaseController/listadoDeCurso.xls";
+        InputStream in = new FileInputStream(template);
+        Map bean = new HashMap();
+        bean.put("curso",curso);
+        XLSTransformer transformer = new XLSTransformer();
+        Workbook workbook = transformer.transformXLS(in, bean);
+
+        response.contentType = "application/vnd.ms-excel";
+        response.setHeader("Content-Disposition", "attachment; filename=\""+ curso.clase.tipoDeClase.tipo +".xls\"");
+        workbook.write(response.out);
+        ok();
        }
 
 }
