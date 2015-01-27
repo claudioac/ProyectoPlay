@@ -11,7 +11,7 @@
 #{/ifnot}
 #{else }
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="tablaRutinasDeEjercicios">
         <thead>
         <tr class="warning">
             <th class="text-center">Nº de Rutina</th>
@@ -25,7 +25,7 @@
                 <td class="text-center">${rutina.numeroDeRutina}</td>
                 <td class="text-center">${rutina.fechaDeControl.format('dd/MM/yyyy')}</td>
                 <td class="text-center">
-                    <a href="#" class="help" title="Ver Rutina"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
+                    <a href="#" class="help detalleRutina" data-key-Rutina="${rutina.altKeyRutina}" title="Ver Rutina"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
                     <a href="#" class="help" title="Descargar Rutina"><span class="glyphicon glyphicon-download"></span></a>
                 </td>
             </tr>
@@ -42,3 +42,12 @@
     <p><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;<strong>Se aconseja que para un mejor rendimiento
         físico realizase una asesoria con un profesional 1 vez al mes.</strong></p>
 </div>
+#{include 'InicioUsuario/fragments/detalleRutinaDeEjercicios.html'/}
+<script type="text/javascript">
+    $('#tablaRutinasDeEjercicios').on('click','a.detalleRutina',function(){
+        var $rutinaAltKey = $(this).data('keyRutina');
+        $('#appendRutinaDeEjercicios').empty();
+        $('#appendRutinaDeEjercicios').load('/verDetalleRutinaDeEjercicios/'+$rutinaAltKey);
+        $('#detalleRutinaDeEjercicios').modal('show');
+    });
+</script>
