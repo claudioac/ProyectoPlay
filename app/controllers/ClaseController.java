@@ -7,6 +7,7 @@ import models.ClasesDTO.CursosDTO;
 import models.ClasesDTO.HorarioClaseDTO;
 import models.ClasesDTO.SearchClasesQuery;
 import models.error.ErrorJSON;
+import mvc.results.JxlsResult;
 import net.sf.jxls.transformer.XLSTransformer;
 import org.apache.poi.ss.usermodel.Workbook;
 import play.Play;
@@ -201,17 +202,9 @@ public class ClaseController extends Controller {
         //TODO - SE DEBE MEJORAR LA IMPLEMENTACIÓN DE EXPORTACIÓN.
         Curso curso = Curso.find("altKey",altKeyCurso).first();
 
-        String template = Play.applicationPath + "/app/views/ClaseController/listadoDeCurso.xls";
-        InputStream in = new FileInputStream(template);
-        Map bean = new HashMap();
-        bean.put("curso",curso);
-        XLSTransformer transformer = new XLSTransformer();
-        Workbook workbook = transformer.transformXLS(in, bean);
-
-        response.contentType = "application/vnd.ms-excel";
-        response.setHeader("Content-Disposition", "attachment; filename=\""+ curso.clase.tipoDeClase.tipo +".xls\"");
-        workbook.write(response.out);
-        ok();
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("curso",curso);
+        throw new JxlsResult(model, curso.clase.tipoDeClase.tipo);
        }
 
 }
