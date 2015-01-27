@@ -219,7 +219,16 @@ public class AsesoriaController extends Controller {
         renderJSON(tipoDeEjercicios);
     }
 
-    public static void agregarEjercicioARutina(EjercicioDTO ejercicio,@As("ss") Date tiempo){
+    public static void agregarEjercicioARutina(EjercicioDTO ejercicio,@As("mm:ss") Date tiempo){
+        Validation.required("ejercicio.ejercicio",ejercicio.ejercicio);
+        Validation.required("tiempo",tiempo);
+        Validation.required("ejercicio.series",ejercicio.series);
+        Validation.required("ejercicio.repeticiones",ejercicio.repeticiones);
+        Validation.required("ejercicio.zonaDelCuerpo",ejercicio.zonaDelCuerpo);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
         Rutina rutina = Rutina.findRutinaByAltKey(ejercicio.altKeyRutina);
         Ejercicio nuevoEjercicio = new Ejercicio();
         nuevoEjercicio.tipoDeEjercicio = TipoDeEjercicio.findById(ejercicio.ejercicio);
@@ -229,5 +238,10 @@ public class AsesoriaController extends Controller {
         nuevoEjercicio.series = ejercicio.series;
         nuevoEjercicio.repeticiones = ejercicio.repeticiones;
         nuevoEjercicio.save();
+    }
+
+    public static void removerEjercicioDeRutina(String altKeyEjercicio){
+        Ejercicio ejercicio = Ejercicio.find("altKey",altKeyEjercicio).first();
+        ejercicio.delete();
     }
 }

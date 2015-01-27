@@ -70,14 +70,14 @@
     </fieldset>
 </form>
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="tablaDeEjercicios">
             <thead>
             <tr class="warning">
                 <th class="text-center">Zona Ejercitada</th>
                 <th class="text-center">Ejercicio</th>
                 <th class="text-center">Series</th>
                 <th class="text-center">Repeticiones</th>
-                <th class="text-center">Descanso/Tiempo</th>
+                <th class="text-center">Descanso/Tiempo(Min)</th>
                 <th class="text-center">Acción</th>
             </tr>
             </thead>
@@ -88,8 +88,8 @@
                 <td class="text-center">${ejercicio.tipoDeEjercicio.nombre}</td>
                 <td class="text-center">${ejercicio.series}</td>
                 <td class="text-center">${ejercicio.repeticiones}</td>
-                <td class="text-center">${ejercicio.descanso != null ? ejercicio.descanso.format('ss'):''}</td>
-                <td class="text-center"><a href="#" data-key-Ejercicio="${ejercicio.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td class="text-center">${ejercicio.descanso != null ? ejercicio.descanso.format('mm:ss'):''}</td>
+                <td class="text-center"><a href="#" class="removerEjercicio" data-key-Ejercicio="${ejercicio.altKey}"><span class="glyphicon glyphicon-remove"></span></a></td>
             </tr>
             #{/list}
             </tbody>
@@ -125,6 +125,7 @@
         });
     });
     $('#guardarEjercicio').click(function(){
+        $("ul.errors-fields").remove();
         $.ajax({
           url:"@{AsesoriaController.agregarEjercicioARutina()}",
           method:"post",
@@ -132,7 +133,20 @@
           success:function(){
               location.href = '@{AsesoriaController.editRutina(rutina.altKey)}';
           },
-          error: function(){
+          error: function(resp){
+              if (resp.status == 400) {
+                  $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                      var $input = $(":input[name='" + name + "']");
+                      $input.closest("div.form-group").addClass("has-error");
+                      var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                      $.each(errors, function (i, elem) {
+                          var $li = $("<li class='text-danger'/>");
+                          $li.text(elem);
+                          $ul.append($li);
+                      });
+                      $input.after($ul);
+                  });
+              }
               $.growl({
                   icon: "glyphicon glyphicon-warning-sign",
                   title: "&nbsp;<strong>Error Interno</strong><br>"
@@ -154,6 +168,43 @@
               });
           }
         });
+    });
+
+    $("#tablaDeEjercicios").on('click','a.removerEjercicio',function(){
+        var $altKeyEjercicio = $(this).data("keyEjercicio");
+       bootbox.confirm("¿Esta Seguro de Eliminar el ejercicio de la rutina?",function(result){
+           if(result){
+               $.ajax({
+                  url:"@{AsesoriaController.removerEjercicioDeRutina()}",
+                  method:"post",
+                  data: {altKeyEjercicio: $altKeyEjercicio},
+                  success: function(){
+                      location.href = '@{AsesoriaController.editRutina(rutina.altKey)}';
+                  },
+                  error:function(){
+                      $.growl({
+                          icon: "glyphicon glyphicon-warning-sign",
+                          title: "&nbsp;<strong>Error Interno</strong><br>"
+                      }, {
+                          element: 'body',
+                          type: "danger",
+                          placement: {
+                              form: "top",
+                              align: "center"
+                          },
+                          spacing: 10,
+                          offset: 20,
+                          z_index: 1031,
+                          delay: 6000,
+                          animate: {
+                              enter: 'animated fadeInRight',
+                              exit: 'animated fadeOutLeft'
+                          }
+                      });
+                  }
+               });
+           }
+       });
     });
 
     $('#tiempo').clockpicker({
