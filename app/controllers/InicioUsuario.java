@@ -1,10 +1,8 @@
 package controllers;
 
 import models.*;
-import models.ClasesDTO.CitaEstadoDTO;
-import models.ClasesDTO.CitasDTO;
-import models.ClasesDTO.FichaDeSaludDTO;
-import models.ClasesDTO.PersonaDTO;
+import models.ClasesDTO.*;
+import models.Mensualidad;
 import models.error.ErrorJSON;
 import play.data.validation.Validation;
 import play.modules.pdf.PDF;
@@ -41,7 +39,9 @@ public class InicioUsuario extends Controller {
     }
 
     public static void historialDeRutinas(){
-      render();
+     String altKeyCliente = session.get("altKey");
+     List<RutinaDTO> rutinas = Rutina.findAllRutinasByAltKeyCliente(altKeyCliente);
+        render(rutinas);
     }
 
     public static void fichaDeSalud(){

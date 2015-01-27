@@ -1,4 +1,44 @@
 #{extends 'mainUsuario.html'/}
+<div class="page-header">
+    <h1><i class="fa fa-trophy">&nbsp;</i>Historial de rutinas &nbsp;
+        <small></small>
+    </h1>
+</div>
+#{ifnot rutinas}
 <div class="alert alert-danger">
     <p><span class="glyphicon glyphicon-warning-sign"></span>No registra Historial de rutinas.</p>
+</div>
+#{/ifnot}
+#{else }
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="warning">
+            <th class="text-center">Nº de Rutina</th>
+            <th class="text-center">Fecha de Control</th>
+            <th class="text-center">Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+            #{list items:rutinas,as:'rutina'}
+            <tr>
+                <td class="text-center">${rutina.numeroDeRutina}</td>
+                <td class="text-center">${rutina.fechaDeControl.format('dd/MM/yyyy')}</td>
+                <td class="text-center">
+                    <a href="#" class="help" title="Ver Rutina"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
+                    <a href="#" class="help" title="Descargar Rutina"><span class="glyphicon glyphicon-download"></span></a>
+                </td>
+            </tr>
+            #{/list}
+        </tbody>
+    </table>
+</div>
+#{/else}
+<div class="alert alert-danger">
+    <p><span class="glyphicon glyphicon-exclamation-sign">&nbsp;</span> Las rutinas se agregan a medida que el cliente
+        se realiza una asesoria y por medio de esta se condicionan los ejercicios a realizar para mejorar su salud.</p>
+</div>
+<div class="alert alert-info">
+    <p><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;<strong>Se aconseja que para un mejor rendimiento
+        físico realizase una asesoria con un profesional 1 vez al mes.</strong></p>
 </div>
