@@ -41,6 +41,8 @@ GET    /editarFichaDeSalud/{numeroDeFicha}                   AsesoriaController.
 GET    /verDetalleFicha/{idFicha}                            ResumenController.resumenFichaDeSalud
 GET    /verDetalleRutinaDeEjercicios/{altKeyRutina}          ResumenController.resumenRutinaDeEjercicios
 GET    /getEjercicios/{idZona}                               AsesoriaController.getEjercicios
+GET    /descargarRutinaDeEjercicios/{altKeyRutina}           InicioUsuario.descargaDeRutina
+
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
 

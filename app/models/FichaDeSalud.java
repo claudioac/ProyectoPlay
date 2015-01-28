@@ -39,7 +39,7 @@ public class FichaDeSalud extends EntidadIdAutoLongAltKey {
     public String antecedentesMedicos;
 
     public static List<FichaDeSaludDTO> findAllFichasDeSaludByAltKeyCliente(String altKeyCliente) {
-        List<FichaDeSalud> fichaDeSalud = JPA.em().createQuery("SELECT f from FichaDeSalud f where f.cliente.altKey=?1 ORDER BY f.fechaDeControl,f.id DESC ",FichaDeSalud.class).setParameter(1,altKeyCliente).getResultList();
+        List<FichaDeSalud> fichaDeSalud = JPA.em().createQuery("SELECT f from FichaDeSalud f where f.cliente.altKey=?1 ORDER BY f.fechaDeControl,f.id DESC ", FichaDeSalud.class).setParameter(1, altKeyCliente).getResultList();
         List<FichaDeSaludDTO> resultado = new ArrayList<FichaDeSaludDTO>();
         for (FichaDeSalud salud : fichaDeSalud) {
             resultado.add(salud.toFichaDeSaludDTO());
@@ -50,7 +50,7 @@ public class FichaDeSalud extends EntidadIdAutoLongAltKey {
     private FichaDeSaludDTO toFichaDeSaludDTO() {
         FichaDeSaludDTO dto = new FichaDeSaludDTO();
         dto.imc = imc;
-        if (estadosIMC != null){
+        if (estadosIMC != null) {
             dto.estadoDeCliente = estadosIMC.clasificacion;
         }
         dto.fechaDeControl = fechaDeControl;
@@ -58,7 +58,17 @@ public class FichaDeSalud extends EntidadIdAutoLongAltKey {
         dto.img = img;
         dto.numeroDeFicha = id;
         dto.problemasDeSalud = antecedentesMedicos;
-        dto.peso= peso;
+        dto.peso = peso;
         return dto;
+    }
+
+    public static FichaDeSalud findUltimaFichaDeSalud(String altKey) {
+        try {
+           FichaDeSalud fichaDeSalud = JPA.em().createQuery("SELECT f from FichaDeSalud f where f.cliente.altKey=?1 order by f.id desc ", FichaDeSalud.class).setParameter(1, altKey).setMaxResults(1).getSingleResult();
+            return fichaDeSalud;
+        } catch (NoResultException e) {
+            return null;
+        }
+
     }
 }

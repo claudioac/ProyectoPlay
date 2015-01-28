@@ -102,4 +102,15 @@ public class InicioUsuario extends Controller {
         options.filename = "Contrato" + ".pdf";
         renderPDF(options, persona, contrato, fechaActual);
     }
+
+    public static void descargaDeRutina(String altKeyRutina){
+        String altKeyCliente = session.get("altKey");
+        Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
+        Rutina rutina = Rutina.findRutinaByAltKey(altKeyRutina);
+        List<EjercicioDTO> ejercicio = Ejercicio.findAllEjerciciosByAltKeyRutina(altKeyRutina);
+        FichaDeSalud fichaDeSalud = FichaDeSalud.findUltimaFichaDeSalud(cliente.altKey);
+        PDF.Options options = new PDF.Options();
+        options.filename = "Rutina Nº"+ rutina.id + ".pdf";
+        renderPDF(options, rutina,ejercicio,cliente,fichaDeSalud);
+    }
 }
