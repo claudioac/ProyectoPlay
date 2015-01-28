@@ -4,13 +4,16 @@ import models.*;
 import models.ClasesDTO.*;
 import models.Mensualidad;
 import models.error.ErrorJSON;
+import mvc.results.JxlsResult;
 import play.data.validation.Validation;
 import play.modules.pdf.PDF;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.With;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static play.modules.pdf.PDF.renderPDF;
@@ -112,5 +115,19 @@ public class InicioUsuario extends Controller {
         PDF.Options options = new PDF.Options();
         options.filename = "Rutina Nº"+ rutina.id + ".pdf";
         renderPDF(options, rutina,ejercicio,cliente,fichaDeSalud);
+    }
+
+    public static void exportMensualidadesExcel(){
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        String altKeyCliente = session.get("altKey");
+        Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
+        Contrato contrato = Contrato.findContratoByAltKeyPersona(altKeyCliente);
+        List<Mensualidad> mensualidades = Mensualidad.mensualidadesByAltkeyCliente(altKeyCliente);
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("contrato",contrato);
+        model.put("mensualidades",mensualidades);
+        model.put("cliente",cliente);
+        model.put("dateFmt", dateFormat);
+        throw new JxlsResult(model, cliente.getNombreCompleto()+" Mensualidades");
     }
 }
