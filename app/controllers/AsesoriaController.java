@@ -40,6 +40,9 @@ public class AsesoriaController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.PROFESOR)){
             renderTemplate("InicioProfesor/asesorarClienteProfesor.html",cliente,fichas,rutinas);
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/asesorarClienteAdmin.html",cliente,fichas,rutinas);
+        }
     }
 
     public static void nuevaFichaDeSalud(String altKeyCliente){
@@ -192,10 +195,10 @@ public class AsesoriaController extends Controller {
             renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
+            renderTemplate("InicioAdministrativo/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
+            renderTemplate("InicioAdmin/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
         }
     }
 
@@ -207,10 +210,10 @@ public class AsesoriaController extends Controller {
             renderTemplate("InicioProfesor/nuevaRutinaProfesor.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
+            renderTemplate("InicioAdministrativo/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/nuevaRutinaAdministrativo.html",cliente,rutina,zonasDelCuerpo);
+            renderTemplate("InicioAdmin/nuevaRutinaAdmin.html",cliente,rutina,zonasDelCuerpo);
         }
     }
 
