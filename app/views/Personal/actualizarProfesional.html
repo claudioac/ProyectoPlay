@@ -101,7 +101,7 @@
     var $clienteEditarForm = $("#editarPersonalForm");
     $("#editarPersonal").click(function () {
         $.ajax({
-            url: "@{ClientesController.editarCliente()}",
+            url: "@{Personal.editarProfesional()}",
             method: "POST",
             data: $clienteEditarForm.serialize(),
             success: function () {

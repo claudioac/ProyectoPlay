@@ -235,6 +235,9 @@ public class ClientesController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/Cliente/actualizarClienteAdmin.html",persona,cuotaDeIncorporacion,regiones,tipoDePlanes,contrato);
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/Cliente/actualizarClienteAdministrador.html",persona,cuotaDeIncorporacion,regiones,tipoDePlanes,contrato);
+        }
     }
 
     public static void updateContrato(Long id, String altKey){
