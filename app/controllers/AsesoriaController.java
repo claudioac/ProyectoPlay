@@ -250,4 +250,9 @@ public class AsesoriaController extends Controller {
         Ejercicio ejercicio = Ejercicio.find("altKey",altKeyEjercicio).first();
         ejercicio.delete();
     }
+
+    public static void eliminarRutinaDeEjercicios(String altKeyRutina){
+        Rutina rutina = Rutina.findRutinaByAltKey(altKeyRutina);
+        rutina.delete();
+    }
 }

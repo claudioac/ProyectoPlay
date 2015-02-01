@@ -5,7 +5,7 @@
 #{/ifnot}
 #{else }
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="tableDeRutinas">
         <thead>
         <tr class="warning">
             <th class="text-center">Nº de Rutina</th>
@@ -36,5 +36,45 @@
 <script type="text/javascript">
     $('#nuevaRutina').click(function(){
         location.href = '@{AsesoriaController.nuevaRutina(cliente.altKey)}';
+    });
+
+    $('#tableDeRutinas').on('click','a.borrarRutina',function(){
+        var $altKeyCita = $(this).data('keyRutina');
+        bootbox.confirm('¿Desea Eliminar esta rutina?',function(result){
+           if(result){
+               $.ajax({
+                  url:"@{AsesoriaController.eliminarRutinaDeEjercicios()}",
+                  method:"post",
+                  data: {altKeyRutina: $altKeyCita},
+                  success: function(){
+                     bootbox.alert('Se elimino exitosamente la rutina de ejercicios',function(){
+                        location.reload();
+                     });
+                  },
+                  error: function(){
+                      $.growl({
+                          icon: "glyphicon glyphicon-warning-sign",
+                          title: "&nbsp;<strong>Error Interno</strong><br>"
+                      }, {
+                          element: 'body',
+                          type: "danger",
+                          placement: {
+                              form: "top",
+                              align: "center"
+                          },
+                          spacing: 10,
+                          offset: 20,
+                          z_index: 1031,
+                          delay: 6000,
+                          animate: {
+                              enter: 'animated fadeInRight',
+                              exit: 'animated fadeOutLeft'
+                          }
+                      });
+                  }
+               });
+           }
+
+        });
     });
 </script>
