@@ -54,9 +54,11 @@
 #{include 'ClaseController/fragments/registrarClienteACurso.html'/}
 <div class="row">
     <div class="col-md-2">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inscripcionCliente">
-            <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.
-        </button>
+        #{if curso.fechaDeCurso >= new java.util.Date()}
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#inscripcionCliente">
+                <span class="glyphicon glyphicon-comment"></span>&nbsp;Inscribirse a la Clase.
+            </button>
+        #{/if}
     </div>
     <div class="col-md-6">
     </div>
@@ -66,6 +68,14 @@
                 <i class="fa fa-file-excel-o"></i>&nbsp;Exportar a Excel
             </button>
         </a>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-2">
+        <button type="button" class="btn btn-primary" onclick="location.href = '@{ClaseController.fichaClaseDirigida(curso.clase.altKey)}'">
+            &nbsp;Volver
+        </button>
     </div>
 </div>
 
