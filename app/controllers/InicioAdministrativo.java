@@ -1,6 +1,5 @@
 package controllers;
 
-import models.Persona;
 import models.Region;
 import models.TipoDeClase;
 import play.mvc.Controller;

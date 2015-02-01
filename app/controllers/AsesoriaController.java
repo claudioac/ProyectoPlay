@@ -43,6 +43,9 @@ public class AsesoriaController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/asesorarClienteAdmin.html",cliente,fichas,rutinas);
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/asesorarClienteAdmininistrativo.html",cliente,fichas,rutinas);
+        }
     }
 
     public static void nuevaFichaDeSalud(String altKeyCliente){
@@ -124,7 +127,7 @@ public class AsesoriaController extends Controller {
             renderTemplate("InicioProfesor/editFichaDeSalud.html",edad,ficha);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/editFichaDeSalud.html",edad,ficha);
+            renderTemplate("InicioAdministrativo/editFichaDeSaludAdministativo.html",edad,ficha);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/editFichaDeSalud.html",edad,ficha);
