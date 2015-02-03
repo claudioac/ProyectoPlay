@@ -766,4 +766,8 @@ INSERT INTO tipodeejercicio(id, activo, nombre, zonasdelcuerpo_id)VALUES (44, tr
 INSERT INTO tipodeejercicio(id, activo, nombre, zonasdelcuerpo_id)VALUES (45, true, 'Bicicleta', 8);
 
 
+--Quemadores de grasa
 
+INSERT INTO tipodeproducto(id, tipo)VALUES (1, 'PROTEINAS');
+INSERT INTO tipodeproducto(id, tipo)VALUES (2, 'QUEMADORES DE GRASA');
+INSERT INTO tipodeproducto(id, tipo)VALUES (3, 'BEBIDAS ENERGETICAS');
