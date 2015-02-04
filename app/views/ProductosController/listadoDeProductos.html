@@ -1,16 +1,62 @@
 <div class="page-header">
     <h1>Listado de Productos Disponibles</h1>
 </div>
-<div class="table-responsive">
-    <table class="table table-bordered table-hover">
+<div ng-controller="productos">
+<form class="form-horizontal well">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="col-md-4 control-label" for="tipoDeClases">Categorias</label>
+                <div class="col-md-8">
+                    <select id="tipoDeClases" name="tipoDeClases" ng-model="ProductoData.categoria" class="form-control">
+                        <option value="">Seleccione..</option>
+                    #{list items:categorias,as:'c'}
+                        <option value="${c.id}">${c.tipo}</option>
+                    #{/list}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="col-md-4 control-label" for="buscarClase"></label>
+                <div class="col-md-4">
+                    <button id="buscarClase" name="buscarClase" class="btn btn-success" ng-click="buscar()">Buscar</button>
+                </div>
+            </div>
+        </div>
+</form>
+<div class="table-responsive" style="display: none;" id="tablaDeProductos">
+    <table class="table table-bordered table-hover" >
         <thead>
         <tr class="warning">
-            <td class="text-center">Nº Producto</td>
             <td class="text-center">Producto</td>
-            <td class="text-center">Descripción</td>
             <td class="text-center">Cantidad Disponible</td>
             <td class="text-center">Precio</td>
+            <td class="text-center">Acción</td>
         </tr>
         </thead>
+        <tbody>
+        <tr  ng-repeat="producto in producto">
+            <td class="text-center">{{producto.nombreProducto}}</td>
+            <td class="text-center">{{producto.cantidadDisponible}}</td>
+            <td class="text-center">{{producto.precio | number:0}}</td>
+            <td class="text-center"><a href="#" class="help" title="Disminuir en 1 la cantidad disponible"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+        </tr>
+        </tbody>
     </table>
 </div>
+</div>
+<script type="text/javascript">
+    app.controller("productos",function($scope,$http){
+        $scope.ProductoData = {};
+        $scope.buscar = function(){
+            var transform = function(data){
+                return $.param(data);
+            }
+            $http.post("/getProductosDisponibles",this.ProductoData,{
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                transformRequest: transform}).success(function(productos){
+                $scope.producto = productos;
+                $('#tablaDeProductos').show();
+            });
+        }
+    });
+</script>

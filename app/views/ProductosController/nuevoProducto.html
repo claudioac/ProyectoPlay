@@ -1,4 +1,4 @@
-<form class="form-horizontal">
+<form class="form-horizontal" id="nuevoProductoForm">
     <fieldset>
 
         <!-- Form Name -->
@@ -6,11 +6,13 @@
 
         <!-- Select Basic -->
         <div class="form-group">
-            <label class="col-md-4 control-label" for="selectbasic">Select Basic</label>
+            <label class="col-md-4 control-label" for="categoria">Categoria</label>
             <div class="col-md-4">
-                <select id="selectbasic" name="selectbasic" class="form-control">
-                    <option value="1">Option one</option>
-                    <option value="2">Option two</option>
+                <select id="categoria" name="producto.categoria" class="form-control input-md">
+                    <option value="">Seleccione..</option>
+                   #{list items:categorias,as:'c'}
+                       <option value="${c.id}">${c.tipo}</option>
+                   #{/list}
                 </select>
             </div>
         </div>
@@ -19,7 +21,15 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="nombreProducto">Nombre del Producto</label>
             <div class="col-md-5">
-                <input id="nombreProducto" name="nombreProducto" type="text" placeholder="" class="form-control input-md">
+                <input id="nombreProducto" name="producto.nombreProducto" type="text" placeholder="" class="form-control input-md">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="descripcionProducto">Descripcion</label>
+            <div class="col-md-5">
+                <textarea name="producto.descripcionProducto" id="descripcionProducto" class="form-control" cols="30" rows="10"></textarea>
 
             </div>
         </div>
@@ -28,7 +38,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="cantidadDisponible">Cantidad Disponible</label>
             <div class="col-md-5">
-                <input id="cantidadDisponible" name="cantidadDisponible" type="text" placeholder="" class="form-control input-md">
+                <input id="cantidadDisponible" name="producto.cantidadDisponible" type="text" placeholder="" class="form-control input-md">
 
             </div>
         </div>
@@ -37,7 +47,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="precio">Precio</label>
             <div class="col-md-5">
-                <input id="precio" name="precio" type="text" placeholder="" class="form-control input-md">
+                <input id="precio" name="producto.precio" type="text" placeholder="$" class="form-control input-md">
 
             </div>
         </div><!-- Button -->
@@ -53,3 +63,47 @@
         </div>
     </fieldset>
 </form>
+<script type="text/javascript">
+    var $nuevoProductoForm = $('#nuevoProductoForm')
+    $("#cantidadDisponible,#precio").keypress(function (e){
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+    });
+    $('#guardarProducto').click(function(){
+        $("ul.errors-fields").remove();
+       bootbox.confirm('¿Desea agregar este nuevo producto?',function(result){
+           if(result){
+               $.ajax({
+                   url:"@{ProductosController.nuevoProducto()}",
+                   method:"post",
+                   data:$nuevoProductoForm.serialize(),
+                   success: function(){
+                       bootbox.alert('Guardado Con Exito',function(){
+                           location.reload();
+                       });
+                   },
+                   error: function(resp){
+                       if (resp.status == 400) {
+                           $.each(resp.responseJSON.fieldErrors, function (name, errors) {
+                               var $input = $(":input[name='" + name + "']", $nuevoProductoForm);
+                               $input.closest("div.form-group").addClass("has-error");
+                               var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                               $.each(errors, function (i, elem) {
+                                   var $li = $("<li class='text-danger'/>");
+                                   $li.text(elem);
+                                   $ul.append($li);
+                               });
+                               $input.after($ul);
+                               console.log(errors);
+                           });
+                           console.log(resp.responseJSON);
+                       }
+                   }
+               });
+
+           }
+       });
+    });
+</script>
