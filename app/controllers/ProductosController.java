@@ -53,8 +53,10 @@ public class ProductosController extends Controller {
 
     }
 
-    public static void descontarStockDisponible(){
-
+    public static void descontarStockDisponible(String altKeyProducto){
+       Producto producto = Producto.find("altKey",altKeyProducto).first();
+       producto.cantidadDisponible = (producto.cantidadDisponible-1);
+       producto.save();
     }
 
     public static void getProductosDisponibles(Long categoria){

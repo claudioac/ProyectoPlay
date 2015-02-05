@@ -24,7 +24,7 @@
         </div>
 </form>
 <div class="table-responsive" style="display: none;" id="tablaDeProductos">
-    <table class="table table-bordered table-hover" >
+    <table class="table table-bordered table-hover" id="productos">
         <thead>
         <tr class="warning">
             <td class="text-center">Producto</td>
@@ -38,25 +38,45 @@
             <td class="text-center">{{producto.nombreProducto}}</td>
             <td class="text-center">{{producto.cantidadDisponible}}</td>
             <td class="text-center">{{producto.precio | number:0}}</td>
-            <td class="text-center"><a href="#" class="help" title="Disminuir en 1 la cantidad disponible"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
+            <td class="text-center"><a href="#" class="disminuirStock" data-key-Producto="{{producto.altKeyProducto}}" class="help" title="Disminuir en 1 la cantidad disponible"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
         </tr>
         </tbody>
     </table>
 </div>
 </div>
 <script type="text/javascript">
-    app.controller("productos",function($scope,$http){
-        $scope.ProductoData = {};
-        $scope.buscar = function(){
-            var transform = function(data){
-                return $.param(data);
-            }
-            $http.post("/getProductosDisponibles",this.ProductoData,{
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
-                transformRequest: transform}).success(function(productos){
-                $scope.producto = productos;
-                $('#tablaDeProductos').show();
-            });
-        }
-    });
+        app.controller("productos",function($scope,$http){
+                $scope.ProductoData = {};
+                $scope.buscar = function(){
+                    var transform = function(data){
+                        return $.param(data);
+                    }
+                    $http.post("/getProductosDisponibles",this.ProductoData,{
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                        transformRequest: transform}).success(function(productos){
+                        $scope.producto = productos;
+                        $('#tablaDeProductos').show();
+                    });
+                }
+        });
+
+        $('#productos').on('click','a.disminuirStock',function(){
+            var $altKeyProducto = $(this).data('keyProducto');
+           bootbox.confirm('¿Desea disminuir el stock disponible en 1 unidad?',function(result){
+               if(result){
+                   $.ajax({
+                      url:"@{ProductosController.descontarStockDisponible()}",
+                      method:"post",
+                      data: {altKeyProducto:$altKeyProducto},
+                      success: function(){
+                          location.reload();
+                      },
+                      error: function(){
+                          bootbox.alert('Error Interno');
+                      }
+                   });
+               }
+           });
+        });
+
 </script>

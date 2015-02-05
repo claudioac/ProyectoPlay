@@ -11,4 +11,9 @@ import javax.persistence.SequenceGenerator;
 public class TipoDeProducto extends EntidadIdAutoLong {
 
     public String tipo;
+
+    @Override
+    public String toString() {
+        return tipo;
+    }
 }

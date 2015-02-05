@@ -9,4 +9,5 @@ public class ProductoDTO {
     public String descripcionProducto;
     public int cantidadDisponible;
     public Long precio;
+    public String altKeyProducto;
 }

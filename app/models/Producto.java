@@ -21,6 +21,11 @@ public class Producto extends EntidadIdAutoLongAltKey{
     public Long precio;
     public boolean activo;
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
     @ManyToOne
     public TipoDeProducto tipoDeProducto;
 
@@ -49,6 +54,7 @@ public class Producto extends EntidadIdAutoLongAltKey{
         dto.precio = precio;
         dto.descripcionProducto = descripcion;
         dto.nombreProducto = nombre;
+        dto.altKeyProducto = altKey;
         return  dto;
     }
 }
