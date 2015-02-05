@@ -21,6 +21,9 @@ public class ProductosController extends Controller {
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
             renderTemplate("InicioAdmin/listadoDeProductosAdmin.html",categorias);
         }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/listadoDeProductosAdministrativo.html",categorias);
+        }
     }
 
     public static void nuevoProducto(ProductoDTO producto){
