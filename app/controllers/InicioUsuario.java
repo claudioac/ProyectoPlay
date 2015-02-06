@@ -130,4 +130,9 @@ public class InicioUsuario extends Controller {
         model.put("dateFmt", dateFormat);
         throw new JxlsResult(model, cliente.getNombreCompleto()+" Mensualidades");
     }
+
+    public static void productosDisponiblesUsuario(){
+        List<TipoDeProducto> categorias = TipoDeProducto.findAll();
+        render(categorias);
+    }
 }

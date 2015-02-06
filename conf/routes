@@ -43,7 +43,7 @@ GET    /verDetalleRutinaDeEjercicios/{altKeyRutina}          ResumenController.r
 GET    /getEjercicios/{idZona}                               AsesoriaController.getEjercicios
 GET    /descargarRutinaDeEjercicios/{altKeyRutina}           InicioUsuario.descargaDeRutina
 POST   /getProductosDisponibles                              ProductosController.getProductosDisponibles
-
+GET    /detalleDelProducto/{altKeyProducto}                  ResumenController.resumenProducto
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
 

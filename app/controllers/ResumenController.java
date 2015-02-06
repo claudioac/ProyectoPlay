@@ -3,6 +3,7 @@ package controllers;
 import models.ClasesDTO.EjercicioDTO;
 import models.Ejercicio;
 import models.FichaDeSalud;
+import models.Producto;
 import models.Rutina;
 import play.mvc.Controller;
 
@@ -24,5 +25,11 @@ public class ResumenController extends Controller {
      List<EjercicioDTO> ejercicios = Ejercicio.findAllEjerciciosByAltKeyRutina(altKeyRutina);
      render(rutina,ejercicios);
  }
+
+
+    public static void resumenProducto(String altKeyProducto){
+        Producto producto = Producto.find("altKey",altKeyProducto).first();
+        render(producto);
+    }
 
 }
