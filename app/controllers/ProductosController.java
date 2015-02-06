@@ -5,10 +5,12 @@ import models.ClasesDTO.ProductoDTO;
 import models.Producto;
 import models.TipoDeProducto;
 import models.error.ErrorJSON;
+import mvc.results.JxlsResult;
 import play.data.validation.Validation;
 import play.mvc.Controller;
 import play.mvc.Http;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,12 +50,11 @@ public class ProductosController extends Controller {
         nuevoProducto.save();
     }
 
-    public static void eliminarProducto(){
-
-    }
-
-    public static void editarProducto(){
-
+    public static void exportarProductos(){
+        List<Producto> productos = Producto.findAll();
+        HashMap<String, Object> model = new HashMap<String, Object>();
+        model.put("productos",productos);
+        throw new JxlsResult(model, "Lista de Productos");
     }
 
     public static void descontarStockDisponible(String altKeyProducto){
