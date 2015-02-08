@@ -52,11 +52,12 @@ public class ContactoController extends Controller {
         String altKeyCliente = session.get("altKey");
         Persona responsable = Persona.findPersonabyAltKey(altKeyCliente);
         List<ContactoDTO> contactosPorRevisar = Contacto.findAllContactosSinRevisar();
+        List<ContactoDTO> respuestas = Contacto.findAllRespuestasByResponsable(responsable);
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
-            renderTemplate("InicioAdmin/contactosAdmin.html");
+            renderTemplate("InicioAdmin/contactosAdmin.html",contactosPorRevisar,respuestas);
         }
         if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
-            renderTemplate("InicioAdministrativo/contactosAdministrativo.html");
+            renderTemplate("InicioAdministrativo/contactosAdministrativo.html",contactosPorRevisar,respuestas);
         }
     }
 }

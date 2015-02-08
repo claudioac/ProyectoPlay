@@ -132,4 +132,9 @@ public class Contacto extends EntidadIdAutoLongAltKey {
         List<Contacto> contactos = JPA.em().createQuery("select c from Contacto c where c.estado.id=?1",Contacto.class).setParameter(1, EstadoContactoDTO.ENVIADO).getResultList();
         return Contacto.toContactoListDTO(contactos);
     }
+
+    public static List<ContactoDTO> findAllRespuestasByResponsable(Persona responsable) {
+        List<Contacto> contactos = JPA.em().createQuery("select c from Contacto c where c.responsable=?1",Contacto.class).setParameter(1, responsable).getResultList();
+        return Contacto.toContactoListDTO(contactos);
+    }
 }

@@ -1,4 +1,4 @@
-<div class="bs-callout bs-callout-info">
+<div class="bs-callout bs-callout-success">
     <div class="table-responsive">
         <table class="table table-bordered table-hover" id="misContactos">
             <thead>
@@ -11,17 +11,16 @@
             </thead>
             <tbody>
             <tr>
-            #{ifnot contactosPorRevisar}
+            #{ifnot respuestas}
                 <td colspan="4" class="text-center"><small><i>No se registran contactos.</i></small></td>
             #{/ifnot}
             #{else }
-                #{list items:contactosPorRevisar,as:'c'}
-                    <td class="text-center">${c.fechaDeContacto.format("dd/MM/yyyy")}</td>
-                    <td class="text-center">${c.asunto}</td>
-                    <td class="text-center">${c.estadoContacto}</td>
+                #{list items:respuestas,as:'r'}
+                    <td class="text-center">${r.fechaDeContacto.format("dd/MM/yyyy")}</td>
+                    <td class="text-center">${r.asunto}</td>
+                    <td class="text-center">${r.estadoContacto}</td>
                     <td class="text-center">
-                        <a href="#" data-key-Contacto="${c.altKeyContacto}" class="verDetalleContacto help" title="Ver Contacto"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
-                        <a href="#" data-key-Contacto="${c.altKeyContacto}" class="responder help" title="Responder"><span class="glyphicon glyphicon-share"></span></a>
+                        <a href="#" data-key-Contacto="${r.altKeyContacto}" class="verDetalleContacto help" title="Ver Respuesta"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
                     </td>
                 #{/list}
             #{/else}
