@@ -31,3 +31,20 @@
     </div>
     <br/>
 </div>
+#{include 'InicioUsuario/fragments/detalleContacto.html'/}
+#{include 'ContactoController/responderContacto.html'/}
+<script type="text/javascript">
+    $('#misContactos').on('click','a.verDetalleContacto',function(){
+        var $altKeyContacto = $(this).data('keyContacto');
+        $('#appendContacto').empty();
+        $('#appendContacto').load('/verDetalleContacto/'+$altKeyContacto);
+        $('#detalleContacto').modal('show');
+    });
+    $('#misContactos').on('click','a.responder',function(){
+        var $altKeyContacto = $(this).data('keyContacto');
+        $('#appendResponderContacto').empty();
+        $('#appendResponderContacto').load('/responderContacto/'+$altKeyContacto);
+        $('#responderContacto').modal('show');
+    });
+
+</script>

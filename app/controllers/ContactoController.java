@@ -60,4 +60,9 @@ public class ContactoController extends Controller {
             renderTemplate("InicioAdministrativo/contactosAdministrativo.html",contactosPorRevisar,respuestas);
         }
     }
+
+    public static void respuestaContacto(String altKeyContacto){
+        Contacto contacto = Contacto.find("altKey",altKeyContacto).first();
+        render(contacto);
+    }
 }

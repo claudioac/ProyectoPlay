@@ -1,0 +1,26 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover" id="porResponder">
+        <tr>
+            <th class="warning">Remitente</th>
+            <td>${contacto.cliente != null ? contacto.cliente.nombreCompleto: 'Persona Externa'}</td>
+        </tr>
+        <tr>
+            <th class="warning">Fecha de Envio</th>
+            <td>
+                ${contacto.fechaDeContacto.format("dd/MM/yyyy")}
+            </td>
+        </tr>
+        <tr>
+            <th class="warning">Asunto</th>
+            <td>${contacto.asunto}</td>
+        </tr>
+        <tr>
+            <th class="warning">Mensaje</th>
+            <td>${contacto.mensaje}</td>
+        </tr>
+        <tr>
+            <th class="warning">Respuesta</th>
+            <td><textarea name="respuestaContacto" class="form-control" id="" cols="30" rows="10"></textarea></td>
+        </tr>
+    </table>
+</div>

@@ -1,6 +1,6 @@
 <div class="bs-callout bs-callout-success">
     <div class="table-responsive">
-        <table class="table table-bordered table-hover" id="misContactos">
+        <table class="table table-bordered table-hover" id="respuestas">
             <thead>
             <tr class="warning">
                 <th class="text-center">Fecha</th>
@@ -30,3 +30,12 @@
     </div>
     <br/>
 </div>
+#{include 'InicioUsuario/fragments/detalleContacto.html'/}
+<script type="text/javascript">
+    $('#respuestas').on('click','a.verDetalleContacto',function(){
+        var $altKeyContacto = $(this).data('keyContacto');
+        $('#appendContacto').empty();
+        $('#appendContacto').load('/verDetalleContacto/'+$altKeyContacto);
+        $('#detalleContacto').modal('show');
+    });
+</script>

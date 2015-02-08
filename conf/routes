@@ -45,6 +45,7 @@ GET    /descargarRutinaDeEjercicios/{altKeyRutina}           InicioUsuario.desca
 POST   /getProductosDisponibles                              ProductosController.getProductosDisponibles
 GET    /detalleDelProducto/{altKeyProducto}                  ResumenController.resumenProducto
 GET     /verDetalleContacto/{altKeyContacto}                 ResumenController.resumenContactoUsuario
+GET     /responderContacto/{altKeyContacto}                  ContactoController.respuestaContacto
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
 
