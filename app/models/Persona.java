@@ -71,6 +71,11 @@ public class Persona extends EntidadIdAutoLongAltKey {
     @OneToMany(mappedBy = "cliente",cascade = {CascadeType.REMOVE})
     public List<FichaDeSalud> fichaDeSalud;
 
+    @OneToMany(mappedBy = "cliente",cascade = {CascadeType.REMOVE})
+    public List<Contacto> contactos;
+
+    @OneToMany(mappedBy = "responsable",cascade = {CascadeType.REMOVE})
+    public List<Contacto> contactosProfesor;
 
     /**
      * Setter y Getters de atributos

@@ -1,0 +1,39 @@
+#{extends 'mainUsuario.html'/}
+<div class="page-header">
+    <h1><i class="fa fa-envelope"></i>&nbsp;Mis Contactos</h1>
+</div>
+<div class="bs-callout bs-callout-danger">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="warning">
+                    <th class="text-center">Fecha</th>
+                    <th class="text-center">Asunto</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    #{ifnot contactos}
+                    <td colspan="4" class="text-center"><small><i>No se registran contactos.</i></small></td>
+                    #{/ifnot}
+                    #{else }
+                        #{list items:contactos,as:'c'}
+                            <td class="text-center">${c.fechaDeContacto.format("dd/MM/yyyy")}</td>
+                            <td class="text-center">${c.asunto}</td>
+                            <td class="text-center">${c.estadoContacto}</td>
+                            <td class="text-center"><a href="#"><span class="glyphicon glyphicon-search"></span></a></td>
+                        #{/list}
+                    #{/else}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevoContacto">Nuevo Contacto</button>
+</div>
+#{include 'InicioUsuario/fragments/nuevoContacto.html'/}
+<script type="text/javascript">
+
+</script>

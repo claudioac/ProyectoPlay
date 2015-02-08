@@ -135,4 +135,12 @@ public class InicioUsuario extends Controller {
         List<TipoDeProducto> categorias = TipoDeProducto.findAll();
         render(categorias);
     }
+
+    public static void misContactos(){
+        String altKeyCliente = session.get("altKey");
+        Persona cliente = Persona.findPersonabyAltKey(altKeyCliente);
+        List<ContactoDTO> contactos = Contacto.findAllContactosByIdCliente(cliente);
+        List<TipoDeContacto> tipoDeContactos = TipoDeContacto.findAll();
+        render(contactos,tipoDeContactos);
+    }
 }

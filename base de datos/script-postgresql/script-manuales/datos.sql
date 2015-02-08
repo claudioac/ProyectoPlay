@@ -771,3 +771,13 @@ INSERT INTO tipodeejercicio(id, activo, nombre, zonasdelcuerpo_id)VALUES (45, tr
 INSERT INTO tipodeproducto(id, tipo)VALUES (1, 'PROTEINAS');
 INSERT INTO tipodeproducto(id, tipo)VALUES (2, 'QUEMADORES DE GRASA');
 INSERT INTO tipodeproducto(id, tipo)VALUES (3, 'BEBIDAS ENERGETICAS');
+
+--Tipo de Contactos
+INSERT INTO tipodecontacto(id, activo, tipo)VALUES (1, true, 'Consulta');
+INSERT INTO tipodecontacto(id, activo, tipo)VALUES (2, true, 'Reclamo');
+
+
+--Estado de Contactos
+INSERT INTO estadocontacto(id, activo, estado)VALUES (1, true, 'Enviado');
+INSERT INTO estadocontacto(id, activo, estado)VALUES (2, true, 'Respondido');
+

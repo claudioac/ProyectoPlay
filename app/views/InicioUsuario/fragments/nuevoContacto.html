@@ -1,0 +1,87 @@
+<div class="modal fade" id="nuevoContacto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center">Nuevo Contacto</h4>
+            </div>
+            <div class="modal-body">
+                <form id="nuevoContactoForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="asunto">
+                                    Asunto</label>
+                                <input type="text" class="form-control" id="asunto" name="contacto.asunto" placeholder="Asunto" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    Email Address</label>
+                                <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                    <input type="email" class="form-control" name="contacto.email" id="email" placeholder="Enter email" required="required" /></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipoContacto">
+                                    Tipo de Contacto</label>
+                                <select id="tipoContacto" name="contacto.idTipoDeContacto" class="form-control" required="required">
+                                    <option value="">Seleccione..</option>
+                                    #{list items:tipoDeContactos,as:'tipo'}
+                                        <option value="${tipo.id}">${tipo.tipo}</option>
+                                    #{/list}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mensaje">
+                                    Mensaje</label>
+                            <textarea name="contacto.mensaje" id="mensaje" class="form-control" rows="9" cols="25" required="required"
+                                      placeholder="Escriba aqui su mensaje"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="enviarContacto" class="btn btn-success">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+   var $nuevoContactoForm = $('#nuevoContactoForm');
+
+    $('#enviarContacto').click(function(){
+        $("#nuevoContactoForm ul.errors-fields").remove();
+        $.ajax({
+            url:"@{ContactoController.nuevoContactoCliente()}",
+            method:"post",
+            data: $nuevoContactoForm.serialize(),
+            success: function(){
+                bootbox.alert("El contacto fue enviado exitosamente",function(){
+                    location.reload();
+                });
+            },
+            error: function(resp){
+                if (resp.status == 400) {
+                    $.each(resp.responseJSON.fieldErrors, function(name, errors){
+                        var $input = $(":input[name='" + name + "']", $nuevoContactoForm);
+                        $input.closest("div.form-group").addClass("has-error");
+                        var $ul = $("<ul class='errors-fields list-inline'></ul>");
+                        $.each(errors,function(i,elem){
+                            var $li = $("<li class='text-danger'/>");
+                            $li.text(elem);
+                            $ul.append($li);
+                        });
+                        $input.after($ul);
+                        console.log(errors);
+                    });
+                    console.log(resp.responseJSON);
+                }
+            }
+        });
+    });
+</script>
