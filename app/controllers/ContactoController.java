@@ -65,4 +65,19 @@ public class ContactoController extends Controller {
         Contacto contacto = Contacto.find("altKey",altKeyContacto).first();
         render(contacto);
     }
+
+    public static void enviarRespuesta(ContactoDTO respuesta){
+        Validation.required("respuesta.respuesta",respuesta.respuesta);
+        if (Validation.hasErrors()) {
+            response.status = Http.StatusCode.BAD_REQUEST;
+            renderJSON(ErrorJSON.fromValidation());
+        }
+        String altKeyCliente = session.get("altKey");
+        Persona responsable = Persona.findPersonabyAltKey(altKeyCliente);
+        Contacto contacto = Contacto.find("altKey",respuesta.altKeyContacto).first();
+        contacto.respuesta = respuesta.respuesta;
+        contacto.responsable = responsable;
+        contacto.estado = EstadoContacto.findById(EstadoContactoDTO.FINALIZADO);
+        contacto.save();
+    }
 }

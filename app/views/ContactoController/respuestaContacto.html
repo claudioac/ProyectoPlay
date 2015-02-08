@@ -20,7 +20,14 @@
         </tr>
         <tr>
             <th class="warning">Respuesta</th>
-            <td><textarea name="respuestaContacto" class="form-control" id="" cols="30" rows="10"></textarea></td>
+            <td>
+                <form id="respuestaForm">
+                    <input type="hidden" name="respuesta.altKeyContacto" value="${contacto.altKey}"/>
+                    <div>
+                    <textarea name="respuesta.respuesta" class="form-control" id="" cols="30" rows="10"></textarea>
+                    </div>
+                </form>
+            </td>
         </tr>
     </table>
 </div>

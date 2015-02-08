@@ -15,6 +15,7 @@ public class ContactoDTO {
     public String altKeyContacto;
     public Date fechaDeContacto;
     public String estadoContacto;
+    public String respuesta;
 
     public String getEmail() {
         return email;

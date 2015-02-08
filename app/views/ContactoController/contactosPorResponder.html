@@ -20,7 +20,6 @@
                     <td class="text-center">${c.asunto}</td>
                     <td class="text-center">${c.estadoContacto}</td>
                     <td class="text-center">
-                        <a href="#" data-key-Contacto="${c.altKeyContacto}" class="verDetalleContacto help" title="Ver Contacto"><span class="glyphicon glyphicon-search"></span></a>&nbsp;&nbsp;
                         <a href="#" data-key-Contacto="${c.altKeyContacto}" class="responder help" title="Responder"><span class="glyphicon glyphicon-share"></span></a>
                     </td>
                 #{/list}
@@ -31,15 +30,8 @@
     </div>
     <br/>
 </div>
-#{include 'InicioUsuario/fragments/detalleContacto.html'/}
 #{include 'ContactoController/responderContacto.html'/}
 <script type="text/javascript">
-    $('#misContactos').on('click','a.verDetalleContacto',function(){
-        var $altKeyContacto = $(this).data('keyContacto');
-        $('#appendContacto').empty();
-        $('#appendContacto').load('/verDetalleContacto/'+$altKeyContacto);
-        $('#detalleContacto').modal('show');
-    });
     $('#misContactos').on('click','a.responder',function(){
         var $altKeyContacto = $(this).data('keyContacto');
         $('#appendResponderContacto').empty();
