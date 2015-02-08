@@ -1,0 +1,30 @@
+<div class="bs-callout bs-callout-danger">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="misContactos">
+            <thead>
+            <tr class="warning">
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Asunto</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            #{ifnot contactos}
+                <td colspan="4" class="text-center"><small><i>No se registran contactos.</i></small></td>
+            #{/ifnot}
+            #{else }
+                #{list items:contactos,as:'c'}
+                    <td class="text-center">${c.fechaDeContacto.format("dd/MM/yyyy")}</td>
+                    <td class="text-center">${c.asunto}</td>
+                    <td class="text-center">${c.estadoContacto}</td>
+                    <td class="text-center"><a href="#" data-key-Contacto="${c.altKeyContacto}" class="verDetalleContacto"><span class="glyphicon glyphicon-search"></span></a></td>
+                #{/list}
+            #{/else}
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+</div>

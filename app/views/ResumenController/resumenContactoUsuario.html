@@ -1,0 +1,43 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th class="warning">Nº de Contacto</th>
+            <td>${contacto.id}</td>
+        </tr>
+        <tr>
+            <th class="warning">Fecha de Mensaje:</th>
+            <td>${contacto.fechaDeContacto.format("dd/MM/yyyy")}</td>
+        </tr>
+        <tr>
+            <th class="warning">Tipo de Contacto:</th>
+            <td>${contacto.tipoDeContacto.tipo}</td>
+        </tr>
+        <tr>
+            <th class="warning">Estado:</th>
+            <td>${contacto.estado.estado.toUpperCase()}</td>
+        </tr>
+        <tr>
+            <th class="warning">Asunto:</th>
+            <td>${contacto.asunto}</td>
+        </tr>
+        <tr>
+            <th class="warning">Mensaje:</th>
+            <td>${contacto.mensaje}</td>
+        </tr>
+        #{if contacto.responsable != null}
+            <tr>
+                <th class="warning">Respuesta:</th>
+                <td>${contacto.respuesta != null ? contacto.respuesta:'SIN RESPUESTA'}</td>
+            </tr>
+            <tr>
+                <th class="warning">Respuesta dada por:</th>
+                <td>${contacto.responsable.nombreCompleto}</td>
+            </tr>
+        #{/if}
+    </table>
+</div>
+#{if contacto.responsable == null}
+<div class="alert alert-danger">
+    <strong><span class="glyphicon glyphicon-warning-sign"></span>&nbsp;Todavia no ah sido respondido su contacto.</strong>
+</div>
+#{/if}

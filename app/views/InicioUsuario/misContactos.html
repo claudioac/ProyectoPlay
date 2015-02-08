@@ -4,7 +4,7 @@
 </div>
 <div class="bs-callout bs-callout-danger">
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover" id="misContactos">
             <thead>
                 <tr class="warning">
                     <th class="text-center">Fecha</th>
@@ -23,7 +23,7 @@
                             <td class="text-center">${c.fechaDeContacto.format("dd/MM/yyyy")}</td>
                             <td class="text-center">${c.asunto}</td>
                             <td class="text-center">${c.estadoContacto}</td>
-                            <td class="text-center"><a href="#"><span class="glyphicon glyphicon-search"></span></a></td>
+                            <td class="text-center"><a href="#" data-key-Contacto="${c.altKeyContacto}" class="verDetalleContacto"><span class="glyphicon glyphicon-search"></span></a></td>
                         #{/list}
                     #{/else}
                 </tr>
@@ -34,6 +34,12 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevoContacto">Nuevo Contacto</button>
 </div>
 #{include 'InicioUsuario/fragments/nuevoContacto.html'/}
+#{include 'InicioUsuario/fragments/detalleContacto.html'/}
 <script type="text/javascript">
-
+    $('#misContactos').on('click','a.verDetalleContacto',function(){
+       var $altKeyContacto = $(this).data('keyContacto');
+       $('#appendContacto').empty();
+        $('#appendContacto').load('/verDetalleContacto/'+$altKeyContacto);
+        $('#detalleContacto').modal('show');
+    });
 </script>

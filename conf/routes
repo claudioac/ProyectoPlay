@@ -44,6 +44,7 @@ GET    /getEjercicios/{idZona}                               AsesoriaController.
 GET    /descargarRutinaDeEjercicios/{altKeyRutina}           InicioUsuario.descargaDeRutina
 POST   /getProductosDisponibles                              ProductosController.getProductosDisponibles
 GET    /detalleDelProducto/{altKeyProducto}                  ResumenController.resumenProducto
+GET     /verDetalleContacto/{altKeyContacto}                 ResumenController.resumenContactoUsuario
 
 GET     /profesor/{altKey}                                   InicioProfesor.index
 

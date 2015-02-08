@@ -1,6 +1,7 @@
 package models;
 
 import models.ClasesDTO.ContactoDTO;
+import models.ClasesDTO.EstadoContactoDTO;
 import play.db.jpa.JPA;
 
 import javax.persistence.*;
@@ -35,6 +36,9 @@ public class Contacto extends EntidadIdAutoLongAltKey {
 
     @ManyToOne(fetch = FetchType.LAZY)
     public Persona responsable;
+
+    @Lob
+    public String respuesta;
 
     public Date getFechaDeContacto() {
         return fechaDeContacto;
@@ -102,11 +106,7 @@ public class Contacto extends EntidadIdAutoLongAltKey {
 
     public static List<ContactoDTO> findAllContactosByIdCliente(Persona cliente) {
         List<Contacto> contactos = JPA.em().createQuery("select c from Contacto c where c.cliente=?1",Contacto.class).setParameter(1,cliente).getResultList();
-        List<ContactoDTO> resultado = new ArrayList<ContactoDTO>();
-        for (Contacto contacto : contactos) {
-            resultado.add(contacto.toContactoDTO());
-        }
-        return resultado;
+        return Contacto.toContactoListDTO(contactos);
     }
 
     private ContactoDTO toContactoDTO() {
@@ -118,5 +118,18 @@ public class Contacto extends EntidadIdAutoLongAltKey {
         dto.fechaDeContacto = fechaDeContacto;
         dto.estadoContacto = estado.estado;
         return dto;
+    }
+
+    private static List<ContactoDTO> toContactoListDTO(List<Contacto> contactos){
+        List<ContactoDTO> resultado = new ArrayList<ContactoDTO>();
+        for (Contacto contacto : contactos) {
+            resultado.add(contacto.toContactoDTO());
+        }
+        return resultado;
+    }
+
+    public static List<ContactoDTO> findAllContactosSinRevisar() {
+        List<Contacto> contactos = JPA.em().createQuery("select c from Contacto c where c.estado.id=?1",Contacto.class).setParameter(1, EstadoContactoDTO.ENVIADO).getResultList();
+        return Contacto.toContactoListDTO(contactos);
     }
 }

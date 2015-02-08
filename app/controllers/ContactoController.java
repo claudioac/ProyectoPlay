@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.variblesEstaticas.TipoUsuariosDTO;
 import models.ClasesDTO.ContactoDTO;
 import models.ClasesDTO.EstadoContactoDTO;
 import models.Contacto;
@@ -12,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Claudio Acuña
@@ -44,5 +46,17 @@ public class ContactoController extends Controller {
 
     public static void nuevoContactoPersonaExterna(){
 
+    }
+
+    public static void misContactosGimnasio(){
+        String altKeyCliente = session.get("altKey");
+        Persona responsable = Persona.findPersonabyAltKey(altKeyCliente);
+        List<ContactoDTO> contactosPorRevisar = Contacto.findAllContactosSinRevisar();
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMIN)){
+            renderTemplate("InicioAdmin/contactosAdmin.html");
+        }
+        if (session.get("tipo").equals(TipoUsuariosDTO.ADMINISTRATIVO)){
+            renderTemplate("InicioAdministrativo/contactosAdministrativo.html");
+        }
     }
 }

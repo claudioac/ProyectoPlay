@@ -1,10 +1,7 @@
 package controllers;
 
+import models.*;
 import models.ClasesDTO.EjercicioDTO;
-import models.Ejercicio;
-import models.FichaDeSalud;
-import models.Producto;
-import models.Rutina;
 import play.mvc.Controller;
 
 import java.util.List;
@@ -30,6 +27,11 @@ public class ResumenController extends Controller {
     public static void resumenProducto(String altKeyProducto){
         Producto producto = Producto.find("altKey",altKeyProducto).first();
         render(producto);
+    }
+
+    public static void resumenContactoUsuario(String altKeyContacto){
+        Contacto contacto = Contacto.find("altKey",altKeyContacto).first();
+        render(contacto);
     }
 
 }
