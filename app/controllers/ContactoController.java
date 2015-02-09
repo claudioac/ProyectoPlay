@@ -79,5 +79,6 @@ public class ContactoController extends Controller {
         contacto.responsable = responsable;
         contacto.estado = EstadoContacto.findById(EstadoContactoDTO.FINALIZADO);
         contacto.save();
+        Notificaciones.respuestaContacto(contacto.cliente,contacto);
     }
 }
