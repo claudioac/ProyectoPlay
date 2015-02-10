@@ -5,8 +5,27 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Estimado ${cliente.nombreCompleto}</p>
+    <p><b>Estimado :</b>${cliente.nombreCompleto}</p>
     <p>Su contacto fue respondido con fecha ${contacto.fechaDeContacto.format("dd/MM/yyyy")}</p>
-
+    <br/>
+    <table>
+        <tr>
+            <th>Asunto:</th>
+            <td>${contacto.asunto}</td>
+        </tr>
+        <tr>
+            <th>Mensaje:</th>
+            <td>${contacto.mensaje}</td>
+        </tr>
+        <tr>
+            <th>Respuesta emitida:</th>
+            <td>${contacto.respuesta}</td>
+        </tr>
+    </table>
+    <br/>
+    <p>Saluda Atentamente.</p>
+    <p>Gimansios Planet Gym</p>
+    <p><small><b><i>Favor de no responder este e-mail, cualquier consulta deber ser realizada por el modulo
+    de contactos de su escritorio de usuario dentro del sistema.</i></b></small></p>
 </body>
 </html>

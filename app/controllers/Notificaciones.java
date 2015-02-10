@@ -12,7 +12,7 @@ public class Notificaciones extends Mailer {
 
     public static void respuestaContacto(Persona cliente, Contacto contacto){
         setFrom("Gimansio <planetGym@planet.cl>");
-        setSubject("Respuesta a Contacto con Asunto "+contacto.asunto);
+        setSubject("Respuesta a Contacto Nº"+contacto.id);
         addRecipient(contacto.email);
         send(cliente,contacto);
      }
